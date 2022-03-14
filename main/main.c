@@ -97,17 +97,19 @@ static void CC_TX_task(void* arg)
 		ESP_LOGW(pcTaskGetTaskName(0), "---------------------------TX---------------------------");
 
 		n_tx++;
-		Rx_addr = CONFIG_RECEIVER_ADDRESS;	// receiver address
+		Rx_addr = CONFIG_RECEIVER_ADDRESS; // receiver address
 
-		time_stamp = clock();								// generate new time stamp
+		time_stamp = clock(); // generate new time stamp
 		Tx_fifo[3] = (uint8_t)(time_stamp >> 24);			// split 32-Bit time stamp to 4 byte array
 		Tx_fifo[4] = (uint8_t)(time_stamp >> 16);
 		Tx_fifo[5] = (uint8_t)(time_stamp >> 8);
 		Tx_fifo[6] = (uint8_t)(time_stamp);
 
-		Pktlen = 0x07;						// set packet length
+		Pktlen = 0x07; // set packet length
 
-		uint8_t res = send_packet(My_addr, Rx_addr, Tx_fifo, Pktlen, 0);	// send package over air. ACK is received via GPIO polling
+		// send package over air. ACK is received via GPIO polling
+		//uint8_t res = send_packet(My_addr, Rx_addr, Tx_fifo, Pktlen, 0);
+		uint8_t res = send_packet(My_addr, Rx_addr, Tx_fifo, Pktlen, CONFIG_TRANSFER_RETRY);
 
 		time_stamp = clock()-time_stamp;
 		if (res) {

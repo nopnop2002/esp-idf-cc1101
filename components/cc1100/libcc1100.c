@@ -430,7 +430,7 @@ static uint8_t spi_begin(void)
 		.miso_io_num = CONFIG_MISO_GPIO, // set SPI MISO pin
 		.quadwp_io_num=-1,
 		.quadhd_io_num=-1,
-		.max_transfer_sz = 1024,		// max transfer size is 1024 bytes
+		.max_transfer_sz = 1024 // max transfer size is 1024 bytes
 	};
 
 	ret = spi_bus_initialize( LCD_HOST, &buscfg, SPI_DMA_CH_AUTO );
@@ -442,10 +442,10 @@ static uint8_t spi_begin(void)
 	// === address and data byte, or between data bytes is needed		 ===
 	// =================================================================
 	spi_device_interface_config_t devcfg = {
-		.clock_speed_hz=5000000,		// SPI clock is 5 MHz!
+		.clock_speed_hz=5000000, // SPI clock is 5 MHz!
 		.queue_size = 7,
-		.mode=0,						// SPI mode 0
-		.spics_io_num=-1,				// we will use external CS pin
+		.mode=0, // SPI mode 0
+		.spics_io_num=-1 // we will use manual CS control
 	};
 
 	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
@@ -676,13 +676,13 @@ uint8_t cc_setup(uint8_t *My_addr, uint8_t dbg)
 	ESP_LOGI(tag, "cc_begin=%d", res);
 	if (res == 0) return 0;
 
-	sidle();													//set to ILDE first
-	//set_output_power_level(0);			//set PA level in dbm
+	sidle(); //set to ILDE first
+	//set_output_power_level(0); //set PA level in dbm
 
 	spi_write_register(IOCFG2, 0x06); //set module in sync mode detection mode
 
-	show_main_settings();					//shows setting
-	show_register_settings();			//shows current CC1101 register values
+	show_main_settings(); //shows setting
+	show_register_settings(); //shows current CC1101 register values
 	ESP_LOGI(tag, "Started.");
 
 	//set to RECEIVE mode
@@ -708,8 +708,8 @@ void show_register_settings(void)
 	config_reg_verify[0] = READ_BURST | READ_BURST;
 	Patable_verify[0] = PATABLE_BURST | READ_BURST;
 
-	spi_send(config_reg_verify, CFG_REGISTER+1);	//reads all 47 config register
-	spi_send(Patable_verify, 9);					//reads output power settings
+	spi_send(config_reg_verify, CFG_REGISTER+1); //reads all 47 config register
+	spi_send(Patable_verify, 9); //reads output power settings
 
 	//show_main_settings();
 	if (debug_level) {
@@ -747,7 +747,7 @@ uint8_t sidle(void)
 
 	spi_write_strobe(SIDLE);
 
-	marcstate = 0xFF;			//set unknown/dummy state value
+	marcstate = 0xFF; //set unknown/dummy state value
 	while (marcstate != 0x01)	//0x01 = sidle
 	{
 		marcstate = (spi_read_register(MARCSTATE) & 0x1F);
@@ -761,10 +761,10 @@ uint8_t transmit(void)
 {
 	uint8_t marcstate, res = 1;
 
-	spi_write_strobe(STX);		//sends the data over air
+	spi_write_strobe(STX); //sends the data over air
 
-	marcstate = 0xFF;			//set unknown/dummy state value
-	while( marcstate != 0x01)		//0x01 = ILDE after sending data
+	marcstate = 0xFF; //set unknown/dummy state value
+	while( marcstate != 0x01) //0x01 = ILDE after sending data
 	{
 		//read out state of cc1100 to be sure in IDLE and TX is finished
 		marcstate = (spi_read_register(MARCSTATE) & 0x1F);
@@ -783,10 +783,10 @@ uint8_t receive(void)
 {
 	uint8_t marcstate;
 
-	sidle();					//sets to idle first.
-	spi_write_strobe(SRX);		//writes receive strobe (receive mode)
+	sidle(); //sets to idle first.
+	spi_write_strobe(SRX); //writes receive strobe (receive mode)
 
-	marcstate = 0xFF;			//set unknown/dummy state value
+	marcstate = 0xFF; //set unknown/dummy state value
 	while (marcstate != 0x0D)	//0x0D = RX
 	{
 		//read out state of cc1100 to be sure in RX
@@ -820,7 +820,7 @@ void tx_payload_burst(uint8_t my_addr, uint8_t rx_addr, uint8_t *txbuffer, uint8
 //========================================================
 void rx_payload_burst(uint8_t rxbuffer[], uint8_t *pktlen)
 {
-	uint8_t bytes_in_RXFIFO = spi_read_register(RXBYTES);		//reads the number of bytes in RXFIFO
+	uint8_t bytes_in_RXFIFO = spi_read_register(RXBYTES); //reads the number of bytes in RXFIFO
 	ESP_LOGD(tag, "rx_payload_burst bytes_in_RXFIFO=0x%02x", bytes_in_RXFIFO);
 
 	rxbuffer[0] = 0;
@@ -828,7 +828,7 @@ void rx_payload_burst(uint8_t rxbuffer[], uint8_t *pktlen)
 	if ((bytes_in_RXFIFO & 0x7F) && !(bytes_in_RXFIFO & 0x80)) {
 		*pktlen = spi_read_register(RXFIFO_SINGLE_BYTE); //received pktlen +1 for complete TX buffer
 		rxbuffer[0] = *pktlen;
-		for (uint8_t i = 1;i < *pktlen + 3;i++) {					//+3 because of i=1 and RSSI and LQI
+		for (uint8_t i = 1;i < *pktlen + 3;i++) { //+3 because of i=1 and RSSI and LQI
 			rxbuffer[i] = spi_read_register(RXFIFO_SINGLE_BYTE);
 		}
 
@@ -854,7 +854,7 @@ void rx_payload_burst(uint8_t rxbuffer[], uint8_t *pktlen)
 //===========================================================================================================
 uint8_t send_packet(uint8_t my_addr, uint8_t rx_addr, uint8_t *txbuffer, uint8_t pktlen,	uint8_t tx_retries)
 {
-	uint8_t pktlen_ack;																					//default package length for ACK
+	uint8_t pktlen_ack;
 	uint8_t rxbuffer[FIFOBUFFER];
 	uint8_t tx_retries_count = 0;
 	uint32_t ackWaitCounter = 0;
@@ -862,26 +862,26 @@ uint8_t send_packet(uint8_t my_addr, uint8_t rx_addr, uint8_t *txbuffer, uint8_t
 	// === Send package with retries ===
 	do
 	{
-		tx_payload_burst(my_addr, rx_addr, txbuffer, pktlen);		//loads the data in cc1100 buffer
+		tx_payload_burst(my_addr, rx_addr, txbuffer, pktlen); //loads the data in cc1100 buffer
 		//send data over air
 		if (transmit() == 0) {
 			ESP_LOGE(tag, "TX Underflow (%d)", tx_retries_count);
-			receive();																					//receive mode
+			receive(); //receive mode
 			return 0;
 		}
-		receive();																							//receive mode
+		receive(); //receive mode
 
 		if (rx_addr == BROADCAST_ADDRESS) {
 			ESP_LOGI(tag, "SEND to BROADCAST_ADDRESS OK.");
-			return 1;																						//successfully sent to BROADCAST_ADDRESS, no ack expected
+			return 1; //successfully sent to BROADCAST_ADDRESS, no ack expected
 		}
 
 		// Wait for an acknowledge
 		while (ackWaitCounter < (ACK_TIMEOUT*1000))
 		{
-			if (packet_available() == 1)												//if RF package received check package acknowledge
+			if (packet_available() == 1) //if RF package received check package acknowledge
 			{
-				uint8_t from_sender = rx_addr;									//the original message sender address
+				uint8_t from_sender = rx_addr; //the original message sender address
 				rx_fifo_erase(rxbuffer);
 				//read packet into buffer
 				rx_payload_burst(rxbuffer, &pktlen_ack);
@@ -891,36 +891,36 @@ uint8_t send_packet(uint8_t my_addr, uint8_t rx_addr, uint8_t *txbuffer, uint8_t
 					break;
 				}
 				ESP_LOGD(tag, "SEND OK after %d retries.", tx_retries_count);
-				return 1;																			 //package successfully sent
+				return 1; //package successfully sent
 			}
 			else {
-				ackWaitCounter += 10;														//increment ACK wait counter
-				delayMicroseconds(10);													//delay to give receiver time
+				ackWaitCounter += 10; //increment ACK wait counter
+				delayMicroseconds(10); //delay to give receiver time
 			}
 		} // end while
 
-		ackWaitCounter = 0;																			//resets the ACK_Timeout
-		tx_retries_count++;																			//increase tx retry counter
+		ackWaitCounter = 0; //resets the ACK_Timeout
+		tx_retries_count++; //increase tx retry counter
 		if (tx_retries_count < tx_retries) delay(100);
 
-	} while (tx_retries_count < tx_retries);										//while count of retries is reaches
+	} while (tx_retries_count < tx_retries); //while count of retries is reaches
 
 	ESP_LOGE(tag, "SEND FAILED, too many retries (%d)", tx_retries);
-	return 0;																										//send failed. too many retries
+	return 0; //send failed. too many retries
 }
 
 // Send Acknowledge
 //=====================================================
 void send_acknowledge(uint8_t my_addr, uint8_t tx_addr)
 {
-	uint8_t pktlen = 0x06;																			//complete Pktlen for ACK packet
-	uint8_t tx_buffer[0x06];																		//tx buffer array init
+	uint8_t pktlen = 0x06; //complete Pktlen for ACK packet
+	uint8_t tx_buffer[0x06]; //tx buffer array init
 
 	tx_buffer[3] = 'A'; tx_buffer[4] = 'c'; tx_buffer[5] = 'k'; //fill buffer with ACK Payload
 
-	tx_payload_burst(my_addr, tx_addr, tx_buffer, pktlen);			//load payload to CC1100
-	transmit();																									//send package over the air
-	receive();																									//set CC1100 in receive mode
+	tx_payload_burst(my_addr, tx_addr, tx_buffer, pktlen); //load payload to CC1100
+	transmit(); //send package over the air
+	receive(); //set CC1100 in receive mode
 
 	ESP_LOGD(tag, "ACK sent.");
 }
@@ -929,8 +929,8 @@ void send_acknowledge(uint8_t my_addr, uint8_t tx_addr)
 //========================
 uint8_t packet_available()
 {
-	if (gpio_get_level(CONFIG_GDO2_GPIO) == 1) {				//if RF package received
-		if (spi_read_register(IOCFG2) == 0x06)		//if sync word detect mode is used
+	if (gpio_get_level(CONFIG_GDO2_GPIO) == 1) { //if RF package received
+		if (spi_read_register(IOCFG2) == 0x06) //if sync word detect mode is used
 		{
 			while (gpio_get_level(CONFIG_GDO2_GPIO) == 1) ;
 		}
@@ -945,15 +945,15 @@ uint8_t packet_available()
 //=========================================================================================
 uint8_t get_payload(uint8_t rxbuffer[], uint8_t *pktlen, uint8_t *my_addr, uint8_t *sender)
 {
-	rx_fifo_erase(rxbuffer);							//delete rx_fifo buffer
-	rx_payload_burst(rxbuffer, pktlen);		//read package in buffer
+	rx_fifo_erase(rxbuffer); //delete rx_fifo buffer
+	rx_payload_burst(rxbuffer, pktlen); //read package in buffer
 
-	if (*pktlen == 0x00) {								//packet length must be > 0
+	if (*pktlen == 0x00) { //packet length must be > 0
 		ESP_LOGE(tag, "bad packet!");
 		return 9;
 	}
 
-	*my_addr = rxbuffer[1];								//set receiver address to my_addr
+	*my_addr = rxbuffer[1]; //set receiver address to my_addr
 	*sender = rxbuffer[2];
 
 	if (check_acknowledge(rxbuffer, *pktlen, *sender, *my_addr) == 1) {
@@ -963,21 +963,21 @@ uint8_t get_payload(uint8_t rxbuffer[], uint8_t *pktlen, uint8_t *my_addr, uint8
 	else {
 		//real data, and sent acknowledge
 		last_rssi_dbm = rssi_convert(rxbuffer[*pktlen + 1]);//converts receiver strength to dBm
-		last_lqi = lqi_convert(rxbuffer[*pktlen + 2]);		//get rf quality indicator
-		last_crc = check_crc(rxbuffer[*pktlen + 2]);		//get packet CRC
+		last_lqi = lqi_convert(rxbuffer[*pktlen + 2]); //get rf quality indicator
+		last_crc = check_crc(rxbuffer[*pktlen + 2]); //get packet CRC
 
-		if (rxbuffer[1] == BROADCAST_ADDRESS)			//if my receiver address is BROADCAST_ADDRESS
+		if (rxbuffer[1] == BROADCAST_ADDRESS) //if my receiver address is BROADCAST_ADDRESS
 		{
 			ESP_LOGW(tag, "BROADCAST message");
 		}
 		ESP_LOGD(tag, "RSSI: %d  LQI: %02x	CRC: %s", last_rssi_dbm, last_lqi, ((last_crc) ? "OK" : "BAD"));
 
-		*my_addr = rxbuffer[1];								//set receiver address to my_addr
-		*sender = rxbuffer[2];								//set from_sender address
+		*my_addr = rxbuffer[1]; //set receiver address to my_addr
+		*sender = rxbuffer[2]; //set from_sender address
 
-		if (*my_addr != BROADCAST_ADDRESS)					//send only ack if no BROADCAST_ADDRESS
+		if (*my_addr != BROADCAST_ADDRESS) //send only ack if no BROADCAST_ADDRESS
 		{
-			send_acknowledge(*my_addr, *sender);			//sending acknowledge to sender!
+			send_acknowledge(*my_addr, *sender); //sending acknowledge to sender!
 		}
 		return 1;
 	}
@@ -1181,14 +1181,14 @@ void set_output_power_level(int8_t dBm)
 {
 	uint8_t pa = 0xC0;
 
-	if			(dBm <= -30) pa = 0x00;
+	if (dBm <= -30) pa = 0x00;
 	else if (dBm <= -20) pa = 0x01;
 	else if (dBm <= -15) pa = 0x02;
 	else if (dBm <= -10) pa = 0x03;
-	else if (dBm <= 0)	 pa = 0x04;
-	else if (dBm <= 5)	 pa = 0x05;
-	else if (dBm <= 7)	 pa = 0x06;
-	else if (dBm <= 10)  pa = 0x07;
+	else if (dBm <= 0) pa = 0x04;
+	else if (dBm <= 5) pa = 0x05;
+	else if (dBm <= 7) pa = 0x06;
+	else if (dBm <= 10) pa = 0x07;
 
 	spi_write_register(FREND0,pa);
 }

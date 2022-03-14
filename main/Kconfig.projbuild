@@ -15,12 +15,20 @@ menu "Application Configuration"
 				Execute Transmitter.
 	endchoice
 
-  config RECEIVER_ADDRESS
+	config RECEIVER_ADDRESS
 		depends on TRANSMITTER
-    int "Receiver address"
-    range 0 254
-    default 0
-    help
-      Both receiver and transmitter must have the same address.
+		int "Receiver address"
+		range 0 254
+		default 0
+		help
+			Both receiver and transmitter must have the same address.
+
+	config TRANSFER_RETRY
+		depends on TRANSMITTER
+		int "Number of transmission retries"
+		range 0 10
+		default 0
+		help
+			Number of transmission retries.
 
 endmenu 
