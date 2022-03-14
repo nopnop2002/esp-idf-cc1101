@@ -42,7 +42,9 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 - Receiver Address   
 0 is a broadcast transmission.   
-Broadcasts do not wait for a receive response.   
+Broadcast do not wait for a receive response.   
+Non-zero is unicast transmission.   
+Unicast wait for a receive response.   
 
 # Wirering
 
