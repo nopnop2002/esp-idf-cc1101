@@ -1060,25 +1060,25 @@ void set_mode(uint8_t mode)
 	switch (mode)
 	{
 		case 0x01:
-			Cfg_reg = cc1100_GFSK_1_2_kb;		//sets up settings for GFSK 1.2 kbit mode/speed
+			Cfg_reg = cc1100_GFSK_1_2_kb;	//sets up settings for GFSK 1.2 kbit mode/speed
 			break;
 		case 0x02:
-			Cfg_reg = cc1100_GFSK_38_4_kb;	//sets up settings for GFSK 38.4 kbit mode/speed
+			Cfg_reg = cc1100_GFSK_38_4_kb; //sets up settings for GFSK 38.4 kbit mode/speed
 			break;
 		case 0x03:
-			Cfg_reg = cc1100_GFSK_100_kb;		//sets up settings for GFSK 100 kbit mode/speed
+			Cfg_reg = cc1100_GFSK_100_kb;	//sets up settings for GFSK 100 kbit mode/speed
 			break;
 		case 0x04:
-			Cfg_reg = cc1100_MSK_250_kb;		//sets up settings for MSK 250 kbit mode/speed
+			Cfg_reg = cc1100_MSK_250_kb; //sets up settings for MSK 250 kbit mode/speed
 			break;
 		case 0x05:
-			Cfg_reg = cc1100_MSK_500_kb;		//sets up settings for MSK 500 kbit mode/speed
+			Cfg_reg = cc1100_MSK_500_kb; //sets up settings for MSK 500 kbit mode/speed
 			break;
 		case 0x06:
-			Cfg_reg = cc1100_OOK_4_8_kb;		//sets up settings for OOK 4.8 kbit mode/speed
+			Cfg_reg = cc1100_OOK_4_8_kb; //sets up settings for OOK 4.8 kbit mode/speed
 			break;
 		default:
-			Cfg_reg = cc1100_GFSK_38_4_kb;	//sets up settings for GFSK 38,4 kbit mode/speed
+			Cfg_reg = cc1100_GFSK_38_4_kb; //sets up settings for GFSK 38,4 kbit mode/speed
 			mode = 0x02;
 			break;
 	}
@@ -1094,45 +1094,45 @@ void set_ISM(uint8_t ism_freq)
 	uint8_t freq2, freq1, freq0;
 	uint8_t *Patable;
 
-	switch (ism_freq)															 //loads the RF freq which is defined in cc1100_freq_select
+	switch (ism_freq) //loads the RF freq which is defined in cc1100_freq_select
 	{
-		case 0x01:																 //315MHz
+		case 0x01: //315MHz
 			freq2=0x0C;
 			freq1=0x1D;
 			freq0=0x89;
 			Patable = patable_power_315;
 			break;
-		case 0x02:																 //433.92MHz
+		case 0x02: //433.92MHz
 			freq2=0x10;
 			freq1=0xB0;
 			freq0=0x71;
 			Patable = patable_power_433;
 			break;
-		case 0x03:																 //868.3MHz
+		case 0x03: //868.3MHz
 			freq2=0x21;
 			freq1=0x65;
 			freq0=0x6A;
 			Patable = patable_power_868;
 			break;
-		case 0x04:																 //915MHz
+		case 0x04: //915MHz
 			freq2=0x23;
 			freq1=0x31;
 			freq0=0x3B;
 			Patable = patable_power_915;
 			break;
 		/*
-		case 0x05:																 //2430MHz
+		case 0x05: //2430MHz
 			freq2=0x5D;
 			freq1=0x76;
 			freq0=0x27;
 			Patable = patable_power_2430;
 			break;
 		*/
-		default:																	 //default is 868.3MHz
+		default: //default is 868.3MHz
 			freq2=0x21;
 			freq1=0x65;
 			freq0=0x6A;
-			Patable = patable_power_868;	 //sets up output power ramp register
+			Patable = patable_power_868;
 			ism_freq = 0x03;
 			break;
 	}
@@ -1153,9 +1153,9 @@ void set_freq(uint32_t freq)
 	// this is split into 3 bytes that are written to 3 different registers on the CC1101
 	uint32_t reg_freq = freq / (CRYSTAL_FREQUENCY>>16);
 
-	uint8_t freq2 = (reg_freq>>16) & 0xFF;	 // high byte, bits 7..6 are always 0 for this register
-	uint8_t freq1 = (reg_freq>>8) & 0xFF;		 // middle byte
-	uint8_t freq0 = reg_freq & 0xFF;				 // low byte
+	uint8_t freq2 = (reg_freq>>16) & 0xFF; // high byte, bits 7..6 are always 0 for this register
+	uint8_t freq1 = (reg_freq>>8) & 0xFF; // middle byte
+	uint8_t freq0 = reg_freq & 0xFF; // low byte
 
 	ESP_LOGW(tag, "FREQUENCY SET to %u [%02x %02x %02x]", freq, freq2, freq1, freq0);
 
@@ -1304,9 +1304,9 @@ float get_temp(uint16_t wait)
 	int adc_result = 0.0;
 	float temperature = 0.0;
 
-	sidle();						// set CC1100 into IDLE
+	sidle(); // set CC1100 into IDLE
 	spi_write_register(PTEST,0xBF);	// enable temperature sensor
-	delay(50);						// wait a bit
+	delay(50); // wait a bit
 
 	for (uint8_t i=0;i<num_samples;i++) { // sample analog temperature value
 		adc_result += adc1_get_voltage(adc_channel);

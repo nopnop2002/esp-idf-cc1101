@@ -40,6 +40,9 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 ![config-app-1](https://user-images.githubusercontent.com/6020549/158111726-a0b57086-809d-4fc6-a9bf-225f8871a3df.jpg)
 ![config-app-2](https://user-images.githubusercontent.com/6020549/158111729-a9bbeee7-8242-4ee5-8ac9-fc33ab5b2fd7.jpg)
 
+- Receiver Address   
+0 is a broadcast transmission.   
+Broadcasts do not wait for a receive response.   
 
 # Wirering
 

@@ -18,9 +18,9 @@ menu "Application Configuration"
   config RECEIVER_ADDRESS
 		depends on TRANSMITTER
     int "Receiver address"
-    range 1 254
-    default 3
+    range 0 254
+    default 0
     help
-      Both receiver and transmitter must have the same address
+      Both receiver and transmitter must have the same address.
 
 endmenu 
