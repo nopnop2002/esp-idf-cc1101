@@ -1,0 +1,154 @@
+menu "CC1101 Example configuration"
+
+	config GPIO_RANGE_MAX
+		int
+		default 33 if IDF_TARGET_ESP32
+		default 46 if IDF_TARGET_ESP32S2
+		default 19 if IDF_TARGET_ESP32C3
+		default 48 if IDF_TARGET_ESP32S3
+
+	config CSN_GPIO
+		int "CC1101 CSN GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 5  if IDF_TARGET_ESP32
+		default 34 if IDF_TARGET_ESP32S2
+		default 9  if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the CSN SPI signal.
+
+	config MISO_GPIO
+		int "CC1101 MISO GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 19 if IDF_TARGET_ESP32
+		default 33 if IDF_TARGET_ESP32S2
+		default 18 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the MISO SPI signal.
+
+	config MOSI_GPIO
+		int "CC1101 MOSI GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 23 if IDF_TARGET_ESP32
+		default 35 if IDF_TARGET_ESP32S2
+		default 19 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the MOSI SPI signal.
+
+	config SCK_GPIO
+		int "CC1101 SCK GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 18 if IDF_TARGET_ESP32
+		default 36 if IDF_TARGET_ESP32S2
+		default 10 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the SCK SPI signal.
+
+	config GDO2_GPIO
+		int "CC1101 GDO2 GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 15 if IDF_TARGET_ESP32
+		default 37 if IDF_TARGET_ESP32S2
+		default 8  if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the GDO2 signal.
+
+	config CC1101_ADDRESS
+		int "CC1101 my address"
+		range 1 254
+		default 3
+		help
+			Both receiver and transmitter must have the same address
+
+	config CC1101_CHANNEL
+		int "CC1101 channel"
+		range 1 254
+		default 1
+		help
+			Both receiver and transmitter must operate on the same channel
+
+	choice
+		prompt "CC1101 Frequency"
+		default CC1101_FREQ2
+		help
+				Select ISM band frequency
+
+		config CC1101_FREQ1
+				bool "315 MHz" 
+		config CC1101_FREQ2
+				bool "433 MHz" 
+		config CC1101_FREQ3
+				bool "868 MHz" 
+		config CC1101_FREQ4
+				bool "915 MHz" 
+	endchoice
+
+	config CC1101_FREQ
+		int
+		default 1 if CC1101_FREQ1
+		default 2 if CC1101_FREQ2
+		default 3 if CC1101_FREQ3
+		default 4 if CC1101_FREQ4
+
+	choice
+		prompt "CC1101 Modulation mode"
+		default CC1101_MODE2
+		help
+			Select Modulation mode
+
+		config CC1101_MODE1
+				bool "GFSK 1.2 kbit mode/speed" 
+		config CC1101_MODE2
+				bool "GFSK 38.4 kbit mode/speed" 
+		config CC1101_MODE3
+				bool "GFSK 100 kbit mode/speed" 
+		config CC1101_MODE4
+				bool "MSK 250 kbit mode/speed" 
+		config CC1101_MODE5
+				bool "MSK 500 kbit mode/speed" 
+		config CC1101_MODE6
+				bool "OOK 4.8 kbit mode/speed" 
+	endchoice
+
+	config CC1101_MODE
+		int
+		default 1 if CC1101_MODE1
+		default 2 if CC1101_MODE2
+		default 3 if CC1101_MODE3
+		default 4 if CC1101_MODE4
+		default 5 if CC1101_MODE5
+		default 6 if CC1101_MODE6
+
+	choice
+		prompt "CC1101 TX Power level"
+		config CC1101_POWER_130
+			bool "-30 dB"
+		config CC1101_POWER_120
+			bool "-20 dB"
+		config CC1101_POWER_115
+			bool "-15 dB"
+		config CC1101_POWER_110
+			bool "-10 dB"
+		config CC1101_POWER_0
+			bool "0 dB"
+		config CC1101_POWER_5
+			bool "5 dB"
+		config CC1101_POWER_7
+			bool "7 dB"
+		config CC1101_POWER_10
+			bool "10 dB"
+		help
+			Select Tx Power level
+	endchoice
+
+	config CC1101_POWER_LEVEL
+		int
+		default -30 if CC1101_POWER_130
+		default -20 if CC1101_POWER_120
+		default -15 if CC1101_POWER_115
+		default -10 if CC1101_POWER_110
+		default 0 if CC1101_POWER_0
+		default 5 if CC1101_POWER_5
+		default 7 if CC1101_POWER_7
+		default 10 if CC1101_POWER_10
+
+endmenu
