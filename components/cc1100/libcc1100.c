@@ -428,9 +428,8 @@ static uint8_t spi_begin(void)
 		.sclk_io_num = CONFIG_SCK_GPIO, // set SPI CLK pin
 		.mosi_io_num = CONFIG_MOSI_GPIO, // set SPI MOSI pin
 		.miso_io_num = CONFIG_MISO_GPIO, // set SPI MISO pin
-		.quadwp_io_num=-1,
-		.quadhd_io_num=-1,
-		.max_transfer_sz = 1024 // max transfer size is 1024 bytes
+		.quadwp_io_num = -1,
+		.quadhd_io_num = -1
 	};
 
 	ret = spi_bus_initialize( LCD_HOST, &buscfg, SPI_DMA_CH_AUTO );
@@ -443,9 +442,11 @@ static uint8_t spi_begin(void)
 	// =================================================================
 	spi_device_interface_config_t devcfg = {
 		.clock_speed_hz=5000000, // SPI clock is 5 MHz!
+		//.clock_speed_hz=1000000, // SPI clock is 1 MHz!
 		.queue_size = 7,
-		.mode=0, // SPI mode 0
-		.spics_io_num=-1 // we will use manual CS control
+		.mode = 0, // SPI mode 0
+		.spics_io_num = -1, // we will use manual CS control
+		.flags = SPI_DEVICE_NO_DUMMY
 	};
 
 	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
@@ -787,7 +788,7 @@ uint8_t receive(void)
 	spi_write_strobe(SRX); //writes receive strobe (receive mode)
 
 	marcstate = 0xFF; //set unknown/dummy state value
-	while (marcstate != 0x0D)	//0x0D = RX
+	while (marcstate != 0x0D) //0x0D = RX
 	{
 		//read out state of cc1100 to be sure in RX
 		marcstate = (spi_read_register(MARCSTATE) & 0x1F);
