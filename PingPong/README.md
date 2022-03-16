@@ -5,9 +5,8 @@ Primary <----- Secondary
 ```
 
 # Configuration   
-
-![config-basic-1](https://user-images.githubusercontent.com/6020549/158706278-a9e4515c-d983-4111-b094-6c1f81c91d9a.jpg)
-![config-basic-2](https://user-images.githubusercontent.com/6020549/158706282-9f3fb710-f3c6-4c85-960d-c303acc960b3.jpg)
+![config-pingpong-1](https://user-images.githubusercontent.com/6020549/158708163-9bacbe80-bb37-4705-a3f7-ef4c1d098f97.jpg)
+![config-pingpong-2](https://user-images.githubusercontent.com/6020549/158708129-7037e259-105d-47ee-b49f-e30eb4f7aa47.jpg)
 
 # Using as Primary   
 Sending and receiving.   
