@@ -1,0 +1,96 @@
+menu "CC1101 Configuration"
+
+	config GPIO_RANGE_MAX
+		int
+		default 33 if IDF_TARGET_ESP32
+		default 46 if IDF_TARGET_ESP32S2
+		default 19 if IDF_TARGET_ESP32C3
+		default 48 if IDF_TARGET_ESP32S3
+
+	config CSN_GPIO
+		int "CC1101 CSN GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 5  if IDF_TARGET_ESP32
+		default 34 if IDF_TARGET_ESP32S2
+		default 9  if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the CSN SPI signal.
+
+	config MISO_GPIO
+		int "CC1101 MISO GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 19 if IDF_TARGET_ESP32
+		default 33 if IDF_TARGET_ESP32S2
+		default 18 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the MISO SPI signal.
+
+	config MOSI_GPIO
+		int "CC1101 MOSI GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 23 if IDF_TARGET_ESP32
+		default 35 if IDF_TARGET_ESP32S2
+		default 19 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the MOSI SPI signal.
+
+	config SCK_GPIO
+		int "CC1101 SCK GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 18 if IDF_TARGET_ESP32
+		default 36 if IDF_TARGET_ESP32S2
+		default 10 if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the SCK SPI signal.
+
+	config GDO0_GPIO
+		int "CC1101 GDO0 GPIO"
+		range 0 GPIO_RANGE_MAX
+		default 15 if IDF_TARGET_ESP32
+		default 37 if IDF_TARGET_ESP32S2
+		default 8  if IDF_TARGET_ESP32C3
+		help
+			Pin Number to be used as the GDO0 signal.
+
+	config CC1101_CHANNEL
+		int "CC1101 channel"
+		range 0 255
+		default 0
+		help
+			Both receiver and transmitter must operate on the same channel
+
+	choice
+		prompt "CC1101 Frequency"
+		default CC1101_FREQ_433
+		help
+				Select ISM band frequency
+
+		config CC1101_FREQ_433
+				bool "433 MHz" 
+		config CC1101_FREQ_868
+				bool "868 MHz" 
+		config CC1101_FREQ_915
+				bool "915 MHz" 
+		config CC1101_FREQ_918
+				bool "918 MHz" 
+	endchoice
+
+	choice
+		prompt "CC1101 Modulation speed"
+		default CC1101_SPEED_38400
+		help
+			Select Modulation speed.
+
+		config CC1101_SPEED_4800
+				bool "4.8 kbit/sec" 
+		config CC1101_SPEED_38400
+				bool "38.4 kbit/sec" 
+	endchoice
+
+	config CC1101_POWER_HIGH
+		bool "Enable output high power"
+		default y
+		help
+			Enable output high power.
+
+endmenu

@@ -1,0 +1,18 @@
+menu "Application Configuration"
+
+	choice DIRECTION
+		prompt "Communication direction"
+		default Receiver
+		help
+			Select Communication direction.
+		config RECEIVER
+			bool "Receiver"
+			help
+				Execute Receiver.
+		config TRANSMITTER
+			bool "Transmitter"
+			help
+				Execute Transmitter.
+	endchoice
+
+endmenu 

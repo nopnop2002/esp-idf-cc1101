@@ -1,0 +1,18 @@
+menu "Application Configuration"
+
+	choice POLARITY
+		prompt "Communication Polarity"
+		default Primary
+		help
+			Select Communication Polarity.
+		config PRIMARY
+			bool "Primary"
+			help
+				As Echo Client.
+		config SECONDARY
+			bool "Secondary"
+			help
+				As Echo Server.
+	endchoice
+
+endmenu 

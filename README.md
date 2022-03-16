@@ -1,15 +1,9 @@
 # esp-idf-cc1101
 CC1100 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
 
-I based on [this](https://github.com/loboris/ESP32_CC1101).
+I ported from [this](https://github.com/veonik/arduino-cc1101).
 
 ![CC1101](https://user-images.githubusercontent.com/6020549/158111751-76c97267-0fb9-4f43-946e-2640fa5f3733.JPG)
-
-
-# Changes from the original   
-- Replace custom SPI driver with standard SPI driver.   
-- Added support for ESP32S2 and ESP32C3.   
-- Rewrite the sample code.   
 
 # Software requirements
 esp-idf v4.4 or later.   
@@ -32,19 +26,8 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 
 # Configuration for Transceiver   
-![config-cc1101-1](https://user-images.githubusercontent.com/6020549/158111642-146a2ed5-4463-4519-948b-db2f0391f8a4.jpg)
-![config-cc1101-2](https://user-images.githubusercontent.com/6020549/158111647-d0276f26-5251-47b6-a97c-55af2e6ee7a9.jpg)
-
-
-# Configuration for Application   
-![config-app-1](https://user-images.githubusercontent.com/6020549/158111726-a0b57086-809d-4fc6-a9bf-225f8871a3df.jpg)
-![config-app-2](https://user-images.githubusercontent.com/6020549/158138652-dce77df3-fd40-4cb6-a32b-c65e44d84ea9.jpg)
-
-- Receiver Address   
-0 is a broadcast transmission.   
-Broadcast do not wait for a receive response.   
-Non-zero is unicast transmission.   
-Unicast wait for a receive response.   
+![config-cc1101-1](https://user-images.githubusercontent.com/6020549/158705737-c52a7c83-89f9-483f-aa4a-fe4e3d433001.jpg)
+![config-cc1101-2](https://user-images.githubusercontent.com/6020549/158705741-3fa58c21-c0f5-4a34-8ca4-2dad58103a45.jpg)
 
 
 # Wirering
@@ -55,14 +38,10 @@ Unicast wait for a receive response.
 |MISO|--|GPIO19|GPIO33|GPIO18|
 |MOSI|--|GPIO23|GPIO35|GPIO19|
 |SCK|--|GPIO18|GPIO36|GPIO10|
-|DGO2|--|GPIO15|GPIO37|GPIO8|
-|DGO0|--|N/C|N/C|N/C|
+|DGO0|--|GPIO15|GPIO37|GPIO8|
+|DGO2|--|N/C|N/C|N/C|
 |GND|--|GND|GND|GND|
 |VCC|--|3.3V|3.3V|3.3V|
 
 __You can change it to any pin using menuconfig.__   
 
-
-# Screen Shot   
-![screen-tx](https://user-images.githubusercontent.com/6020549/158112359-e1424239-38e0-4642-8259-bbd653639b3c.jpg)
-![screen-rx](https://user-images.githubusercontent.com/6020549/158112361-3ae2c4e7-4ff0-4617-bca6-9ae51de67625.jpg)
