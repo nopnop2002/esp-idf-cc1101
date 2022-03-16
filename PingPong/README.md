@@ -10,11 +10,11 @@ Primary <----- Secondary
 ![config-basic-2](https://user-images.githubusercontent.com/6020549/158706282-9f3fb710-f3c6-4c85-960d-c303acc960b3.jpg)
 
 # Using as Primary   
-Sending and receiving.
+Sending and receiving.   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/arduino/secondary).   
 
 # Using as Secondary   
-Send back the received data.
+Send back the received data.   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/arduino/primary).   
 
 
