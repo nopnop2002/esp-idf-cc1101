@@ -13,7 +13,7 @@ This is because this version supports ESP32-C3.
 
 ```Shell
 git clone https://github.com/nopnop2002/esp-idf-cc1101
-cd esp-idf-cc1101
+cd esp-idf-cc1101/basic
 idf.py set-target {esp32/esp32s2/esp32c3}
 idf.py menuconfig
 idf.py flash
