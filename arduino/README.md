@@ -3,7 +3,7 @@ I use [this](https://github.com/veonik/arduino-cc1101).
 
 # Wirering
 
-|CC1101||UNO|MEGA||
+|CC1101||ATmega328|ATmega2560||
 |:-:|:-:|:-:|:-:|:-:|
 |CSN|--|D10|D10|*1|
 |MISO|--|D12|D12||
