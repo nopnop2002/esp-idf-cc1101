@@ -17,4 +17,5 @@ I use [this](https://github.com/veonik/arduino-cc1101).
 (*1)    
 CC1101 is not 5V tolerant.   
 You need level shift from 5V to 3.3V.   
+I used [this](https://www.ti.com/lit/ds/symlink/txs0108e.pdf?ts=1647593549503) for a level shift.   
 
