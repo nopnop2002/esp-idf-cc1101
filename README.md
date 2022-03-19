@@ -1,5 +1,5 @@
 # esp-idf-cc1101
-CC1100 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
+CC1101 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
 
 I ported from [this](https://github.com/veonik/arduino-cc1101).
 
