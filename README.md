@@ -58,4 +58,4 @@ __You can change it to any pin using menuconfig.__
 |Acknowledgement Payload|Yes|No|
 
 
-
+The nRF24L01 can tell whether the transmission was successful or unsuccessful on the transmitting side.   
