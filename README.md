@@ -56,7 +56,23 @@ __You can change it to any pin using menuconfig.__
 |FiFo for transmission|32Byte*3|64Byte*1|
 |CRC Length|8/16bits|16bits|
 |Acknowledgement Payload|Yes|No|
+|Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
 
+
+- GFSK
+ Gaussian shaped Frequency Shift Keying
+- 2-FSK
+ Binary Frequency Shift Keying
+- 4-FSK
+ Quaternary Frequency Shift Keying
+- GFSK
+ Gaussian shaped Frequency Shift Keying
+- ASK
+ Amplitude Shift Keying
+- OSK
+ On-Off Keying
+- MSI
+ Minimum Shift Keying
 
 nRF24L01 can tell whether the transmission was successful or unsuccessful on the transmitting side.   
 
