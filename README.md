@@ -59,3 +59,5 @@ __You can change it to any pin using menuconfig.__
 
 
 The nRF24L01 can tell whether the transmission was successful or unsuccessful on the transmitting side.   
+
+cc1101 cannot determine whether the transmission was successful or unsuccessful on the sending side.   
