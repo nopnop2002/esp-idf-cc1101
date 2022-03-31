@@ -45,3 +45,17 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 __You can change it to any pin using menuconfig.__   
 
+
+
+# Comparison of cc1101 and nRF24L01
+||cc1101|nRF24L01|
+|:-:|:-:|:-:|
+|Frequency|2.4GHz|315/433/868/915MHz|
+|PacketSize|32Byte|64Byte|
+|FiFo for reception|32Byye*3|64Byte*1|
+|FiFo for transmission|32Byye*3|64Byte*1|
+|CRC Length|8/16bits|16bits|
+|Acknowledgement Payload|Yes|No|
+
+
+
