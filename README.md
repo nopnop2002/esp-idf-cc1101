@@ -62,7 +62,6 @@ __You can change it to any pin using menuconfig.__
 - GFSK  : Gaussian shaped Frequency Shift Keying
 - 2-FSK : Binary Frequency Shift Keying
 - 4-FSK : Quaternary Frequency Shift Keying
-- GFSK  : Gaussian shaped Frequency Shift Keying
 - ASK   : Amplitude Shift Keying
 - OSK   : On-Off Keying
 - MSI   : Minimum Shift Keying
