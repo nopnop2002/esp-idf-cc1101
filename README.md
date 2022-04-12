@@ -3,7 +3,15 @@ CC1101 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
 
 I ported from [this](https://github.com/veonik/arduino-cc1101).
 
-![CC1101](https://user-images.githubusercontent.com/6020549/158111751-76c97267-0fb9-4f43-946e-2640fa5f3733.JPG)
+- 433MHz module(2.54mm pitch)
+![CC1101-433MHz-2 54mm](https://user-images.githubusercontent.com/6020549/162900437-b4b74e11-ff01-4890-b85e-491ab36d1247.JPG)
+
+- 433MHz module(1.27mm pitch)
+![CC1101-433MHz-1 27mm](https://user-images.githubusercontent.com/6020549/162900515-eece8362-8ae0-4c63-9ca4-2f639026fd79.JPG)
+
+- 868MHz module(2mm pitch)
+![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
+
 
 # Software requirements
 esp-idf v4.4 or later.   
