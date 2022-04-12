@@ -28,7 +28,8 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 # Configuration for Transceiver   
 ![config-cc1101-1](https://user-images.githubusercontent.com/6020549/158705737-c52a7c83-89f9-483f-aa4a-fe4e3d433001.jpg)
 ![config-cc1101-2](https://user-images.githubusercontent.com/6020549/158705741-3fa58c21-c0f5-4a34-8ca4-2dad58103a45.jpg)
-
+![config-cc1101-3](https://user-images.githubusercontent.com/6020549/162887858-daf51cef-f165-48ce-b5bd-cdb33faf3824.jpg)
+![config-cc1101-4](https://user-images.githubusercontent.com/6020549/162887865-28919f76-5401-4742-872a-7a16f6d269f7.jpg)
 
 # Wirering
 
