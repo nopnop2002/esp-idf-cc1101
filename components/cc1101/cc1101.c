@@ -396,20 +396,20 @@ void init(uint8_t freq, uint8_t mode)
 
 	//interrupt setting
 	gpio_config_t io_conf;
-  //interrupt of falling edge
-  io_conf.intr_type = GPIO_INTR_NEGEDGE; // GPIO interrupt type : falling edge
-  //bit mask of the pins
-  io_conf.pin_bit_mask = 1ULL<<CONFIG_GDO0_GPIO;
-  //set as input mode
-  io_conf.mode = GPIO_MODE_INPUT;
-  //enable pull-up mode
-  io_conf.pull_up_en = 1;
-  io_conf.pull_down_en = 0;
-  gpio_config(&io_conf);
-  //install gpio isr service
-  gpio_install_isr_service(0);
-  //hook isr handler for specific gpio pin
-  gpio_isr_handler_add(CONFIG_GDO0_GPIO, gpio_isr_handler, (void*) CONFIG_GDO0_GPIO);
+	//interrupt of falling edge
+	io_conf.intr_type = GPIO_INTR_NEGEDGE; // GPIO interrupt type : falling edge
+	//bit mask of the pins
+	io_conf.pin_bit_mask = 1ULL<<CONFIG_GDO0_GPIO;
+	//set as input mode
+	io_conf.mode = GPIO_MODE_INPUT;
+	//enable pull-up mode
+	io_conf.pull_up_en = 1;
+	io_conf.pull_down_en = 0;
+	gpio_config(&io_conf);
+	//install gpio isr service
+	gpio_install_isr_service(0);
+	//hook isr handler for specific gpio pin
+	gpio_isr_handler_add(CONFIG_GDO0_GPIO, gpio_isr_handler, (void*) CONFIG_GDO0_GPIO);
 
 	spi_bus_config_t buscfg = {
 		.sclk_io_num = CONFIG_SCK_GPIO, // set SPI CLK pin
@@ -531,7 +531,7 @@ void setCarrierFreq(byte freq)
 			break;
 	}
 	 
-	_carrierFreq = freq;  
+	_carrierFreq = freq;
 }
 
 /**
@@ -709,7 +709,7 @@ void setTxState(void)
  */
 void setTxPowerAmp(uint8_t paLevel)
 {
-  writeReg(CC1101_PATABLE, paLevel);
+	writeReg(CC1101_PATABLE, paLevel);
 }
 
 /**
