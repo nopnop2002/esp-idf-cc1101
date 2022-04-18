@@ -47,8 +47,8 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 |MISO|--|GPIO19|GPIO33|GPIO18|
 |MOSI|--|GPIO23|GPIO35|GPIO19|
 |SCK|--|GPIO18|GPIO36|GPIO10|
-|DGO0|--|GPIO15|GPIO37|GPIO8|
-|DGO2|--|N/C|N/C|N/C|
+|GDO0|--|GPIO15|GPIO37|GPIO8|
+|GDO2|--|N/C|N/C|N/C|
 |GND|--|GND|GND|GND|
 |VCC|--|3.3V|3.3V|3.3V|
 
