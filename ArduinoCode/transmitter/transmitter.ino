@@ -26,14 +26,28 @@ void setup() {
     radio.setChannel(0);
     radio.setTxPowerAmp(PA_LongDistance);
 
+    bool install = true;
     Serial.print(F("CC1101_PARTNUM "));
-    Serial.println(radio.readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER));
+    //Serial.println(radio.readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER));
+    byte partnum = radio.readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER);
+    Serial.println(partnum);
+    if (partnum != 0) install = false;
+    
     Serial.print(F("CC1101_VERSION "));
-    Serial.println(radio.readReg(CC1101_VERSION, CC1101_STATUS_REGISTER));
+    //Serial.println(radio.readReg(CC1101_VERSION, CC1101_STATUS_REGISTER));
+    byte version = radio.readReg(CC1101_VERSION, CC1101_STATUS_REGISTER);
+    Serial.println(version);
+    if (version != 20) install = false;
+
     Serial.print(F("CC1101_MARCSTATE "));
     Serial.println(radio.readReg(CC1101_MARCSTATE, CC1101_STATUS_REGISTER) & 0x1f);
 
-    Serial.println(F("CC1101 radio initialized."));
+    if (install) {
+      Serial.println(F("CC1101 radio initialized."));
+    } else {
+      Serial.println(F("CC1101 radio not initialized."));
+      while(1);
+    }
 }
 
 void loop() {
@@ -41,9 +55,9 @@ void loop() {
     if (now > lastSend + sendDelay) {
 
         lastSend = now;
-        //const char *message = "hello world";
+        //const char *message = "Hello World";
         char message[64];
-        sprintf(message, "hello world %ld", now);
+        sprintf(message, "Hello World %ld", now);
         CCPACKET packet;
         // We also need to include the 0 byte at the end of the string
         packet.length = strlen(message)  + 1;

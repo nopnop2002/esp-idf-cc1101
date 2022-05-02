@@ -38,16 +38,16 @@ void rx_task(void *pvParameter)
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
-				ESP_LOGI(pcTaskGetTaskName(0), "Received packet...");
+				ESP_LOGI(pcTaskGetName(0), "Received packet...");
 				if (!packet.crc_ok) {
-					ESP_LOGE(pcTaskGetTaskName(0), "crc not ok");
+					ESP_LOGE(pcTaskGetName(0), "crc not ok");
 				}
-				ESP_LOGI(pcTaskGetTaskName(0),"lqi: %d", lqi(packet.lqi));
-				ESP_LOGI(pcTaskGetTaskName(0),"rssi: %ddBm", rssi(packet.rssi));
+				ESP_LOGI(pcTaskGetName(0),"lqi: %d", lqi(packet.lqi));
+				ESP_LOGI(pcTaskGetName(0),"rssi: %ddBm", rssi(packet.rssi));
 
 				if (packet.crc_ok && packet.length > 0) {
-					ESP_LOGI(pcTaskGetTaskName(0),"len: %d", packet.length);
-					ESP_LOGI(pcTaskGetTaskName(0),"data: %s", (const char *) packet.data);
+					ESP_LOGI(pcTaskGetName(0),"len: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
 				}
 			} // end receiveData
 		} // end packet_available
@@ -65,13 +65,13 @@ void tx_task(void *pvParameter)
 	char message[64];
 	CCPACKET packet;
 	while(1) {
-		sprintf(message, "hello world %d", xTaskGetTickCount());
+		sprintf(message, "Hello World %d", xTaskGetTickCount());
 		// We also need to include the 0 byte at the end of the string
 		packet.length = strlen(message)  + 1;
-		ESP_LOGD(pcTaskGetTaskName(0), "packet.length=%d", packet.length);
+		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
 		strncpy((char *) packet.data, message, packet.length);
 		sendData(packet);
-		vTaskDelay(1000/portTICK_RATE_MS);
+		vTaskDelay(1000/portTICK_PERIOD_MS);
 	} // end while
 
 	// never reach here
@@ -128,10 +128,10 @@ void app_main()
 	}
 
 #if CONFIG_TRANSMITTER
-	xTaskCreate(&tx_task, "tx_task", 1024*2, NULL, 1, NULL);
+	xTaskCreate(&tx_task, "tx_task", 1024*3, NULL, 1, NULL);
 #endif
 #if CONFIG_RECEIVER
-	xTaskCreate(&rx_task, "rx_task", 1024*2, NULL, 1, NULL);
+	xTaskCreate(&rx_task, "rx_task", 1024*3, NULL, 1, NULL);
 #endif
 }
 

@@ -41,6 +41,8 @@
 #define HOST_ID HSPI_HOST
 #elif CONFIG_IDF_TARGET_ESP32S2
 #define HOST_ID SPI2_HOST
+#elif CONFIG_IDF_TARGET_ESP32S3
+#define HOST_ID SPI2_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32C3
 #define HOST_ID SPI2_HOST
 #endif
@@ -74,6 +76,7 @@ spi_device_handle_t handle;
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
+#define delayMicroseconds(us) esp_rom_delay_us(us)
 #define LOW  0
 #define HIGH 1
 #define byte uint8_t
@@ -122,36 +125,6 @@ uint8_t spi_transfer(uint8_t address) {
 	return datain[0];
 }
 
-static portMUX_TYPE microsMux = portMUX_INITIALIZER_UNLOCKED;
-
-unsigned long micros()
-{
-	static unsigned long lccount = 0;
-	static unsigned long overflow = 0;
-	unsigned long ccount;
-	portENTER_CRITICAL_ISR(&microsMux);
-	__asm__ __volatile__ ( "rsr	%0, ccount" : "=a" (ccount) );
-	if(ccount < lccount){
-		overflow += UINT32_MAX / CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ;
-	}
-	lccount = ccount;
-	portEXIT_CRITICAL_ISR(&microsMux);
-	return overflow + (ccount / CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ);
-}
-
-void delayMicroseconds(uint32_t us)
-{
-	portDISABLE_INTERRUPTS();
-	uint32_t m = micros();
-	if (us) {
-		uint32_t e = (m + us);
-		if (m > e) { //overflow
-			while (micros() > e) ;
-		}
-		while(micros() < e) ;
-	}
-	portENABLE_INTERRUPTS();
-}
 
 /**
  * wakeUp
@@ -609,12 +582,15 @@ bool sendData(CCPACKET packet)
 	}
 
 	// Wait for the sync word to be transmitted
+	ESP_LOGD(TAG, "b wait_GDO0_high");
 	wait_GDO0_high();
 
 	// Wait until the end of the packet transmission
+	ESP_LOGD(TAG, "b wait_GDO0_low");
 	wait_GDO0_low();
 
 	// Check that the TX FIFO is empty
+	ESP_LOGD(TAG, "b readStatusReg");
 	if((readStatusReg(CC1101_TXBYTES) & 0x7F) == 0)
 		res = true;
 
