@@ -54,6 +54,7 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 __You can change it to any pin using menuconfig.__   
 
+__GDO0 needs to be able to use interrupts.__   
 
 
 # Comparison of cc1101 and nRF24L01
