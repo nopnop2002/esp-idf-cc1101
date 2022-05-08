@@ -35,6 +35,7 @@ int lqi(char raw) {
 #if CONFIG_SECONDARY
 void secondary_task(void *pvParameter)
 {
+	ESP_LOGI(pcTaskGetName(0), "Start");
 	CCPACKET packet;
 	while(1) {
 		if(packet_available()) {
@@ -74,6 +75,7 @@ void secondary_task(void *pvParameter)
 #if CONFIG_PRIMARY
 void primary_task(void *pvParameter)
 {
+	ESP_LOGI(pcTaskGetName(0), "Start");
 	char message[64];
 	CCPACKET packet;
 	while(1) {
