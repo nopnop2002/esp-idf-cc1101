@@ -71,30 +71,17 @@ __Some GPIOs cannot use interrupts.__
 |Modulation format|2-FSK/GFSK/OOK/MSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
 
 
-# Comparison of nRF905 and cc1101
-||nRF905|cc1101|
-|:-:|:-:|:-:|
-|Manufacturer|Nordic Semiconductor|Texas Instrument|
-|Frequency|433/868/915MHz|315/433/868/915MHz|
-|Maximum Payload|32Byte|64Byte|
-|FiFo for reception|32Byte*1|64Byte*1|
-|FiFo for transmission|32Byte*1|64Byte*1|
-|CRC Length|8/16bits|16bits|
-|Acknowledgement Payload|No|No|
-|Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
-
-
-# Comparison of si4432 and cc1101
-||si4432|cc1101|
-|:-:|:-:|:-:|
-|Manufacturer|Silicon Labs|Texas Instrument|
-|Frequency|315/433/868/915MHz|315/433/868/915MHz|
-|Maximum Payload|64Byte|64Byte|
-|FiFo for reception|64Byte*1|64Byte*1|
-|FiFo for transmission|64Byte*1|64Byte*1|
-|CRC Length|8/16bits|16bits|
-|Acknowledgement Payload|No|No|
-|Modulation format|FSK/GFSK/OOK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
+# Comparison of nRF905, cc1101 and si4432
+||nRF905|cc1101|si4432|
+|:-:|:-:|:-:|:-:|
+|Manufacturer|Nordic Semiconductor|Texas Instrument|Silicon Labs|
+|Frequency|433/868/915MHz|315/433/868/915MHz|315/433/868/915MHz|
+|Maximum Payload|32Byte|64Byte|64Byte|
+|FiFo for reception|32Byte*1|64Byte*1|64Byte*1|
+|FiFo for transmission|32Byte*1|64Byte*1|64Byte*1|
+|CRC Length|8/16bits|16bits|8/16bits|
+|Acknowledgement Payload|No|No|No|
+|Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|FSK/GFSK/OOK|
 
 
 - GFSK  : Gaussian shaped Frequency Shift Keying
