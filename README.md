@@ -58,16 +58,30 @@ __GDO0 needs to be able to use interrupts.__
 __Some GPIOs cannot use interrupts.__   
 
 
-# Comparison of cc1101 and nRF24L01
-||nRF24L01|cc1101|
+# Comparison of nRF905 and cc1101
+||nRF905|cc1101|
 |:-:|:-:|:-:|
-|Frequency|2.4GHz|315/433/868/915MHz|
+|Manufacturer|Nordic Semiconductor|Texas Instrument|
+|Frequency|433/868/915MHz|315/433/868/915MHz|
 |Maximum Payload|32Byte|64Byte|
-|FiFo for reception|32Byte*3|64Byte*1|
-|FiFo for transmission|32Byte*3|64Byte*1|
+|FiFo for reception|32Byte*1|64Byte*1|
+|FiFo for transmission|32Byte*1|64Byte*1|
 |CRC Length|8/16bits|16bits|
-|Acknowledgement Payload|Yes|No|
+|Acknowledgement Payload|No|No|
 |Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
+
+
+# Comparison of cc2500 and cc1101
+||cc2500|cc1101|
+|:-:|:-:|:-:|
+|Manufacturer|Texas Instrument|Texas Instrument|
+|Frequency|2.4GHz|315/433/868/915MHz|
+|Maximum Payload|64Byte|64Byte|
+|FiFo for reception|64Byte*1|64Byte*1|
+|FiFo for transmission|64Byte*1|64Byte*1|
+|CRC Length|16bits|16bits|
+|Acknowledgement Payload|No|No|
+|Modulation format|2-FSK/GFSK/OOK/MSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
 
 
 - GFSK  : Gaussian shaped Frequency Shift Keying
