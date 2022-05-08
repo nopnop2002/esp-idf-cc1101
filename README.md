@@ -91,6 +91,3 @@ __Some GPIOs cannot use interrupts.__
 - OSK   : On-Off Keying
 - MSI   : Minimum Shift Keying
 
-nRF24L01 can tell whether the transmission was successful or unsuccessful on the transmitting side.   
-
-cc1101 cannot tell whether the transmission was successful or unsuccessful on the transmitting side.   
