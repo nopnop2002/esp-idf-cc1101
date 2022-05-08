@@ -34,6 +34,7 @@ int lqi(char raw) {
 
 void rx_task(void *pvParameter)
 {
+	ESP_LOGI(pcTaskGetName(0), "Start");
 	CCPACKET packet;
 	while(1) {
 		if(packet_available()) {
@@ -62,6 +63,7 @@ void rx_task(void *pvParameter)
 #if CONFIG_TRANSMITTER
 void tx_task(void *pvParameter)
 {
+	ESP_LOGI(pcTaskGetName(0), "Start");
 	char message[64];
 	CCPACKET packet;
 	while(1) {
