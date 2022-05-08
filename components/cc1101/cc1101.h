@@ -437,7 +437,7 @@ void reset(void);
  * @param freq Carrier frequency
  * @param mode Working mode (speed, ...)
  */
-void init(uint8_t freq, uint8_t mode);
+esp_err_t init(uint8_t freq, uint8_t mode);
 
 /**
  * setSyncWord

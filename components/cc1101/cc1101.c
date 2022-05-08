@@ -351,7 +351,7 @@ static void IRAM_ATTR gpio_isr_handler(void *arg)
  * @param freq Carrier frequency
  * @param mode Working mode (speed, ...)
  */
-void init(uint8_t freq, uint8_t mode)
+esp_err_t init(uint8_t freq, uint8_t mode)
 {
 	_carrierFreq = freq; // Frequency
 	_workMode = mode; // Transfer Speed
@@ -415,6 +415,17 @@ void init(uint8_t freq, uint8_t mode)
 
 	// Configure PATABLE
 	setTxPowerAmp(PA_LowPower);
+
+	// Check Chip ID
+	uint8_t CHIP_PARTNUM = readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER);
+	uint8_t CHIP_VERSION = readReg(CC1101_VERSION, CC1101_STATUS_REGISTER);
+	ESP_LOGI(TAG, "CC1101_PARTNUM %d", CHIP_PARTNUM);
+	ESP_LOGI(TAG, "CC1101_VERSION %d", CHIP_VERSION);
+	if (CHIP_PARTNUM != 0 || CHIP_VERSION != 20) {
+		ESP_LOGE(TAG, "CC1101 not installed");
+		return ESP_FAIL;
+	}
+	return ESP_OK;
 }
 
 /**
