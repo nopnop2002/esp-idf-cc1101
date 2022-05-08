@@ -146,7 +146,12 @@ void app_main()
 #endif
 
 	//init(CFREQ_433, 0);
-	init(freq, mode);
+	esp_err_t ret = init(freq, mode);
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "CC1101 not installed");
+		while(1) { vTaskDelay(1); }
+	}
+
 	uint8_t syncWord[2] = {199, 10};
 	setSyncWordArray(syncWord);
 	ESP_LOGW(TAG, "Set channel to %d", CONFIG_CC1101_CHANNEL);
@@ -157,15 +162,6 @@ void app_main()
 	setTxPowerAmp(PA_LongDistance);
 #endif
 
-	uint8_t CHIP_PARTNUM = readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER);
-	uint8_t CHIP_VERSION = readReg(CC1101_VERSION, CC1101_STATUS_REGISTER);
-	ESP_LOGI(TAG, "CC1101_PARTNUM %d", CHIP_PARTNUM);
-	ESP_LOGI(TAG, "CC1101_VERSION %d", CHIP_VERSION);
-	ESP_LOGI(TAG, "CC1101_MARCSTATE %d",readReg(CC1101_MARCSTATE, CC1101_STATUS_REGISTER) & 0x1f);
-	if (CHIP_VERSION != 20) {
-		ESP_LOGE(TAG, "CC1101 not installed");
-		while(1) { vTaskDelay(1); }
-	}
 
 #if CONFIG_PRIMARY
 	xTaskCreate(&primary_task, "primary_task", 1024*3, NULL, 1, NULL);
