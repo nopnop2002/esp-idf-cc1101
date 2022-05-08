@@ -84,7 +84,21 @@ __Some GPIOs cannot use interrupts.__
 |Modulation format|2-FSK/GFSK/OOK/MSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
 
 
+# Comparison of si4432 and cc1101
+||si4432|cc1101|
+|:-:|:-:|:-:|
+|Manufacturer|Silicon Labs|Texas Instrument|
+|Frequency|315/433/868/915MHz|315/433/868/915MHz|
+|Maximum Payload|64Byte|64Byte|
+|FiFo for reception|64Byte*1|64Byte*1|
+|FiFo for transmission|64Byte*1|64Byte*1|
+|CRC Length|8/16bits|16bits|
+|Acknowledgement Payload|No|No|
+|Modulation format|FSK/GFSK/OOK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
+
+
 - GFSK  : Gaussian shaped Frequency Shift Keying
+- FSK   : Frequency Shift Keying
 - 2-FSK : Binary Frequency Shift Keying
 - 4-FSK : Quaternary Frequency Shift Keying
 - ASK   : Amplitude Shift Keying
