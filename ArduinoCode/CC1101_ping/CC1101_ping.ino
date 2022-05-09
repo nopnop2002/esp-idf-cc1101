@@ -93,14 +93,12 @@ int lqi(char raw) {
 
 void loop() {
     static bool waiting = false;
-    static int counter = 0;
     unsigned long startMillis;
     unsigned long now = millis();
     char message[64];
     if (now > lastSend + sendDelay && waiting == false) {
         lastSend = now;
         //const char *message = "hello world";
-        //char message[64];
         sprintf(message, "Hello World %ld", now);
         CCPACKET packet;
         // We also need to include the 0 byte at the end of the string
@@ -110,7 +108,6 @@ void loop() {
         radio.sendData(packet);
         Serial.println(F("Sent packet..."));
         waiting = true;
-        counter = 0;
         startMillis = millis();
     }
 
