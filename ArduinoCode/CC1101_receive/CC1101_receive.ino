@@ -30,8 +30,6 @@ CC1101 radio;
 
 byte syncWord[2] = {199, 10};
 bool packetWaiting;
-unsigned long lastSend = 0;
-unsigned int sendDelay = 1000;
 
 void messageReceived() {
     packetWaiting = true;
@@ -68,6 +66,8 @@ void setup() {
       Serial.println(F("CC1101 radio not initialized."));
       while(1);
     }
+
+    packetWaiting = false;
     attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
 }
 
@@ -89,29 +89,10 @@ int lqi(char raw) {
     return 0x3F - raw;
 }
 
+
 void loop() {
-    static bool waiting = false;
-    static int counter = 0;
-    unsigned long now = millis();
-    if (now > lastSend + sendDelay && waiting == false) {
-        lastSend = now;
-        //const char *message = "hello world";
-        char message[64];
-        sprintf(message, "Hello World %ld", now);
-        CCPACKET packet;
-        // We also need to include the 0 byte at the end of the string
-        packet.length = strlen(message)  + 1;
-        strncpy((char *) packet.data, message, packet.length);
-
-        radio.sendData(packet);
-        Serial.println(F("Sent packet..."));
-        waiting = true;
-        counter = 0;
-    }
-
-    // Wait for a response from the other party 
     if (packetWaiting) {
-        detachInterrupt(CC1101Interrupt);
+        //detachInterrupt(CC1101Interrupt);
         packetWaiting = false;
         CCPACKET packet;
         if (radio.receiveData(&packet) > 0) {
@@ -120,29 +101,20 @@ void loop() {
             if (!packet.crc_ok) {
                 Serial.println(F("crc not ok"));
             }
-            Serial.print(F("lqi: "));
+            Serial.print(F("packet.lqi: "));
             Serial.println(lqi(packet.lqi));
-            Serial.print(F("rssi: "));
+            Serial.print(F("packet.rssi: "));
             Serial.print(rssi(packet.rssi));
             Serial.println(F("dBm"));
 
             if (packet.crc_ok && packet.length > 0) {
-                Serial.print(F("len: "));
+                Serial.print(F("packet.length: "));
                 Serial.println(packet.length);
-                Serial.print(F("data: "));
+                Serial.print(F("packet.data: "));
                 Serial.println((const char *) packet.data);
             }
-            waiting = false;
         }
-        attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
-    } // end packetWaiting
 
-    if (waiting) {
-      delay(1);
-      counter++;
-      if (counter == 2000) {
-        Serial.println("No responce from others");
-        waiting = false;
-      }
+        //attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
     }
 }
