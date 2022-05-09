@@ -43,11 +43,11 @@ void rx_task(void *pvParameter)
 				if (!packet.crc_ok) {
 					ESP_LOGE(pcTaskGetName(0), "crc not ok");
 				}
-				ESP_LOGI(pcTaskGetName(0),"lqi: %d", lqi(packet.lqi));
-				ESP_LOGI(pcTaskGetName(0),"rssi: %ddBm", rssi(packet.rssi));
+				ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
+				ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
 
 				if (packet.crc_ok && packet.length > 0) {
-					ESP_LOGI(pcTaskGetName(0),"len: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
 				}
 			} // end receiveData

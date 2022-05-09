@@ -88,30 +88,33 @@ void primary_task(void *pvParameter)
 
 		// Wait for a response from the other party
 		bool waiting = true;
-		int counter = 0;
+		TickType_t startTick = xTaskGetTickCount();
 		while(waiting) {
 			if(packet_available()) {
+				TickType_t respTick = xTaskGetTickCount() - startTick;
 				if (receiveData(&packet) > 0) {
 					ESP_LOGI(pcTaskGetName(0), "Received packet...");
 					if (!packet.crc_ok) {
 						ESP_LOGE(pcTaskGetName(0), "crc not ok");
 					}
-					ESP_LOGI(pcTaskGetName(0),"lqi: %d", lqi(packet.lqi));
-					ESP_LOGI(pcTaskGetName(0),"rssi: %ddBm", rssi(packet.rssi));
+					ESP_LOGI(pcTaskGetName(0),"Responce time: %d", respTick);
+					ESP_LOGD(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
+					ESP_LOGD(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
 
 					if (packet.crc_ok && packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"len: %d", packet.length);
-						ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
+						ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+						ESP_LOGI(pcTaskGetName(0),"%s --> %s", message, (const char *) packet.data);
+						ESP_LOGD(pcTaskGetName(0),"data: %s", (const char *) packet.data);
 					}
 					waiting = false;
 				} // end receiveData
 			} // end packet_available
-			vTaskDelay(1);
-			counter++;
-			if (counter == 200) {
+			TickType_t diffTick = xTaskGetTickCount() - startTick;
+			if (diffTick > 100) {
 				ESP_LOGE(pcTaskGetName(0), "No responce from others");
 				waiting = false;
 			}
+			vTaskDelay(1);
 		} // end while
 		vTaskDelay(1000/portTICK_PERIOD_MS);
 	} // end while
