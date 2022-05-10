@@ -37,16 +37,11 @@
 #define TAG "CC1101"
 
 // SPI Stuff
-#if CONFIG_IDF_TARGET_ESP32
-#define HOST_ID HSPI_HOST
-#elif CONFIG_IDF_TARGET_ESP32S2
+#if CONFIG_SPI2_HOST
 #define HOST_ID SPI2_HOST
-#elif CONFIG_IDF_TARGET_ESP32S3
-#define HOST_ID SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32C3
-#define HOST_ID SPI2_HOST
+#elif CONFIG_SPI3_HOST
+#define HOST_ID SPI3_HOST
 #endif
-spi_device_handle_t handle;
 
 /**
  * Macros
@@ -95,7 +90,7 @@ bool spi_write_byte(uint8_t* Dataout, size_t DataLength )
 		SPITransaction.length = DataLength * 8;
 		SPITransaction.tx_buffer = Dataout;
 		SPITransaction.rx_buffer = NULL;
-		spi_device_transmit( handle, &SPITransaction );
+		spi_device_transmit( _handle, &SPITransaction );
 	}
 
 	return true;
@@ -110,7 +105,7 @@ bool spi_read_byte(uint8_t* Datain, uint8_t* Dataout, size_t DataLength )
 		SPITransaction.length = DataLength * 8;
 		SPITransaction.tx_buffer = Dataout;
 		SPITransaction.rx_buffer = Datain;
-		spi_device_transmit( handle, &SPITransaction );
+		spi_device_transmit( _handle, &SPITransaction );
 	}
 
 	return true;
@@ -406,7 +401,7 @@ esp_err_t init(uint8_t freq, uint8_t mode)
 		.flags = SPI_DEVICE_NO_DUMMY
 	};
 
-	ret = spi_bus_add_device( HOST_ID, &devcfg, &handle);
+	ret = spi_bus_add_device( HOST_ID, &devcfg, &_handle);
 	ESP_LOGI(TAG, "spi_bus_add_device=%d",ret);
 	assert(ret==ESP_OK);
 

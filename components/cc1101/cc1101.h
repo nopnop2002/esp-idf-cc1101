@@ -28,6 +28,7 @@
 
 //#include <Arduino.h>
 //#include <SPI.h>
+#include <driver/spi_master.h>
 #include "ccpacket.h"
 
 /**
@@ -375,6 +376,12 @@ uint8_t _devAddress;
  * Packet available
  */
 bool _packetAvailable;
+
+/**
+ * SPI device handle
+ */
+spi_device_handle_t _handle;
+
 
 /**
  * cmdStrobe
