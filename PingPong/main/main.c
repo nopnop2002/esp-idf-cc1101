@@ -10,6 +10,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+#define __MAIN__
 #include <cc1101.h>
 
 #define TAG "MAIN"

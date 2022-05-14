@@ -342,45 +342,51 @@ void readBurstReg(uint8_t * buffer, uint8_t regAddr, uint8_t len);
  */
 void setRegsFromEeprom(void);
 
+#ifndef __MAIN__
+	#define DECLARE extern
+#else
+	#define DECLARE
+#endif
+
 /*
  * RF state
  */
-uint8_t _rfState;
+DECLARE uint8_t _rfState;
 
 /**
  * Carrier frequency
  */
-uint8_t _carrierFreq;
+DECLARE uint8_t _carrierFreq;
 
 /**
  * Working mode (speed, ...)
  */
-uint8_t _workMode;
+DECLARE uint8_t _workMode;
 
 /**
  * Frequency channel
  */
-uint8_t _channel;
+DECLARE uint8_t _channel;
 
 /**
  * Synchronization word
  */
-uint8_t _syncWord[2];
+DECLARE uint8_t _syncWord[2];
 
 /**
  * Device address
  */
-uint8_t _devAddress;
+DECLARE uint8_t _devAddress;
 
 /**
  * Packet available
  */
-bool _packetAvailable;
+DECLARE bool _packetAvailable;
 
 /**
  * SPI device handle
  */
-spi_device_handle_t _handle;
+DECLARE spi_device_handle_t _handle;
 
 
 /**
