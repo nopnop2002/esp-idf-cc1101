@@ -42,6 +42,42 @@
 #elif CONFIG_SPI3_HOST
 #define HOST_ID SPI3_HOST
 #endif
+static spi_device_handle_t _handle;
+
+/*
+ * RF state
+ */
+static uint8_t _rfState;
+
+/**
+ * Carrier frequency
+ */
+static uint8_t _carrierFreq;
+
+/**
+ * Working mode (speed, ...)
+ */
+static uint8_t _workMode;
+
+/**
+ * Frequency channel
+ */
+static uint8_t _channel;
+
+/**
+ * Synchronization word
+ */
+static uint8_t _syncWord[2];
+
+/**
+ * Device address
+ */
+static uint8_t _devAddress;
+
+/**
+ * Packet available
+ */
+static bool _packetAvailable;
 
 /**
  * Macros
