@@ -2,7 +2,7 @@ menu "Application Configuration"
 
 	choice DIRECTION
 		prompt "Communication direction"
-		default Receiver
+		default RECEIVER
 		help
 			Select Communication direction.
 		config RECEIVER
