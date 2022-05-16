@@ -90,8 +90,8 @@ static bool _packetAvailable;
 #define cc1101_Deselect()  gpio_set_level(CONFIG_CSN_GPIO, HIGH)
 // Wait until SPI MISO line goes low
 //#define wait_Miso()  while(digitalRead(MISO)>0)
-//#define wait_Miso()  while(gpio_get_level(CONFIG_MISO_GPIO)>0)
-#define wait_Miso()  (void)0
+#define wait_Miso()  while(gpio_get_level(CONFIG_MISO_GPIO)>0)
+//#define wait_Miso()  (void)0
 // Get GDO0 pin state
 //#define getGDO0state()	digitalRead(GDO0)
 #define getGDO0state()	gpio_get_level(CONFIG_GDO0_GPIO)
@@ -392,7 +392,6 @@ esp_err_t init(uint8_t freq, uint8_t mode)
 	_syncWord[1] = CC1101_DEFVAL_SYNC0; // 0x47
 	_devAddress = CC1101_DEFVAL_ADDR; // 0xFF
 	_packetAvailable = false;
-
 
 	gpio_reset_pin(CONFIG_CSN_GPIO);
 	gpio_set_direction(CONFIG_CSN_GPIO, GPIO_MODE_OUTPUT);
