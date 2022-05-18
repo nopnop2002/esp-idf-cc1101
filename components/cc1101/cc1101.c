@@ -178,12 +178,21 @@ bool spi_read_byte(uint8_t* Datain, uint8_t* Dataout, size_t DataLength )
 	return true;
 }
 
-uint8_t spi_transfer(uint8_t address) {
+uint8_t spi_transfer(uint8_t address)
+{
 	uint8_t datain[1];
 	uint8_t dataout[1];
 	dataout[0] = address;
 	//spi_write_byte(dev, dataout, 1 );
-	spi_read_byte(datain, dataout, 1 );
+	//spi_read_byte(datain, dataout, 1 );
+
+	spi_transaction_t SPITransaction;
+	memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
+	SPITransaction.length = 8;
+	SPITransaction.tx_buffer = dataout;
+	SPITransaction.rx_buffer = datain;
+	spi_device_transmit( _handle, &SPITransaction );
+
 	return datain[0];
 }
 
