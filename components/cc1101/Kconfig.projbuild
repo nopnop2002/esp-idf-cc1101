@@ -4,16 +4,16 @@ menu "CC1101 Configuration"
 		int
 		default 33 if IDF_TARGET_ESP32
 		default 46 if IDF_TARGET_ESP32S2
-		default 19 if IDF_TARGET_ESP32C3
 		default 48 if IDF_TARGET_ESP32S3
+		default 18 if IDF_TARGET_ESP32C2
+		default 19 if IDF_TARGET_ESP32C3
 
 	config MISO_GPIO
 		int "CC1101 MISO GPIO"
 		range 0 GPIO_RANGE_MAX
 		default 19 if IDF_TARGET_ESP32
-		default 37 if IDF_TARGET_ESP32S2
-		default 37 if IDF_TARGET_ESP32S3
-		default 18 if IDF_TARGET_ESP32C3
+		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default  4 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			Pin Number to be used as the MISO SPI signal.
 
@@ -21,9 +21,8 @@ menu "CC1101 Configuration"
 		int "CC1101 SCK GPIO"
 		range 0 GPIO_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
-		default 36 if IDF_TARGET_ESP32S2
-		default 36 if IDF_TARGET_ESP32S3
-		default 10 if IDF_TARGET_ESP32C3
+		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default  3 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			Pin Number to be used as the SCK SPI signal.
 
@@ -31,19 +30,17 @@ menu "CC1101 Configuration"
 		int "CC1101 MOSI GPIO"
 		range 0 GPIO_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
-		default 35 if IDF_TARGET_ESP32S2
-		default 35 if IDF_TARGET_ESP32S3
-		default 19 if IDF_TARGET_ESP32C3
+		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default  2 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			Pin Number to be used as the MOSI SPI signal.
 
 	config CSN_GPIO
 		int "CC1101 CSN GPIO"
 		range 0 GPIO_RANGE_MAX
-		default 5  if IDF_TARGET_ESP32
-		default 34 if IDF_TARGET_ESP32S2
-		default 34 if IDF_TARGET_ESP32S3
-		default 9  if IDF_TARGET_ESP32C3
+		default  5 if IDF_TARGET_ESP32
+		default 34 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default  1 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			Pin Number to be used as the CSN SPI signal.
 
@@ -51,9 +48,8 @@ menu "CC1101 Configuration"
 		int "CC1101 GDO0 GPIO"
 		range 0 GPIO_RANGE_MAX
 		default 15 if IDF_TARGET_ESP32
-		default 33 if IDF_TARGET_ESP32S2
-		default 33 if IDF_TARGET_ESP32S3
-		default 8  if IDF_TARGET_ESP32C3
+		default 33 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default  0 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			Pin Number to be used as the GDO0 signal.
 
@@ -67,6 +63,7 @@ menu "CC1101 Configuration"
 			help
 				Use SPI2_HOST. This is also called HSPI_HOST.
 		config SPI3_HOST
+			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 			bool "SPI3_HOST"
 			help
 				USE SPI3_HOST. This is also called VSPI_HOST
@@ -83,16 +80,16 @@ menu "CC1101 Configuration"
 		prompt "CC1101 Frequency"
 		default CC1101_FREQ_433
 		help
-				Select ISM band frequency
+			Select ISM band frequency
 
 		config CC1101_FREQ_433
-				bool "433 MHz" 
+			bool "433 MHz" 
 		config CC1101_FREQ_868
-				bool "868 MHz" 
+			bool "868 MHz" 
 		config CC1101_FREQ_915
-				bool "915 MHz" 
+			bool "915 MHz" 
 		config CC1101_FREQ_918
-				bool "918 MHz" 
+			bool "918 MHz" 
 	endchoice
 
 	choice
@@ -102,9 +99,9 @@ menu "CC1101 Configuration"
 			Select Modulation speed.
 
 		config CC1101_SPEED_4800
-				bool "4.8 kbit/sec" 
+			bool "4.8 kbit/sec" 
 		config CC1101_SPEED_38400
-				bool "38.4 kbit/sec" 
+			bool "38.4 kbit/sec" 
 	endchoice
 
 	config CC1101_POWER_HIGH
