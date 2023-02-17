@@ -56,7 +56,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 # Wirering
 
-|CC1101||ESP32|ESP32-S2/S3|ESP32-C3|
+|CC1101||ESP32|ESP32-S2/S3|ESP32-C2/C3|
 |:-:|:-:|:-:|:-:|:-:|
 |MISO|--|GPIO19|GPIO37|GPIO4|
 |SCK|--|GPIO18|GPIO36|GPIO3|
