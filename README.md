@@ -114,6 +114,6 @@ __Some GPIOs cannot use interrupts.__
 - 2-FSK : Binary Frequency Shift Keying
 - 4-FSK : Quaternary Frequency Shift Keying
 - ASK   : Amplitude Shift Keying
-- OSK   : On-Off Keying
+- OOK   : On-Off Keying
 - MSI   : Minimum Shift Keying
 
