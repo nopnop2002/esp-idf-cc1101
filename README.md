@@ -43,6 +43,15 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 # Modulation speed selection   
 ![config-cc1101-4](https://user-images.githubusercontent.com/6020549/162887865-28919f76-5401-4742-872a-7a16f6d269f7.jpg)
 
+# Enable output high power
+Default Power Setting is 0xC6.   
+Enabling this results in 0xC0.   
+|Setting|868 MHz|915 MHz|
+|:-:|:-:|:-:|
+|0xC6|29.4mA|28.7mA|
+|0xC0|34.2mA|33.4mA|
+![config-cc1101-6](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/72f130da-9317-49f7-b317-7f2d99dc73fb)
+
 # SPI BUS selection   
 ![config-cc1101-5](https://user-images.githubusercontent.com/6020549/167520086-e74c1f25-5c5f-4349-a98f-5248ac9edf50.jpg)
 
