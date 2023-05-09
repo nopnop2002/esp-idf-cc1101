@@ -50,6 +50,7 @@ Enabling this results in 0xC0.
 |:-:|:-:|:-:|
 |0xC6|29.4mA|28.7mA|
 |0xC0|34.2mA|33.4mA|
+
 ![config-cc1101-6](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/72f130da-9317-49f7-b317-7f2d99dc73fb)
 
 # SPI BUS selection   
