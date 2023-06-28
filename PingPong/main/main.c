@@ -3,6 +3,8 @@
  * This sample code is in the public domain.
  */
 
+#include <stdio.h>
+#include <inttypes.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -79,7 +81,7 @@ void primary_task(void *pvParameter)
 	char message[64];
 	CCPACKET packet;
 	while(1) {
-		sprintf(message, "Hello World %d", xTaskGetTickCount());
+		sprintf(message, "Hello World %"PRIu32, xTaskGetTickCount());
 		// We also need to include the 0 byte at the end of the string
 		packet.length = strlen(message)  + 1;
 		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
@@ -97,7 +99,7 @@ void primary_task(void *pvParameter)
 					if (!packet.crc_ok) {
 						ESP_LOGE(pcTaskGetName(0), "crc not ok");
 					}
-					ESP_LOGI(pcTaskGetName(0),"Responce time: %d", respTick);
+					ESP_LOGI(pcTaskGetName(0),"Responce time: %"PRIu32, respTick);
 					ESP_LOGD(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
 					ESP_LOGD(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
 

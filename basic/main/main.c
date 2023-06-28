@@ -3,6 +3,8 @@
  * This sample code is in the public domain.
  */
 
+#include <stdio.h>
+#include <inttypes.h>
 #include <string.h>
 
 #include "freertos/FreeRTOS.h"
@@ -67,7 +69,7 @@ void tx_task(void *pvParameter)
 	char message[64];
 	CCPACKET packet;
 	while(1) {
-		sprintf(message, "Hello World %d", xTaskGetTickCount());
+		sprintf(message, "Hello World %"PRIu32, xTaskGetTickCount());
 		// We also need to include the 0 byte at the end of the string
 		packet.length = strlen(message)  + 1;
 		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
