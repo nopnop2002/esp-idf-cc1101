@@ -93,7 +93,7 @@ __Some GPIOs cannot use interrupts.__
 |FiFo for transmission|64Byte*1|64Byte*1|
 |CRC Length|16bits|16bits|
 |Acknowledgement Payload|No|No|
-|Modulation format|2-FSK/GFSK/OOK/MSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
+|Available Modulation format|2-FSK/GFSK/OOK/MSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|
 
 
 # Comparison of nRF905, cc1101 and si4432
@@ -106,7 +106,7 @@ __Some GPIOs cannot use interrupts.__
 |FiFo for transmission|32Byte*1|64Byte*1|64Byte*1|
 |CRC Length|8/16bits|16bits|8/16bits|
 |Acknowledgement Payload|No|No|No|
-|Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|FSK/GFSK/OOK|
+|Available Modulation format|GFSK|2-FSK/4-FSK/GFSK/ASK/OOK/MSK|FSK/GFSK/OOK|
 
 
 - GFSK  : Gaussian shaped Frequency Shift Keying
