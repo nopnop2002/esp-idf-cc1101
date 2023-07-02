@@ -83,6 +83,14 @@ __GDO0 needs to be able to use interrupts.__
 __Some GPIOs cannot use interrupts.__   
 
 
+# Radio frequency   
+The frequency used can be changed by the channel number.    
+Center frequency and channel spacing frequency are software specified.   
+The channel spacing is set in the MDMCFG0.CHANSPC_M and MDMCFG1.CHANSPC_E registers.   
+The base or start frequency is set by the 24 bit frequency word located in the FREQ2, FREQ1, and FREQ0 registers.   
+Therefore, communication between applications with different center and channel spacing frequencies is not possible.   
+
+
 # Comparison of cc2500 and cc1101
 ||cc2500|cc1101|
 |:-:|:-:|:-:|
