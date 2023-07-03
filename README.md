@@ -83,14 +83,15 @@ __GDO0 needs to be able to use interrupts.__
 __Some GPIOs cannot use interrupts.__   
 
 
-# Radio frequency   
-The frequencies used are determined by the channel number, base frequency and channel spacing frequency.   
-Base frequency and channel spacing frequency are software specified.   
-The base frequency is set by the 24 bit frequency word located in the FREQ2, FREQ1, and FREQ0 registers.   
-The channel spacing is set in the MDMCFG0.CHANSPC_M and MDMCFG1.CHANSPC_E registers.   
-There are no standards for these values.   
-These values can be determined individually for each application.   
-Therefore, communication between applications with different base and channel spacing frequencies is not possible.   
+# Communication with another library   
+Basically, communication between applications with different register values is not guaranteed.   
+These settings may differ.   
+- Base frequency and channel spacing frequency
+- Preamble size
+- Combined sync-word qualifier mode
+- Packet length configuration
+- Manchester encoding configuration
+- Wireless modulation method
 
 
 # Comparison of cc2500 and cc1101
