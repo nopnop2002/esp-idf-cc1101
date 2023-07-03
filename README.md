@@ -88,7 +88,7 @@ The frequencies used are determined by the channel number, base frequency and ch
 Base frequency and channel spacing frequency are software specified.   
 The base frequency is set by the 24 bit frequency word located in the FREQ2, FREQ1, and FREQ0 registers.   
 The channel spacing is set in the MDMCFG0.CHANSPC_M and MDMCFG1.CHANSPC_E registers.   
-Therefore, communication between applications with different center and channel spacing frequencies is not possible.   
+Therefore, communication between applications with different base and channel spacing frequencies is not possible.   
 
 
 # Comparison of cc2500 and cc1101
