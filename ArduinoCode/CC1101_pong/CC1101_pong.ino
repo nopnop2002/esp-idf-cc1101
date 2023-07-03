@@ -13,17 +13,14 @@
 // ATmega2560/1280
 #if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 #define CC1101Interrupt 4 // Pin 19
-#define CC1101_GDO0 19
 
 // Teensy 3.5
 #elif defined(__MK64FX512__)
 #define CC1101Interrupt 9 // Pin 9
-#define CC1101_GDO0 9
 
 // ATmega328
 #else
 #define CC1101Interrupt 0 // Pin 2
-#define CC1101_GDO0 2
 #endif
 
 CC1101 radio;
