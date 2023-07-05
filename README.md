@@ -92,6 +92,8 @@ These settings may differ.
 - Packet length configuration
 - Manchester encoding configuration
 - Wireless modulation method
+- The data rate used when transmitting
+- The data rate expected in receive
 
 You need to use [this](https://github.com/veonik/arduino-cc1101) when communicating with the Arduino environment.   
 Communication with other libraries is not guaranteed.   
