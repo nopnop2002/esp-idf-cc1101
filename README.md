@@ -89,7 +89,7 @@ These settings may differ.
 - Base frequency and channel spacing frequency
 - Preamble size
 - Combined sync-word qualifier mode
-- Packet length configuration
+- Packet format configuration
 - Manchester encoding configuration
 - Wireless modulation method
 - The data rate used when transmitting
