@@ -87,8 +87,6 @@ __Some GPIOs cannot use interrupts.__
 Basically, communication between applications with different register values is not guaranteed.   
 These settings may differ.   
 - Base frequency and channel spacing frequency
-- Preamble size
-- Combined sync-word qualifier mode
 - Packet format configuration
 - Manchester encoding configuration
 - Wireless modulation method
