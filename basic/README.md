@@ -1,4 +1,4 @@
-# basic
+# Basic Example
 One-way communication for transmission or reception.   
 
 # Configuration   

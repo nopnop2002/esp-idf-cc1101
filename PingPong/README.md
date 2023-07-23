@@ -1,8 +1,6 @@
-# PingPong
-```
-Primary -----> Secondary
-Primary <----- Secondary
-```
+# PingPong Example   
+Send data from primary to secondary.   
+In the secondary, the characters are converted and sent back.   
 
 # Configuration   
 ![config-pingpong-1](https://user-images.githubusercontent.com/6020549/158708163-9bacbe80-bb37-4705-a3f7-ef4c1d098f97.jpg)

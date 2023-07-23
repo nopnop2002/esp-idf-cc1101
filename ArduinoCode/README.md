@@ -1,5 +1,5 @@
 # Example of Arduino environment   
-I use [this](https://github.com/veonik/arduino-cc1101).   
+I use [this](https://github.com/veonik/arduino-cc1101) library.   
 
 # Wirering
 
