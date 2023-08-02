@@ -2,17 +2,17 @@ menu "Application Configuration"
 
 	choice DIRECTION
 		prompt "Communication polarity"
-		default RECEIVER
+		default SENDER
 		help
-			Select Communication direction.
+			Select Communication polarity.
+		config SENDER
+			bool "As the sender"
+			help
+				As the sender.
 		config RECEIVER
-			bool "Receiver"
+			bool "As the receiver"
 			help
-				Execute Receiver.
-		config TRANSMITTER
-			bool "Transmitter"
-			help
-				Execute Transmitter.
+				As the receiver.
 	endchoice
 
 endmenu 

@@ -62,7 +62,7 @@ void rx_task(void *pvParameter)
 }
 #endif // CONFIG_RECEIVER
 
-#if CONFIG_TRANSMITTER
+#if CONFIG_SENDER
 void tx_task(void *pvParameter)
 {
 	ESP_LOGI(pcTaskGetName(0), "Start");
@@ -81,7 +81,7 @@ void tx_task(void *pvParameter)
 	// never reach here
 	vTaskDelete( NULL );
 }
-#endif // CONFIG_TRANSMITTER
+#endif // CONFIG_SENDER
 
 void app_main()
 {
@@ -126,7 +126,7 @@ void app_main()
 	setTxPowerAmp(PA_LongDistance);
 #endif
 
-#if CONFIG_TRANSMITTER
+#if CONFIG_SENDER
 	xTaskCreate(&tx_task, "TX", 1024*3, NULL, 5, NULL);
 #endif
 #if CONFIG_RECEIVER
