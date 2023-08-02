@@ -127,10 +127,10 @@ void app_main()
 #endif
 
 #if CONFIG_TRANSMITTER
-	xTaskCreate(&tx_task, "tx_task", 1024*3, NULL, 1, NULL);
+	xTaskCreate(&tx_task, "TX", 1024*3, NULL, 5, NULL);
 #endif
 #if CONFIG_RECEIVER
-	xTaskCreate(&rx_task, "rx_task", 1024*3, NULL, 1, NULL);
+	xTaskCreate(&rx_task, "RX", 1024*3, NULL, 5, NULL);
 #endif
 }
 

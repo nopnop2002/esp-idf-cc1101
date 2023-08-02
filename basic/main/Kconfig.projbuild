@@ -1,7 +1,7 @@
 menu "Application Configuration"
 
 	choice DIRECTION
-		prompt "Communication direction"
+		prompt "Communication polarity"
 		default RECEIVER
 		help
 			Select Communication direction.
