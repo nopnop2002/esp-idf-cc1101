@@ -34,6 +34,57 @@ int lqi(char raw) {
 	return 0x3F - raw;
 }
 
+#if CONFIG_PRIMARY
+void primary_task(void *pvParameter)
+{
+	ESP_LOGI(pcTaskGetName(0), "Start");
+	CCPACKET packet_sent;
+	CCPACKET packet_recv;
+	while(1) {
+		packet_sent.length = sprintf((char *)packet_sent.data, "Hello World %"PRIu32, xTaskGetTickCount());
+		// We also need to include the 0 byte at the end of the string
+		packet_sent.data[packet_sent.length] = 0;
+		packet_sent.length = packet_sent.length + 1;
+		ESP_LOGD(pcTaskGetName(0), "packet_sent.length=%d", packet_sent.length);
+		sendData(packet_sent);
+
+		// Wait for a response from the other party
+		bool waiting = true;
+		TickType_t startTick = xTaskGetTickCount();
+		while(waiting) {
+			if(packet_available()) {
+				TickType_t respTick = xTaskGetTickCount() - startTick;
+				if (receiveData(&packet_recv) > 0) {
+					ESP_LOGI(pcTaskGetName(0), "Received packet...");
+					if (!packet_recv.crc_ok) {
+						ESP_LOGE(pcTaskGetName(0), "crc not ok");
+					} else {
+						ESP_LOGI(pcTaskGetName(0),"Responce time: %"PRIu32, respTick);
+						ESP_LOGD(pcTaskGetName(0),"packet_recv.lqi: %d", lqi(packet_recv.lqi));
+						ESP_LOGD(pcTaskGetName(0),"packet_recv.rssi: %ddBm", rssi(packet_recv.rssi));
+						if (packet_recv.length > 0) {
+							ESP_LOGI(pcTaskGetName(0),"packet_recv.length: %d", packet_recv.length);
+							ESP_LOGI(pcTaskGetName(0),"[%s] --> [%s]", (char *) packet_sent.data, (char *) packet_recv.data);
+						}
+					}
+					waiting = false;
+				} // end receiveData
+			} // end packet_available
+			TickType_t diffTick = xTaskGetTickCount() - startTick;
+			if (diffTick > 100) {
+				ESP_LOGE(pcTaskGetName(0), "No responce from others");
+				waiting = false;
+			}
+			vTaskDelay(1);
+		} // end while
+		vTaskDelay(1000/portTICK_PERIOD_MS);
+	} // end while
+
+	// never reach here
+	vTaskDelete( NULL );
+}
+#endif // CONFIG_PRIMARY
+
 #if CONFIG_SECONDARY
 void secondary_task(void *pvParameter)
 {
@@ -73,58 +124,6 @@ void secondary_task(void *pvParameter)
 	vTaskDelete( NULL );
 }
 #endif // CONFIG_SECONDARY
-
-#if CONFIG_PRIMARY
-void primary_task(void *pvParameter)
-{
-	ESP_LOGI(pcTaskGetName(0), "Start");
-	char message[64];
-	CCPACKET packet;
-	while(1) {
-		sprintf(message, "Hello World %"PRIu32, xTaskGetTickCount());
-		// We also need to include the 0 byte at the end of the string
-		packet.length = strlen(message)  + 1;
-		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
-		strncpy((char *) packet.data, message, packet.length);
-		sendData(packet);
-
-		// Wait for a response from the other party
-		bool waiting = true;
-		TickType_t startTick = xTaskGetTickCount();
-		while(waiting) {
-			if(packet_available()) {
-				TickType_t respTick = xTaskGetTickCount() - startTick;
-				if (receiveData(&packet) > 0) {
-					ESP_LOGI(pcTaskGetName(0), "Received packet...");
-					if (!packet.crc_ok) {
-						ESP_LOGE(pcTaskGetName(0), "crc not ok");
-					}
-					ESP_LOGI(pcTaskGetName(0),"Responce time: %"PRIu32, respTick);
-					ESP_LOGD(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
-					ESP_LOGD(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
-
-					if (packet.crc_ok && packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
-						ESP_LOGI(pcTaskGetName(0),"%s --> %s", message, (const char *) packet.data);
-						ESP_LOGD(pcTaskGetName(0),"data: %s", (const char *) packet.data);
-					}
-					waiting = false;
-				} // end receiveData
-			} // end packet_available
-			TickType_t diffTick = xTaskGetTickCount() - startTick;
-			if (diffTick > 100) {
-				ESP_LOGE(pcTaskGetName(0), "No responce from others");
-				waiting = false;
-			}
-			vTaskDelay(1);
-		} // end while
-		vTaskDelay(1000/portTICK_PERIOD_MS);
-	} // end while
-
-	// never reach here
-	vTaskDelete( NULL );
-}
-#endif // CONFIG_PRIMARY
 
 void app_main()
 {
@@ -171,10 +170,10 @@ void app_main()
 
 
 #if CONFIG_PRIMARY
-	xTaskCreate(&primary_task, "primary_task", 1024*3, NULL, 1, NULL);
+	xTaskCreate(&primary_task, "PRIMARY", 1024*3, NULL, 5, NULL);
 #endif
 #if CONFIG_SECONDARY
-	xTaskCreate(&secondary_task, "secondary_task", 1024*3, NULL, 1, NULL);
+	xTaskCreate(&secondary_task, "SECONDARY", 1024*3, NULL, 5, NULL);
 #endif
 }
 
