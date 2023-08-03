@@ -1,0 +1,84 @@
+menu "Application Configuration"
+
+	menu "WiFi Setting"
+
+	config ESP_WIFI_SSID
+		string "WiFi SSID"
+		default "myssid"
+		help
+			SSID (network name) for the example to connect to.
+
+	config ESP_WIFI_PASSWORD
+		string "WiFi Password"
+		default "mypassword"
+		help
+			WiFi password (WPA or WPA2) for the example to use.
+
+	config ESP_MAXIMUM_RETRY
+		int "Maximum retry"
+		default 5
+		help
+			Set the Maximum retry to avoid station reconnecting to the AP unlimited when the AP is really inexistent.
+
+	endmenu
+
+	menu "Radio Setting"
+
+	choice DIRECTION
+		prompt "Communication polarity"
+		default SENDER
+		help
+			Select Communication polarity.
+		config SENDER
+			bool "MQTT to Radio"
+			help
+				MQTT to Radio.
+		config RECEIVER
+			bool "Radio to MQTT"
+			help
+				Radio to MQTT.
+	endchoice
+
+	config MQTT_BROKER
+		string "MQTT Broker"
+		default "broker.emqx.io"
+		help
+			Host name or IP address of the broker to connect to
+
+	config BROKER_AUTHENTICATION
+		bool "Server requests for password when connecting"
+		default false
+		help
+			Server requests for password when connecting.
+
+	config AUTHENTICATION_USERNAME
+		depends on BROKER_AUTHENTICATION
+		string "Username used for connecting to the broker"
+		default "user"
+		help
+			Username used for connecting to the broker.
+
+	config AUTHENTICATION_PASSWORD
+		depends on BROKER_AUTHENTICATION
+		string "Password used for connecting to the broker"
+		default "password"
+		help
+			Username used for connecting to the broker.
+
+	config MQTT_PUB_TOPIC
+		depends on RECEIVER
+		string "Publish Topic"
+		default "/topic/radio/test"
+		help
+			Topic of publish
+
+	config MQTT_SUB_TOPIC
+		depends on SENDER
+		string "Subscribe Topic"
+		default "/topic/radio/test"
+		help
+			Topic of subscribe
+
+	endmenu
+
+endmenu 
