@@ -30,7 +30,7 @@ This is cc1101 and HTTP gateway application.
 ### Radio to HTTP
 Receive from Radio and publish as HTTP.   
 ESP32 acts as HTTP Client.   
-You can use nc as HTTP Server.   
+You can use nc(netcat) as HTTP Server.   
 ```sh ./http-server.sh```
 
 ```
