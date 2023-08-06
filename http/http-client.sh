@@ -1,12 +1,17 @@
 #!/bin/bash
-SERVER="http://esp32-server.local:8080/post"
+#sudo apt install avahi-utils
+#set -x
+SERVER="esp32-server.local"
+HOST=`avahi-resolve -4 -n esp32-server.local | cut -f 2`
+echo $HOST
+URI="http://${HOST}:8080/post"
 
 while :
 do
 	payload=`date "+%Y/%m/%d %H:%M:%S"`
 	echo ${payload}
-	#curl -d "2023/08/03 22:14:35" ${SERVER}
-	curl -d "${payload}" ${SERVER}
+	echo curl -d "${payload}" ${URI}
+	curl -d "${payload}" ${URI}
 	echo ""
 	sleep 1
 done
