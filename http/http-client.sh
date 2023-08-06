@@ -2,7 +2,7 @@
 #sudo apt install avahi-utils
 #set -x
 SERVER="esp32-server.local"
-HOST=`avahi-resolve -4 -n esp32-server.local | cut -f 2`
+HOST=`avahi-resolve -4 -n ${SERVER} | cut -f 2`
 echo $HOST
 URI="http://${HOST}:8080/post"
 
