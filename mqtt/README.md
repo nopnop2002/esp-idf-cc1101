@@ -43,13 +43,6 @@ You can use mosquitto_pub as Publisher.
 
 ![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/db337006-a8ef-44e1-8463-317352997e4d)
 
-MQTT broker is specified by one of the following.   
-- IP address   
- ```192.168.10.20```   
-- mDNS host name   
- ```mqtt-broker.local```   
-- Fully Qualified Domain Name   
- ```broker.emqx.io```
 
 Communicate with Arduino Environment.   
 Run this sketch.   
@@ -77,4 +70,12 @@ Run this sketch.
 ArduinoCode\CC1101_transmitte   
 
 
+### Specifying an MQTT Broker   
+MQTT broker is specified by one of the following.   
+- IP address   
+ ```192.168.10.20```   
+- mDNS host name   
+ ```mqtt-broker.local```   
+- Fully Qualified Domain Name   
+ ```broker.emqx.io```
 
