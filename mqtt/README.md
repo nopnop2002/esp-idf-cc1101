@@ -28,35 +28,6 @@ This is cc1101 and MQTT gateway application.
 
 ## Radioi Setting
 
-### Radio to MQTT
-Receive from Radio and publish as MQTT.   
-You can use mosquitto_sub as Subscriber.   
-```sh ./mqtt_sub.sh```
-
-```
-            +----------+           +----------+           +----------+           +----------+
-            |          |           |          |           |          |           |          |
-==(Radio)==>|  cc1101  |--(SPI)--->|  ESP32   |--(MQTT)-->|  Broker  |--(MQTT)-->|Subscriber|
-            |          |           |          |           |          |           |          |
-            +----------+           +----------+           +----------+           +----------+
-```
-
-![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/5a1b7694-5a2a-4e40-8627-2c2a11a40f62)
-
-MQTT broker is specified by one of the following.   
-- IP address   
- ```192.168.10.20```   
-- mDNS host name   
- ```mqtt-broker.local```   
-- Fully Qualified Domain Name   
- ```broker.emqx.io```
-
-Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_transmitte   
-
-
-
 ### MQTT to Radio
 Subscribe with MQTT and send to Radio.   
 You can use mosquitto_pub as Publisher.   
@@ -70,10 +41,40 @@ You can use mosquitto_pub as Publisher.
             +----------+           +----------+           +----------+           +----------+
 ```
 
-![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/67af409c-bf08-4f8f-987e-c2446fd60187)
+![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/db337006-a8ef-44e1-8463-317352997e4d)
 
+MQTT broker is specified by one of the following.   
+- IP address   
+ ```192.168.10.20```   
+- mDNS host name   
+ ```mqtt-broker.local```   
+- Fully Qualified Domain Name   
+ ```broker.emqx.io```
 
 Communicate with Arduino Environment.   
 Run this sketch.   
 ArduinoCode\CC1101_receive   
+
+
+### Radio to MQTT
+Receive from Radio and publish as MQTT.   
+You can use mosquitto_sub as Subscriber.   
+```sh ./mqtt_sub.sh```
+
+```
+            +----------+           +----------+           +----------+           +----------+
+            |          |           |          |           |          |           |          |
+==(Radio)==>|  cc1101  |--(SPI)--->|  ESP32   |--(MQTT)-->|  Broker  |--(MQTT)-->|Subscriber|
+            |          |           |          |           |          |           |          |
+            +----------+           +----------+           +----------+           +----------+
+```
+
+![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/50627a8b-8d86-41bd-9dc6-4bb438b71b84)
+
+
+Communicate with Arduino Environment.   
+Run this sketch.   
+ArduinoCode\CC1101_transmitte   
+
+
 
