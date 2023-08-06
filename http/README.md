@@ -64,6 +64,13 @@ You can use nc(netcat) as HTTP Server.
 
 ![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/85cfe7eb-e148-49b6-a9d6-524c321c13d5)
 
+
+Communicate with Arduino Environment.   
+Run this sketch.   
+ArduinoCode\CC1101_transmitte   
+
+
+### Specifying an HTTP Server   
 HTTP Server is specified by one of the following.   
 - IP address   
  ```192.168.10.20```   
@@ -71,10 +78,5 @@ HTTP Server is specified by one of the following.
  ```http-server.local```   
 - Fully Qualified Domain Name   
  ```http-server.public.io```
-
-Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_transmitte   
-
 
 
