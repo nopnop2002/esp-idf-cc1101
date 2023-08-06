@@ -22,11 +22,8 @@ void tx_task(void *pvParameter)
 	CCPACKET packet;
 	while(1) {
 		packet.length = sprintf((char *)packet.data, "Hello World %"PRIu32, xTaskGetTickCount());
-		// We also need to include the 0 byte at the end of the string
-		packet.data[packet.length] = 0;
-		packet.length = packet.length + 1;
-		ESP_LOGI(pcTaskGetName(0), "packet.length=%d", packet.length);
 		sendData(packet);
+		ESP_LOGI(pcTaskGetName(0), "Sent packet. length=%d", packet.length);
 		vTaskDelay(1000/portTICK_PERIOD_MS);
 	} // end while
 
@@ -69,7 +66,7 @@ void rx_task(void *pvParameter)
 					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
 					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
+						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
 					}
 				}
 			} // end receiveData

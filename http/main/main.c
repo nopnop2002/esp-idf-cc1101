@@ -191,13 +191,9 @@ void tx_task(void *pvParameter)
 	ESP_LOGI(pcTaskGetName(0), "Start");
 	CCPACKET packet;
 	while(1) {
-		size_t received = xMessageBufferReceive(xMessageBufferRecv, packet.data, sizeof(packet.data), portMAX_DELAY);
-		// We also need to include the 0 byte at the end of the string
-		packet.data[received] = 0;
-		packet.length = received  + 1;
+		packet.length = xMessageBufferReceive(xMessageBufferRecv, packet.data, sizeof(packet.data), portMAX_DELAY);
 		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
 		sendData(packet);
-		vTaskDelay(1000/portTICK_PERIOD_MS);
 	} // end while
 
 	// never reach here
@@ -253,9 +249,9 @@ void rx_task(void *pvParameter)
 					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
 					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
+						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
 						size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
-						if (sended == 0) {
+						if (sended != packet.length) {
 							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail");
 						}
 					}

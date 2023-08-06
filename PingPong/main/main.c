@@ -42,9 +42,6 @@ void primary_task(void *pvParameter)
 	CCPACKET packet_recv;
 	while(1) {
 		packet_sent.length = sprintf((char *)packet_sent.data, "Hello World %"PRIu32, xTaskGetTickCount());
-		// We also need to include the 0 byte at the end of the string
-		packet_sent.data[packet_sent.length] = 0;
-		packet_sent.length = packet_sent.length + 1;
 		ESP_LOGD(pcTaskGetName(0), "packet_sent.length=%d", packet_sent.length);
 		sendData(packet_sent);
 
@@ -62,9 +59,13 @@ void primary_task(void *pvParameter)
 						ESP_LOGI(pcTaskGetName(0),"Responce time: %"PRIu32, respTick);
 						ESP_LOGD(pcTaskGetName(0),"packet_recv.lqi: %d", lqi(packet_recv.lqi));
 						ESP_LOGD(pcTaskGetName(0),"packet_recv.rssi: %ddBm", rssi(packet_recv.rssi));
-						if (packet_recv.length > 0) {
+						if (packet_recv.length == packet_sent.length) {
 							ESP_LOGI(pcTaskGetName(0),"packet_recv.length: %d", packet_recv.length);
-							ESP_LOGI(pcTaskGetName(0),"[%s] --> [%s]", (char *) packet_sent.data, (char *) packet_recv.data);
+							ESP_LOGI(pcTaskGetName(0),"[%.*s] --> [%.*s]", 
+								packet_sent.length, (char *) packet_sent.data,
+								packet_recv.length, (char *) packet_recv.data);
+						} else {
+							ESP_LOGE(pcTaskGetName(0),"illegal receive packet length %d --> %d", packet_sent.length, packet_recv.length);
 						}
 					}
 					waiting = false;
@@ -96,24 +97,22 @@ void secondary_task(void *pvParameter)
 				ESP_LOGI(pcTaskGetName(0), "Received packet...");
 				if (!packet.crc_ok) {
 					ESP_LOGE(pcTaskGetName(0), "crc not ok");
-				}
-				ESP_LOGI(pcTaskGetName(0),"lqi: %d", lqi(packet.lqi));
-				ESP_LOGI(pcTaskGetName(0),"rssi: %ddBm", rssi(packet.rssi));
-
-				if (packet.crc_ok && packet.length > 0) {
-					ESP_LOGI(pcTaskGetName(0),"len: %d", packet.length);
-					ESP_LOGI(pcTaskGetName(0),"data: %s", (const char *) packet.data);
-
-					for (int i=0;i<packet.length;i++) {
-						if (islower(packet.data[i])) {
-							packet.data[i] = toupper(packet.data[i]);
-						} else {
-							packet.data[i] = tolower(packet.data[i]);
+				} else {
+                    ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
+                    ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
+                    ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+					if (packet.length > 0) {
+						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
+						for (int i=0;i<packet.length;i++) {
+							if (islower(packet.data[i])) {
+								packet.data[i] = toupper(packet.data[i]);
+							} else {
+								packet.data[i] = tolower(packet.data[i]);
+							}
 						}
+						sendData(packet);
+						ESP_LOGI(pcTaskGetName(0),"send back....");
 					}
-					sendData(packet);
-					ESP_LOGI(pcTaskGetName(0),"send back....");
-
 				}
 			} // end receiveData
 		} // end packet_available

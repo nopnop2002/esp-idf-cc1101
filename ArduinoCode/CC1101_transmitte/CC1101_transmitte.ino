@@ -53,18 +53,11 @@ void setup() {
 void loop() {
     unsigned long now = millis();
     if (now > lastSend + sendDelay) {
-
         lastSend = now;
-        //const char *message = "Hello World";
-        char message[64];
-        sprintf(message, "Hello World %ld", now);
         CCPACKET packet;
-        // We also need to include the 0 byte at the end of the string
-        packet.length = strlen(message)  + 1;
-        strncpy((char *) packet.data, message, packet.length);
-
+        packet.length = sprintf((char *) packet.data, "Hello World %ld", now);
         radio.sendData(packet);
-        Serial.println(F("Sent packet..."));
-
+        Serial.print(F("Sent packet. length="));
+        Serial.println(packet.length);
     }
 }

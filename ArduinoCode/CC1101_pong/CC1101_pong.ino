@@ -26,10 +26,10 @@
 CC1101 radio;
 
 byte syncWord[2] = {199, 10};
-bool packetWaiting;
+bool packet_arrival;
 
 void messageReceived() {
-    packetWaiting = true;
+    packet_arrival = true;
 }
 
 void setup() {
@@ -85,9 +85,9 @@ int lqi(char raw) {
 }
 
 void loop() {
-    if (packetWaiting) {
+    if (packet_arrival) {
         detachInterrupt(CC1101Interrupt);
-        packetWaiting = false;
+        packet_arrival = false;
         CCPACKET packet;
         if (radio.receiveData(&packet) > 0) {
             Serial.println();
@@ -102,11 +102,12 @@ void loop() {
             Serial.println(F("dBm"));
 
             if (packet.crc_ok && packet.length > 0) {
-                Serial.print(F("len: "));
+                packet.data[packet.length] = 0;
+                Serial.print(F("packet.length: "));
                 Serial.println(packet.length);
-                Serial.print(F("data: "));
+                Serial.print(F("packet.data: "));
                 Serial.println((const char *) packet.data);
-
+                
                 for (int i=0;i<packet.length;i++) {
                   if (islower(packet.data[i])) {
                     packet.data[i] = toupper(packet.data[i]);

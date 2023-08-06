@@ -26,10 +26,10 @@
 CC1101 radio;
 
 byte syncWord[2] = {199, 10};
-bool packetWaiting;
+bool packet_arrival;
 
 void messageReceived() {
-    packetWaiting = true;
+    packet_arrival = true;
 }
 
 void setup() {
@@ -64,7 +64,7 @@ void setup() {
       while(1);
     }
 
-    packetWaiting = false;
+    packet_arrival = false;
     attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
 }
 
@@ -88,27 +88,28 @@ int lqi(char raw) {
 
 
 void loop() {
-    if (packetWaiting) {
+    if (packet_arrival) {
         //detachInterrupt(CC1101Interrupt);
-        packetWaiting = false;
+        packet_arrival = false;
         CCPACKET packet;
         if (radio.receiveData(&packet) > 0) {
             Serial.println();
             Serial.println(F("Received packet..."));
             if (!packet.crc_ok) {
                 Serial.println(F("crc not ok"));
-            }
-            Serial.print(F("packet.lqi: "));
-            Serial.println(lqi(packet.lqi));
-            Serial.print(F("packet.rssi: "));
-            Serial.print(rssi(packet.rssi));
-            Serial.println(F("dBm"));
-
-            if (packet.crc_ok && packet.length > 0) {
-                Serial.print(F("packet.length: "));
-                Serial.println(packet.length);
-                Serial.print(F("packet.data: "));
-                Serial.println((const char *) packet.data);
+            } else {
+                Serial.print(F("packet.lqi: "));
+                Serial.println(lqi(packet.lqi));
+                Serial.print(F("packet.rssi: "));
+                Serial.print(rssi(packet.rssi));
+                Serial.println(F("dBm"));
+                if (packet.length > 0) {
+                    packet.data[packet.length] = 0;
+                    Serial.print(F("packet.length: "));
+                    Serial.println(packet.length);
+                    Serial.print(F("packet.data: "));
+                    Serial.println((const char *) packet.data);
+                }
             }
         }
 

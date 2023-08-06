@@ -26,12 +26,12 @@
 CC1101 radio;
 
 byte syncWord[2] = {199, 10};
-bool packetWaiting;
+bool packet_arrival;
 unsigned long lastSend = 0;
 unsigned int sendDelay = 1000;
 
 void messageReceived() {
-    packetWaiting = true;
+    packet_arrival = true;
 }
 
 void setup() {
@@ -66,7 +66,7 @@ void setup() {
       while(1);
     }
 
-    packetWaiting = false;
+    packet_arrival = false;
     attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
 }
 
@@ -89,58 +89,60 @@ int lqi(char raw) {
 }
 
 void loop() {
-    static bool waiting = false;
+    static bool waiting_response = false;
     unsigned long startMillis;
     unsigned long now = millis();
-    char message[64];
-    if (now > lastSend + sendDelay && waiting == false) {
-        lastSend = now;
-        //const char *message = "hello world";
-        sprintf(message, "Hello World %ld", now);
-        CCPACKET packet;
-        // We also need to include the 0 byte at the end of the string
-        packet.length = strlen(message)  + 1;
-        strncpy((char *) packet.data, message, packet.length);
+    CCPACKET packet_sent;
+    CCPACKET packet_recv;
 
-        radio.sendData(packet);
+    if (now > lastSend + sendDelay && waiting_response == false) {
+        lastSend = now;
+        packet_sent.length = sprintf((char *) packet_sent.data, "Hello World %ld", now);
+        radio.sendData(packet_sent);
         Serial.println(F("Sent packet..."));
-        waiting = true;
+        packet_sent.data[packet_sent.length] = 0;
+        waiting_response = true;
         startMillis = millis();
     }
 
     // Wait for a response from the other party 
-    if (packetWaiting) {
+    if (packet_arrival) {
         unsigned long diffMillis = now - startMillis;
         detachInterrupt(CC1101Interrupt);
-        packetWaiting = false;
-        CCPACKET packet;
-        if (radio.receiveData(&packet) > 0) {
+        packet_arrival = false;
+        if (radio.receiveData(&packet_recv) > 0) {
             Serial.println(F("Received packet..."));
-            if (!packet.crc_ok) {
+            if (!packet_recv.crc_ok) {
                 Serial.println(F("crc not ok"));
+            } else {
+                Serial.print("Responce time: ");
+                Serial.println(diffMillis);
+                if (packet_recv.length == packet_sent.length) {
+                    packet_recv.data[packet_recv.length] = 0;
+                    Serial.print(F("packet.length: "));
+                    Serial.println(packet_recv.length);
+                    Serial.print((const char *)packet_sent.data);
+                    Serial.print(" --> ");
+                    Serial.println((const char *)packet_recv.data);
+                } else {
+                    Serial.println(F("illegal receive packet length"));
+                    Serial.print(F("packet_sent.length="));
+                    Serial.println(packet_sent.length);
+                    Serial.print(F("packet_recv.length="));
+                    Serial.println(packet_recv.length);
+                }
             }
-            
-            Serial.print("Responce time: ");
-            Serial.println(diffMillis);
-
-            if (packet.crc_ok && packet.length > 0) {
-                Serial.print(F("packet.length: "));
-                Serial.println(packet.length);
-                Serial.print(message);
-                Serial.print(" --> ");
-                Serial.println((const char *) packet.data);
-            }
-            waiting = false;
+            waiting_response = false;
         }
         attachInterrupt(CC1101Interrupt, messageReceived, FALLING);
-    } // end packetWaiting
+    } // end packet_arrival
 
 
-    if (waiting) {
+    if (waiting_response) {
       unsigned long diffMillis = millis() - startMillis;
       if (diffMillis > 2000) {
         Serial.println("No responce from others");
-        waiting = false;
+        waiting_response = false;
       }
     }
 
