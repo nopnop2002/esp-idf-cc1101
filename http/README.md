@@ -3,13 +3,13 @@ This is cc1101 and HTTP gateway application.
 ```
             +-----------+           +-----------+           +-----------+
             |           |           |           |           |           |
-==(Radio)==>|  cc1101   |--(SPI)--->|   ESP32   |--(HTTP)-->|HTTP Server|
+            |HTTP Client|--(HTTP)-->|   ESP32   |--(SPI)--->|  cc1101   |==(Radio)==>
             |           |           |           |           |           |
             +-----------+           +-----------+           +-----------+
 
             +-----------+           +-----------+           +-----------+
             |           |           |           |           |           |
-            |HTTP Client|--(HTTP)-->|   ESP32   |--(SPI)--->|  cc1101   |==(Radio)==>
+==(Radio)==>|  cc1101   |--(SPI)--->|   ESP32   |--(HTTP)-->|HTTP Server|
             |           |           |           |           |           |
             +-----------+           +-----------+           +-----------+
 ```
@@ -26,6 +26,28 @@ This is cc1101 and HTTP gateway application.
 
 
 ## Radioi Setting
+
+### HTTP to Radio
+Subscribe with HTTP and send to Radio.   
+ESP32 acts as HTTP Server.   
+You can use curl as HTTP Client.   
+```sh ./http-client.sh```
+
+```
+            +-----------+           +-----------+           +-----------+
+            |           |           |           |           |           |
+            |HTTP Client|--(HTTP)-->|   ESP32   |--(SPI)--->|  cc1101   |==(Radio)==>
+            |           |           |           |           |           |
+            +-----------+           +-----------+           +-----------+
+```
+
+![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/a3f7dcd3-3ca8-46e0-a88d-768c30e8fa6b)
+
+
+Communicate with Arduino Environment.   
+Run this sketch.   
+ArduinoCode\CC1101_receive   
+
 
 ### Radio to HTTP
 Receive from Radio and publish as HTTP.   
@@ -56,25 +78,4 @@ Run this sketch.
 ArduinoCode\CC1101_transmitte   
 
 
-
-### HTTP to Radio
-Subscribe with HTTP and send to Radio.   
-ESP32 acts as HTTP Server.   
-You can use curl as HTTP Client.   
-```sh ./http-client.sh```
-
-```
-            +-----------+           +-----------+           +-----------+
-            |           |           |           |           |           |
-            |HTTP Client|--(HTTP)-->|   ESP32   |--(SPI)--->|  cc1101   |==(Radio)==>
-            |           |           |           |           |           |
-            +-----------+           +-----------+           +-----------+
-```
-
-![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/a3f7dcd3-3ca8-46e0-a88d-768c30e8fa6b)
-
-
-Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_receive   
 
