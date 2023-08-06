@@ -9,7 +9,7 @@ URI="http://${HOST}:8080/post"
 while :
 do
 	payload=`date "+%Y/%m/%d %H:%M:%S"`
-	echo ${payload}
+	#echo ${payload}
 	echo curl -d "${payload}" ${URI}
 	curl -d "${payload}" ${URI}
 	echo ""
