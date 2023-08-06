@@ -41,8 +41,7 @@ You can use curl as HTTP Client.
             +-----------+           +-----------+           +-----------+
 ```
 
-![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/a3f7dcd3-3ca8-46e0-a88d-768c30e8fa6b)
-
+![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/26f4bf6f-a0e5-4038-a617-b4fb83badc96)
 
 Communicate with Arduino Environment.   
 Run this sketch.   
@@ -63,7 +62,7 @@ You can use nc(netcat) as HTTP Server.
             +-----------+           +-----------+           +-----------+
 ```
 
-![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/636aba51-2134-4d63-8c5d-99462b5f81a5)
+![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/85cfe7eb-e148-49b6-a9d6-524c321c13d5)
 
 HTTP Server is specified by one of the following.   
 - IP address   
