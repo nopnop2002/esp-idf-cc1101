@@ -7,9 +7,9 @@ One-way communication for transmission or reception.
 ![config-basic-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/975098ad-1c69-450c-abd6-82f9de8f779b)
 
 # Using as receiver   
-I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
-
-# Using as transmitter   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_transmitte).   
+
+# Using as sender   
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
 
 
