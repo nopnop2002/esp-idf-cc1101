@@ -8,11 +8,11 @@ In the secondary, the characters are converted and sent back.
 
 # Using as Primary   
 Sending and receiving.   
-I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_ping).   
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_pong).   
 
 # Using as Secondary   
 Send back the received data.   
-I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_pong).   
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_ping).   
 
 
 # Screen Shot
