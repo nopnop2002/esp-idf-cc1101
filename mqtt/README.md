@@ -79,3 +79,6 @@ MQTT broker is specified by one of the following.
 - Fully Qualified Domain Name   
  ```broker.emqx.io```
 
+
+# MQTT Broker for ESP32   
+https://github.com/nopnop2002/esp-idf-mqtt-broker
