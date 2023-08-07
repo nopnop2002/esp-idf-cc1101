@@ -71,7 +71,7 @@ ArduinoCode\CC1101_transmitte
 
 
 ### Specifying an MQTT Broker   
-MQTT broker is specified by one of the following.   
+You can specify your MQTT broker in one of the following ways:   
 - IP address   
  ```192.168.10.20```   
 - mDNS host name   
