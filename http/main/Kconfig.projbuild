@@ -25,6 +25,7 @@ menu "Application Configuration"
 		default "esp32-server"
 		help
 			The mDNS host name used by the ESP32.
+
 	endmenu
 
 	menu "Radio Setting"
