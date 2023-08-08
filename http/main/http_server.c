@@ -79,7 +79,7 @@ esp_err_t start_server(int port)
 
 	// Start the httpd server
 	if (httpd_start(&server, &config) != ESP_OK) {
-		ESP_LOGE(TAG, "Failed to start file server!");
+		ESP_LOGE(TAG, "Failed to starting server!");
 		return ESP_FAIL;
 	}
 

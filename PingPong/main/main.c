@@ -14,7 +14,7 @@
 
 #include <cc1101.h>
 
-#define TAG "MAIN"
+static const char *TAG = "MAIN";
 
 // Get signal strength indicator in dBm.
 // See: http://www.ti.com/lit/an/swra114d/swra114d.pdf
