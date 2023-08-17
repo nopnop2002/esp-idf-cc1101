@@ -155,6 +155,7 @@ esp_err_t http_post_with_url(char *url, char * post_data, size_t post_len)
 	}
 
 	esp_http_client_cleanup(client);
+	return err;
 }
 
 esp_err_t query_mdns_host(const char * host_name, char *ip);
