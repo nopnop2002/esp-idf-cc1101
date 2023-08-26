@@ -179,15 +179,15 @@ void convert_mdns_host(char * from, char * to)
 
 void initialize_mdns(void)
 {
-    //initialize mDNS
-    ESP_ERROR_CHECK( mdns_init() );
-    //set mDNS hostname (required if you want to advertise services)
-    ESP_ERROR_CHECK( mdns_hostname_set(CONFIG_MDNS_HOSTNAME) );
-    ESP_LOGI(TAG, "mdns hostname set to: [%s]", CONFIG_MDNS_HOSTNAME);
+	//initialize mDNS
+	ESP_ERROR_CHECK( mdns_init() );
+	//set mDNS hostname (required if you want to advertise services)
+	ESP_ERROR_CHECK( mdns_hostname_set(CONFIG_MDNS_HOSTNAME) );
+	ESP_LOGI(TAG, "mdns hostname set to: [%s]", CONFIG_MDNS_HOSTNAME);
 
 #if 0
-    //set default mDNS instance name
-    ESP_ERROR_CHECK( mdns_instance_name_set("ESP32 with mDNS") );
+	//set default mDNS instance name
+	ESP_ERROR_CHECK( mdns_instance_name_set("ESP32 with mDNS") );
 #endif
 }
 
@@ -242,9 +242,15 @@ void rx_task(void *pvParameter)
 					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
 						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
-						size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
-						if (sended != packet.length) {
-							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail packet.length=%d sended=%d", packet.length, sended);
+						size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferTrans );
+						ESP_LOGI(pcTaskGetName(NULL), "spacesAvailable=%d", spacesAvailable);
+						if (spacesAvailable < packet.length*2) {
+							ESP_LOGW(pcTaskGetName(NULL), "xMessageBuffer available less than %d", packet.length*2);
+						} else {
+							size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
+							if (sended != packet.length) {
+								ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail packet.length=%d sended=%d", packet.length, sended);
+							}
 						}
 					}
 				}
@@ -324,9 +330,9 @@ void app_main()
 	setTxPowerAmp(PA_LongDistance);
 #endif
 
-    // Get the local IP address
-    esp_netif_ip_info_t ip_info;
-    ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info));
+	// Get the local IP address
+	esp_netif_ip_info_t ip_info;
+	ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info));
 	char cparam0[64];
 	sprintf(cparam0, IPSTR, IP2STR(&ip_info.ip));
 	ESP_LOGI(TAG, "cparam0=[%s]", cparam0);

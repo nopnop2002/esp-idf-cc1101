@@ -228,9 +228,15 @@ void rx_task(void *pvParameter)
 					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
 						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
-						size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
-						if (sended != packet.length) {
-							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail");
+						size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferTrans );
+						ESP_LOGI(pcTaskGetName(NULL), "spacesAvailable=%d", spacesAvailable);
+						if (spacesAvailable < packet.length*2) {
+							ESP_LOGW(pcTaskGetName(NULL), "xMessageBuffer available less than %d", packet.length*2);
+						} else {
+							size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
+							if (sended != packet.length) {
+								ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail");
+							}
 						}
 					}
 				}
