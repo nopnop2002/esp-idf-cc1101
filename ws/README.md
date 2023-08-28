@@ -52,7 +52,7 @@ ArduinoCode\CC1101_receive
 Receive from Radio and publish as WebSocket.   
 ESP32 acts as WebSocket Client.   
 Use [this](https://components.espressif.com/components/espressif/esp_websocket_client) component.   
-You can use ws-server.py as HTTP Server.   
+You can use ws-server.py as WS Server.   
 ```python3 ws-server.py```
 
 ```
