@@ -48,7 +48,7 @@ menu "Application Configuration"
 	config WEB_SERVER_HOST
 		depends on RECEIVER
 		string "server to connect to"
-		default "http-server.local"
+		default "ws-server.local"
 		help
 			server to connect to.
 

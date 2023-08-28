@@ -63,7 +63,7 @@ You can use ws-server.py as WS Server.
             +-----------+           +-----------+           +-----------+
 ```
 
-![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/1c4da972-b51e-4ee5-ad9f-985adb47bc56)
+![config-radio-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/1d22d218-8f3b-45ec-acb9-a3266f9cc492)
 
 
 Communicate with Arduino Environment.   
