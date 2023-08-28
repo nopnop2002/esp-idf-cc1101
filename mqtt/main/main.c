@@ -184,7 +184,7 @@ void tx_task(void *pvParameter)
 	CCPACKET packet;
 	while(1) {
 		packet.length = xMessageBufferReceive(xMessageBufferRecv, packet.data, sizeof(packet.data), portMAX_DELAY);
-		ESP_LOGD(pcTaskGetName(0), "packet.length=%d", packet.length);
+		ESP_LOGI(pcTaskGetName(0), "packet.length=%d", packet.length);
 		sendData(packet);
 	} // end while
 

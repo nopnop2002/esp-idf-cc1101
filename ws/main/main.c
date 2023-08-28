@@ -264,8 +264,8 @@ void rx_task(void *pvParameter)
 }
 #endif // CONFIG_RECEIVER
 
-void http_client(void *pvParameters);
-void http_server(void *pvParameters);
+void ws_client(void *pvParameters);
+void ws_server(void *pvParameters);
 
 void app_main()
 {
@@ -339,11 +339,11 @@ void app_main()
 
 #if CONFIG_SENDER
 	xTaskCreate(&tx_task, "TX", 1024*3, NULL, 5, NULL);
-	xTaskCreate(&http_server, "HTTP_SERVER", 1024*4, (void *)cparam0, 5, NULL);
+	xTaskCreate(&ws_server, "WS_SERVER", 1024*4, (void *)cparam0, 5, NULL);
 #endif
 #if CONFIG_RECEIVER
 	xTaskCreate(&rx_task, "RX", 1024*3, NULL, 5, NULL);
-	xTaskCreate(&http_client, "HTTP_CLIENT", 1024*4, NULL, 5, NULL);
+	xTaskCreate(&ws_client, "WS_CLIENT", 1024*4, NULL, 5, NULL);
 #endif
 
 	while(1) {
