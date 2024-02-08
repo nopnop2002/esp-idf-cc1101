@@ -98,10 +98,16 @@ void app_main()
 
 	uint8_t mode;
 #if CONFIG_CC1101_SPEED_4800
-	mode = MODE_LOW_SPEED;
+	mode = CSPEED_4800;
 	ESP_LOGW(TAG, "Set speed to 4800bps");
+#elif CONFIG_CC1101_SPEED_9600
+	mode = CSPEED_9600;
+	ESP_LOGW(TAG, "Set speed to 38400bps");
+#elif CONFIG_CC1101_SPEED_19200
+	mode = CSPEED_19200;
+	ESP_LOGW(TAG, "Set speed to 38400bps");
 #elif CONFIG_CC1101_SPEED_38400
-	mode = MODE_HIGH_SPEED;
+	mode = CSPEED_38400;
 	ESP_LOGW(TAG, "Set speed to 38400bps");
 #endif
 

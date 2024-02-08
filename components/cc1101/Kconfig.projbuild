@@ -100,7 +100,11 @@ menu "CC1101 Configuration"
 			Select Modulation speed.
 
 		config CC1101_SPEED_4800
-			bool "4.8 kbit/sec" 
+			bool "4.8 kbit/sec"
+		config CC1101_SPEED_9600
+			bool "9.6 kbit/sec"
+		config CC1101_SPEED_19200
+			bool "19.2 kbit/sec"    
 		config CC1101_SPEED_38400
 			bool "38.4 kbit/sec" 
 	endchoice
