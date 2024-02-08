@@ -56,8 +56,14 @@ enum RFSTATE
 /**
  * Working modes
  */
-#define MODE_HIGH_SPEED	0x00	// RF speed = 38400 bps
-#define MODE_LOW_SPEED  0x01	// RF speed = 4800 bps
+enum CSPEED
+{
+	CSPEED_4800 = 0,            // RF speed = 4800 bps
+	CSPEED_9600,                // RF speed = 9600 bps
+	CSPEED_19200,               // RF speed = 19200 bps
+	CSPEED_38400,               // RF speed = 38400 bps
+	CSPEED_LAST
+};
 
 /**
  * Frequency channels
@@ -243,7 +249,9 @@ enum RFSTATE
 #define CC1101_DEFVAL_FREQ0_433  0x62				 // Frequency Control Word, Low Byte
 
 #define CC1101_DEFVAL_MDMCFG4_4800		0xC7	 // Modem configuration. Speed = 4800 bps
-#define CC1101_DEFVAL_MDMCFG4_38400		 0xCA		// Modem configuration. Speed = 38 Kbps
+#define CC1101_DEFVAL_MDMCFG4_9600		0xC8	 // Modem configuration. Speed = 9600 bps
+#define CC1101_DEFVAL_MDMCFG4_19200		0xC9	 // Modem configuration. Speed = 19 kbps
+#define CC1101_DEFVAL_MDMCFG4_38400		0xCA	 // Modem configuration. Speed = 38 Kbps
 #define CC1101_DEFVAL_MDMCFG3		 0x83				 // Modem Configuration
 #define CC1101_DEFVAL_MDMCFG2		 0x93				 // Modem Configuration
 #define CC1101_DEFVAL_MDMCFG1		 0x22				 // Modem Configuration

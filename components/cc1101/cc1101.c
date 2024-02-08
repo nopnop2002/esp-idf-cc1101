@@ -367,10 +367,22 @@ void setCCregs(void)
 	setCarrierFreq(_carrierFreq);
 
 	// RF speed
-	if (_workMode == MODE_LOW_SPEED)
-		writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_4800);
-	else
-		writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_38400);
+	switch(_workMode)
+	{
+		case CSPEED_4800:
+			writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_4800);
+			break;
+		case CSPEED_9600:
+			writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_9600);
+			break;
+		case CSPEED_19200:
+			writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_19200);
+			break;
+		case CSPEED_38400:
+			writeReg(CC1101_MDMCFG4, CC1101_DEFVAL_MDMCFG4_38400);
+			break;
+	}
+
 		
 	writeReg(CC1101_MDMCFG3, CC1101_DEFVAL_MDMCFG3);
 	writeReg(CC1101_MDMCFG2, CC1101_DEFVAL_MDMCFG2);
