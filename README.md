@@ -48,14 +48,13 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 # Output power Selection   
 ![config-cc1101-6](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b3e776cd-426a-4726-9c57-d6f8ee0bc587)
 
-Default Power Setting.   
+Default Power level.   
 ||315MHz|433MHz|868MHz|915MHz|
 |:-:|:-:|:-:|:-:|:-:|
 |Output Power|8.5dBM|7.8dBm|8.5dBm|7.2dBm|
 |Current Consumption|24.4mA|25.2mA|29.5mA|27.4mA|
 
-Minimum Power Setting.   
-Output Power is -30dBm.   
+Minimum power level is -30dBm.   
 ||315MHz|433MHz|868MHz|915MHz|
 |:-:|:-:|:-:|:-:|:-:|
 |Current Consumption|10.9mA|11.9mA|12.1mA|12.0mA|
@@ -65,8 +64,7 @@ Output Power is -30dBm.
 |:-:|:-:|:-:|:-:|:-:|
 |Current Consumption|15.0mA|15.9mA|16.9mA|16.7mA|
 
-Maximum Power Setting.   
-Output Power is 10dBm.   
+Maximum power level is 10dBm.   
 ||315MHz|433MHz|868MHz|915MHz|
 |:-:|:-:|:-:|:-:|:-:|
 |Current Consumption|26.9mA|29.1mA|32.4mA|31.8mA|
