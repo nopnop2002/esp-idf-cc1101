@@ -59,7 +59,7 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 Default power level.   
 ||315MHz|433MHz|868MHz|915MHz|
 |:-:|:-:|:-:|:-:|:-:|
-|Output Power|8.5dBM|7.8dBm|8.5dBm|7.2dBm|
+|Output Power|8.5dBm|7.8dBm|8.5dBm|7.2dBm|
 |Current Consumption|24.4mA|25.2mA|29.5mA|27.4mA|
 
 Minimum power level is -30dBm.   
