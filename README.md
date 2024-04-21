@@ -59,7 +59,7 @@ Minimum power level is -30dBm.
 |:-:|:-:|:-:|:-:|:-:|
 |Current Consumption|10.9mA|11.9mA|12.1mA|12.0mA|
 
-0dBm Power Setting.   
+Power lebel is 0dBm.   
 ||315MHz|433MHz|868MHz|915MHz|
 |:-:|:-:|:-:|:-:|:-:|
 |Current Consumption|15.0mA|15.9mA|16.9mA|16.7mA|
