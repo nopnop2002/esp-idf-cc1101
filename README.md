@@ -6,7 +6,9 @@ I ported from [this](https://github.com/veonik/arduino-cc1101).
 - 433MHz module(2.54mm pitch)
 ![CC1101-433MHz-2 54mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5b0f350-5e1f-4487-b00c-2e1b2d7d696d)
 
+- 433MHz module(2.54mm pitch)
 ![CC1101-433MHz-2 54mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/0ece5072-8645-49df-a494-c6470e75cafc)
+![CC1101-433MHz-2 54mm-2-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/0ccba0a5-dcc4-4687-93d2-5ce02940a179)
 
 - 433MHz module(1.27mm pitch)
 ![CC1101-433MHz-1 27mm](https://user-images.githubusercontent.com/6020549/162900515-eece8362-8ae0-4c63-9ca4-2f639026fd79.JPG)
