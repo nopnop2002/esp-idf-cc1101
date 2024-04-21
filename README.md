@@ -37,23 +37,40 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 # Configuration for Transceiver   
 ![config-cc1101-1](https://user-images.githubusercontent.com/6020549/158705737-c52a7c83-89f9-483f-aa4a-fe4e3d433001.jpg)
-![config-cc1101-2](https://user-images.githubusercontent.com/6020549/167520047-c6924db8-55b3-441e-99c9-fda4d4e801a7.jpg)
+![config-cc1101-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/ea7a5389-bd92-414d-9456-9b4b0491592d)
 
 # Frequency selection   
-![config-cc1101-3](https://user-images.githubusercontent.com/6020549/162887858-daf51cef-f165-48ce-b5bd-cdb33faf3824.jpg)
+![config-cc1101-3](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/ab635915-350f-49d0-81af-ea001b22abd1)
 
 # Modulation speed selection   
 ![config-cc1101-4](https://user-images.githubusercontent.com/6020549/162887865-28919f76-5401-4742-872a-7a16f6d269f7.jpg)
 
-# Enable output high power
-Default Power Setting is 0xC6.   
-Enabling this results in 0xC0.   
-|Setting|868 MHz|915 MHz|
-|:-:|:-:|:-:|
-|0xC6|29.4mA|28.7mA|
-|0xC0|34.2mA|33.4mA|
+# Output power Selection   
+![config-cc1101-6](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b3e776cd-426a-4726-9c57-d6f8ee0bc587)
 
-![config-cc1101-6](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/72f130da-9317-49f7-b317-7f2d99dc73fb)
+Default Power Setting.   
+||315MHz|433MHz|868MHz|915MHz|
+|:-:|:-:|:-:|:-:|:-:|
+|Output Power|8.5dBM|7.8dBm|8.5dBm|7.2dBm|
+|Current Consumption|24.4mA|25.2mA|29.5mA|27.4mA|
+
+Minimum Power Setting.   
+Output Power is -30dBm.   
+||315MHz|433MHz|868MHz|915MHz|
+|:-:|:-:|:-:|:-:|:-:|
+|Current Consumption|10.9mA|11.9mA|12.1mA|12.0mA|
+
+0dBm Power Setting.   
+||315MHz|433MHz|868MHz|915MHz|
+|:-:|:-:|:-:|:-:|:-:|
+|Current Consumption|15.0mA|15.9mA|16.9mA|16.7mA|
+
+Maximum Power Setting.   
+Output Power is 10dBm.   
+||315MHz|433MHz|868MHz|915MHz|
+|:-:|:-:|:-:|:-:|:-:|
+|Current Consumption|26.9mA|29.1mA|32.4mA|31.8mA|
+
 
 # SPI BUS selection   
 ![config-cc1101-5](https://user-images.githubusercontent.com/6020549/167520086-e74c1f25-5c5f-4349-a98f-5248ac9edf50.jpg)

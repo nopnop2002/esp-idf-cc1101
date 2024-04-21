@@ -98,9 +98,9 @@ void secondary_task(void *pvParameter)
 				if (!packet.crc_ok) {
 					ESP_LOGE(pcTaskGetName(0), "crc not ok");
 				} else {
-                    ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
-                    ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
-                    ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
+					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
+					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
 						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
 						for (int i=0;i<packet.length;i++) {
@@ -127,7 +127,10 @@ void secondary_task(void *pvParameter)
 void app_main()
 {
 	uint8_t freq;
-#if CONFIG_CC1101_FREQ_433
+#if CONFIG_CC1101_FREQ_315
+	freq = CFREQ_315;
+	ESP_LOGW(TAG, "Set frequency to 315MHz");
+#elif CONFIG_CC1101_FREQ_433
 	freq = CFREQ_433;
 	ESP_LOGW(TAG, "Set frequency to 433MHz");
 #elif CONFIG_CC1101_FREQ_868
@@ -136,9 +139,6 @@ void app_main()
 #elif CONFIG_CC1101_FREQ_915
 	freq = CFREQ_915;
 	ESP_LOGW(TAG, "Set frequency to 915MHz");
-#elif CONFIG_CC1101_FREQ_918
-	freq = CFREQ_918;
-	ESP_LOGW(TAG, "Set frequency to 918MHz");
 #endif
 
 	uint8_t mode;
@@ -162,11 +162,16 @@ void app_main()
 	ESP_LOGW(TAG, "Set channel to %d", CONFIG_CC1101_CHANNEL);
 	setChannel(CONFIG_CC1101_CHANNEL);
 	disableAddressCheck();
-#if CONFIG_CC1101_POWER_HIGH
-	ESP_LOGW(TAG, "Set PA_LongDistance");
-	setTxPowerAmp(PA_LongDistance);
+#if CONFIG_CC1101_POWER_MIN
+	ESP_LOGW(TAG, "Set Minimum power level");
+	setTxPowerAmp(POWER_MIN);
+#elif CONFIG_CC1101_POWER_0db
+	ESP_LOGW(TAG, "Set 0 dBm power level");
+	setTxPowerAmp(POWER_0db);
+#elif CONFIG_CC1101_POWER_MAX
+	ESP_LOGW(TAG, "Set Maximum power level");
+	setTxPowerAmp(POWER_MAX);
 #endif
-
 
 #if CONFIG_PRIMARY
 	xTaskCreate(&primary_task, "PRIMARY", 1024*3, NULL, 5, NULL);
