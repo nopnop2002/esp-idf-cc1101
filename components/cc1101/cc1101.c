@@ -80,6 +80,14 @@ static uint8_t _devAddress;
 static bool _packetAvailable;
 
 /**
+ * Power level
+ */
+static uint8_t _powerMin;
+static uint8_t _power0db;
+static uint8_t _powerMax;
+
+
+/**
  * Macros
  */
 // Select (SPI) CC1101
@@ -259,10 +267,10 @@ void writeBurstReg(byte regAddr, byte* buffer, byte len)
  */			
 void cmdStrobe(byte cmd) 
 {
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(cmd);										// Send strobe command
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Select();	// Select CC1101
+	wait_Miso();		// Wait until MISO goes low
+	spi_transfer(cmd);	// Send strobe command
+	cc1101_Deselect();	// Deselect CC1101
 }
 
 /**
@@ -281,11 +289,11 @@ byte readReg(byte regAddr, byte regType)
 	byte addr, val;
 
 	addr = regAddr | regType;
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(addr);										// Send register address
-	val = spi_transfer(0x00);							// Read result
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Select();			// Select CC1101
+	wait_Miso();				// Wait until MISO goes low
+	spi_transfer(addr);			// Send register address
+	val = spi_transfer(0x00);	// Read result
+	cc1101_Deselect();			// Deselect CC1101
 
 	return val;
 }
@@ -445,6 +453,27 @@ esp_err_t init(uint8_t freq, uint8_t mode)
 	_devAddress = CC1101_DEFVAL_ADDR; // 0xFF
 	_packetAvailable = false;
 
+	if (freq == CFREQ_315) {
+		_powerMin = PA_MinPower_315;
+		_power0db = PA_0dbPower_315;
+		_powerMax = PA_MaxPower_315;
+	} else if (freq == CFREQ_433) {
+		_powerMin = PA_MinPower_433;
+		_power0db = PA_0dbPower_433;
+		_powerMax = PA_MaxPower_433;
+	} else if (freq == CFREQ_868) {
+		_powerMin = PA_MinPower_868;
+		_power0db = PA_0dbPower_868;
+		_powerMax = PA_MaxPower_868;
+	} else if (freq == CFREQ_915) {
+		_powerMin = PA_MinPower_915;
+		_power0db = PA_0dbPower_915;
+		_powerMax = PA_MaxPower_915;
+	} else {
+		ESP_LOGE(TAG, "Illegal Freqiency");
+		vTaskDelete(NULL);
+	}
+
 	// Initialize SPI
 	spi_init();
 
@@ -468,8 +497,13 @@ esp_err_t init(uint8_t freq, uint8_t mode)
 	// Reset CC1101
 	reset();
 
-	// Configure PATABLE
+	// Read PATABLE
+	uint8_t ptable[8];
+	readBurstReg(ptable, CC1101_PATABLE, 8);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, ptable, 8, ESP_LOG_INFO);
+#if 0
 	setTxPowerAmp(PA_LowPower);
+#endif
 
 	// Check Chip ID
 	uint8_t CHIP_PARTNUM = readReg(CC1101_PARTNUM, CC1101_STATUS_REGISTER);
@@ -548,26 +582,33 @@ void setCarrierFreq(byte freq)
 {
 	switch(freq)
 	{
-		case CFREQ_915:
-			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_915);
-			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_915);
-			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_915);
+		case CFREQ_315:
+			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_315);
+			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_315);
+			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_315);
 			break;
 		case CFREQ_433:
 			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_433);
 			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_433);
 			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_433);
 			break;
-		case CFREQ_918:
-			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_918);
-			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_918);
-			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_918);
-			break;
 		case CFREQ_868:
 			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_868);
 			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_868);
 			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_868);
 			break;
+		case CFREQ_915:
+			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_915);
+			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_915);
+			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_915);
+			break;
+#if 0
+		case CFREQ_918:
+			writeReg(CC1101_FREQ2, CC1101_DEFVAL_FREQ2_918);
+			writeReg(CC1101_FREQ1, CC1101_DEFVAL_FREQ1_918);
+			writeReg(CC1101_FREQ0, CC1101_DEFVAL_FREQ0_918);
+			break;
+#endif
 	}
 	 
 	_carrierFreq = freq;
@@ -751,7 +792,23 @@ void setTxState(void)
  */
 void setTxPowerAmp(uint8_t paLevel)
 {
+#if 0
 	writeReg(CC1101_PATABLE, paLevel);
+#endif
+	ESP_LOGI(TAG, "setTxPowerAmp paLevel=%d", paLevel);
+	if (paLevel == POWER_MIN) {
+		ESP_LOGI(TAG, "setTxPowerAmp _powerMin=0x%x", _powerMin);
+		writeReg(CC1101_PATABLE, _powerMin);
+	} else if (paLevel == POWER_0db) {
+		ESP_LOGI(TAG, "setTxPowerAmp _power0db=0x%x", _power0db);
+		writeReg(CC1101_PATABLE, _power0db);
+	} else if (paLevel == POWER_MAX) {
+		ESP_LOGI(TAG, "setTxPowerAmp _powerMax=0x%x", _powerMax);
+		writeReg(CC1101_PATABLE, _powerMax);
+	}
+	uint8_t ptable[8];
+	readBurstReg(ptable, CC1101_PATABLE, 8);
+	ESP_LOG_BUFFER_HEXDUMP(TAG, ptable, 8, ESP_LOG_INFO);
 }
 
 /**

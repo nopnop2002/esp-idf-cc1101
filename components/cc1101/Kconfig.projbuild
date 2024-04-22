@@ -83,14 +83,14 @@ menu "CC1101 Configuration"
 		help
 			Select ISM band frequency
 
+		config CC1101_FREQ_315
+			bool "315 MHz" 
 		config CC1101_FREQ_433
 			bool "433 MHz" 
 		config CC1101_FREQ_868
 			bool "868 MHz" 
 		config CC1101_FREQ_915
 			bool "915 MHz" 
-		config CC1101_FREQ_918
-			bool "918 MHz" 
 	endchoice
 
 	choice
@@ -109,10 +109,20 @@ menu "CC1101 Configuration"
 			bool "38.4 kbit/sec" 
 	endchoice
 
-	config CC1101_POWER_HIGH
-		bool "Enable output high power"
-		default y
+	choice
+		prompt "CC1101 TX power level"
+		default CC1101_POWER_DEFAULT
 		help
-			Enable output high power.
+			Select TX power level.
+
+		config CC1101_POWER_DEFAULT
+			bool "Default power level"
+		config CC1101_POWER_MIN
+			bool "Minimum power level"
+		config CC1101_POWER_0db
+			bool "Power level is 0dBm"    
+		config CC1101_POWER_MAX
+			bool "Maximum power level" 
+	endchoice
 
 endmenu
