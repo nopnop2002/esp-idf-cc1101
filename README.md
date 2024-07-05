@@ -11,7 +11,8 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 ![CC1101-433MHz-2 54mm-2-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/0ccba0a5-dcc4-4687-93d2-5ce02940a179)
 
 - 433MHz module(1.27mm pitch)
-![CC1101-433MHz-1 27mm](https://user-images.githubusercontent.com/6020549/162900515-eece8362-8ae0-4c63-9ca4-2f639026fd79.JPG)
+![CC1101-433MHz-1 27mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/414c1b08-43c3-4998-ac81-f0d3006d2699)
+![CC1101-433MHz-1 27mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/9b555215-848d-4b85-a8ce-9e6481c9d953)
 
 - 868MHz module(2mm pitch)
 ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
