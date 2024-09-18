@@ -1,4 +1,0 @@
-#
-# mDNS
-#
-CONFIG_MDNS_STRICT_MODE=y
