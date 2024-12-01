@@ -3,34 +3,43 @@
 # https://github.com/python-websockets/websockets
 
 import time
-import datetime
 import socket
 from websockets.sync.client import connect
+import argparse
+import signal
 
-server = "esp32-server.local"
-port = 8080
-timezone = datetime.timedelta(hours=9)
+def handler(signal, frame):
+	global running
+	print('handler')
+	running = False
 
-try:
-	ip = socket.gethostbyname(server)
-except:
-	print('gethostbyname fail')
-	exit()
+if __name__=='__main__':
+	signal.signal(signal.SIGINT, handler)
+	running = True
 
-print("ip={}".format(ip))
-uri = "ws://{}:{}".format(ip, port)
-print("uri={}".format(uri))
-try:
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--host', help='tcp host', default="esp32-server.local")
+	parser.add_argument('--port', type=int, help='tcp port', default=8080)
+	args = parser.parse_args()
+	print("args.host={}".format(args.host))
+	print("args.port={}".format(args.port))
+
+	try:
+		ip = socket.gethostbyname(args.host)
+	except socket.gaierror as e:
+		print(f'Invalid hostname, error raised is {e}')
+		exit()
+	print("ip={}".format(ip))
+	uri = "ws://{}:{}".format(ip, args.port)
+	print("uri={}".format(uri))
 	websocket = connect(uri)
-except:
-	print('connect fail')
-	exit()
 
-while True:
-	dt_now = datetime.datetime.now(datetime.timezone(timezone))
-	payload = dt_now.strftime('%Y/%m/%d %H:%M:%S')
-	websocket.send(payload)
-	responce = websocket.recv()
-	print("{}-->{}".format(payload, responce))
-	time.sleep(1.0)
+	while running:
+		t = time.time()
+		local_time = time.localtime(t)
+		payload = time.asctime(local_time)
+		websocket.send(payload)
+		responce = websocket.recv()
+		print("{}-->{}".format(payload, responce))
+		time.sleep(1.0)
 

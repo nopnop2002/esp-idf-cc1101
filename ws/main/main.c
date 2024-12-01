@@ -37,8 +37,6 @@ MessageBufferHandle_t xMessageBufferRecv;
 
 // The total number of bytes (not single messages) the message buffer will be able to hold at any one time.
 size_t xBufferSizeBytes = 1024;
-// The size, in bytes, required to hold each item in the message,
-size_t xItemSize = 256;
 
 static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
@@ -244,13 +242,10 @@ void rx_task(void *pvParameter)
 						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
 						size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferTrans );
 						ESP_LOGI(pcTaskGetName(NULL), "spacesAvailable=%d", spacesAvailable);
-						if (spacesAvailable < packet.length*2) {
-							ESP_LOGW(pcTaskGetName(NULL), "xMessageBuffer available less than %d", packet.length*2);
-						} else {
-							size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
-							if (sended != packet.length) {
-								ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail packet.length=%d sended=%d", packet.length, sended);
-							}
+						size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, portMAX_DELAY);
+						if (sended != packet.length) {
+							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail packet.length=%d sended=%d", packet.length, sended);
+							break;
 						}
 					}
 				}
@@ -258,8 +253,6 @@ void rx_task(void *pvParameter)
 		} // end packet_available
 		vTaskDelay(1);
 	} // end while
-
-	// never reach here
 	vTaskDelete( NULL );
 }
 #endif // CONFIG_RECEIVER

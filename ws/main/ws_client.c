@@ -22,15 +22,12 @@
 #include "esp_transport_ws.h"
 #include "esp_websocket_client.h"
 
-#if CONFIG_RECEIVER
-
 #define TIMEOUT_SEC 5
 #define TIMEOUT_VAL 0x255
 
 static const char *TAG = "CLIENT";
 
 extern MessageBufferHandle_t xMessageBufferTrans;
-extern size_t xItemSize;
 
 static TimerHandle_t timeout_signal_timer;
 
@@ -157,7 +154,7 @@ void ws_client(void *pvParameters)
 	}
 	ESP_LOGI(TAG, "Connected to %s...", websocket_cfg.uri);
 
-	char buffer[xItemSize];
+	char buffer[64]; // Maximum Payload size of CC1101 is 64
 	while (1) {
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buffer, sizeof(buffer), portMAX_DELAY);
 		ESP_LOGI(TAG, "xMessageBufferReceive received=%d", received);
@@ -194,4 +191,3 @@ void ws_client(void *pvParameters)
 	esp_websocket_client_destroy(client);
 	vTaskDelete(NULL);
 }
-#endif
