@@ -19,7 +19,6 @@
 static const char *TAG = "SERVER";
 
 extern MessageBufferHandle_t xMessageBufferRecv;
-extern size_t xItemSize;
 
 /* root post handler */
 static esp_err_t root_post_handler(httpd_req_t *req)
