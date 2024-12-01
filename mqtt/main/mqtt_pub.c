@@ -19,8 +19,6 @@
 #include "esp_mac.h" // esp_base_mac_addr_get
 #include "mqtt_client.h"
 
-#if CONFIG_RECEIVER
-
 static const char *TAG = "PUB";
 
 EventGroupHandle_t mqtt_status_event_group;
@@ -160,4 +158,3 @@ void mqtt_pub(void *pvParameters)
 	esp_mqtt_client_stop(mqtt_client);
 	vTaskDelete(NULL);
 }
-#endif
