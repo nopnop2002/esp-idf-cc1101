@@ -25,7 +25,6 @@ EventGroupHandle_t mqtt_status_event_group;
 #define MQTT_CONNECTED_BIT BIT2
 
 extern MessageBufferHandle_t xMessageBufferTrans;
-extern size_t xItemSize;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
@@ -133,7 +132,7 @@ void mqtt_pub(void *pvParameters)
 	xEventGroupWaitBits(mqtt_status_event_group, MQTT_CONNECTED_BIT, false, true, portMAX_DELAY);
 	ESP_LOGI(TAG, "Connected to MQTT Broker");
 
-	char buffer[xItemSize];
+	char buffer[64]; // Maximum Payload size of CC1101 is 64
 	while (1) {
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buffer, sizeof(buffer), portMAX_DELAY);
 		ESP_LOGI(TAG, "xMessageBufferReceive received=%d", received);

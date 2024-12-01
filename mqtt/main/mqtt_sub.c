@@ -26,7 +26,6 @@
 static const char *TAG = "SUB";
 
 extern MessageBufferHandle_t xMessageBufferRecv;
-extern size_t xItemSize;
 
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
