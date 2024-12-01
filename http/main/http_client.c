@@ -18,8 +18,6 @@
 #include "esp_tls.h"
 #include "esp_http_client.h"
 
-#if CONFIG_RECEIVER
-
 static const char *TAG = "CLIENT";
 
 extern MessageBufferHandle_t xMessageBufferTrans;
@@ -193,4 +191,3 @@ void http_client(void *pvParameters)
 	// Stop connection
 	vTaskDelete(NULL);
 }
-#endif

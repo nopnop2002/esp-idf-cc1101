@@ -16,8 +16,6 @@
 #include "esp_log.h"
 #include "esp_http_server.h"
 
-#if CONFIG_SENDER
-
 static const char *TAG = "SERVER";
 
 extern MessageBufferHandle_t xMessageBufferRecv;
@@ -45,7 +43,11 @@ static esp_err_t root_post_handler(httpd_req_t *req)
 
 	/* Log data received */
 	ESP_LOGI(TAG, "%.*s", req->content_len, buf);
-	size_t sended = xMessageBufferSend(xMessageBufferRecv, buf, req->content_len, portMAX_DELAY);
+
+	// Queries a message buffer to see how much free space it contains
+	size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferRecv );
+	ESP_LOGI(TAG, "spacesAvailable=%d", spacesAvailable);
+	size_t sended = xMessageBufferSend(xMessageBufferRecv, buf, req->content_len, 100);
 	if (sended != req->content_len) {
 		ESP_LOGE(TAG, "xMessageBufferSend fail. sended=%d req->content_len=%d", sended, req->content_len);
 	}
@@ -116,4 +118,3 @@ void http_server(void *pvParameters)
 	ESP_ERROR_CHECK(start_server(port));
 	vTaskDelete(NULL);
 }
-#endif
