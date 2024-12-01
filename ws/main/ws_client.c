@@ -1,4 +1,5 @@
-/*	WebSocket Client Example
+/*
+	WebSocket Client Example
 
 	This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -19,17 +20,12 @@
 #include "freertos/message_buffer.h"
 #include "esp_event.h"
 #include "esp_log.h"
-#include "esp_transport_ws.h"
+//#include "esp_transport_ws.h"
 #include "esp_websocket_client.h"
-
-#define TIMEOUT_SEC 5
-#define TIMEOUT_VAL 0x255
 
 static const char *TAG = "CLIENT";
 
 extern MessageBufferHandle_t xMessageBufferTrans;
-
-static TimerHandle_t timeout_signal_timer;
 
 typedef struct {
 	TaskHandle_t taskHandle;
@@ -39,15 +35,6 @@ typedef struct {
 	int payload_offset;
 	char data[256];
 } SOCKET_t;
-
-static void timer_cb(TimerHandle_t xTimer)
-{
-	TaskHandle_t taskHandle = ( TaskHandle_t ) pvTimerGetTimerID( xTimer );
-	ESP_LOGI(pcTaskGetName(NULL), "taskHandle=0x%x", (unsigned int)taskHandle);
-	//ESP_LOGI(pcTaskGetName(NULL), "timer_cb taskHandle=%d", (int)taskHandle);
-	ESP_LOGI(pcTaskGetName(NULL), "No data received for %d seconds", TIMEOUT_SEC);
-	xTaskNotify( taskHandle, TIMEOUT_VAL, eSetValueWithOverwrite );
-}
 
 #if 0
 typedef enum ws_transport_opcodes {
@@ -67,7 +54,7 @@ static void websocket_event_handler(void *handler_args, esp_event_base_t base, i
 {
 	esp_websocket_event_data_t *data = (esp_websocket_event_data_t *)event_data;
 	SOCKET_t *socketBuf = data->user_context;
-	ESP_LOGI(TAG, "taskHandle=0x%x", (unsigned int)socketBuf->taskHandle);
+	ESP_LOGI(TAG, "taskHandle=0x%x event_id=0x%"PRIx32, (unsigned int)socketBuf->taskHandle, event_id);
 	switch (event_id) {
 	case WEBSOCKET_EVENT_CONNECTED:
 		ESP_LOGI(TAG, "WEBSOCKET_EVENT_CONNECTED");
@@ -93,7 +80,9 @@ static void websocket_event_handler(void *handler_args, esp_event_base_t base, i
 		}
 
 		if (data->op_code == WS_TRANSPORT_OPCODES_TEXT) {
+			ESP_LOGI(TAG, "Received text data->data_len=%d", data->data_len);
 			ESP_LOGD(TAG, "Total payload length=%d, data_len=%d, current payload offset=%d", data->payload_len, data->data_len, data->payload_offset);
+			ESP_LOG_BUFFER_HEXDUMP(TAG, data->data_ptr, data->data_len, ESP_LOG_INFO);
 			socketBuf->data_len = data->data_len;
 			socketBuf->op_code = data->op_code;
 			socketBuf->payload_len = data->payload_len;
@@ -107,6 +96,7 @@ static void websocket_event_handler(void *handler_args, esp_event_base_t base, i
 		break;
 	case WEBSOCKET_EVENT_ERROR:
 		ESP_LOGI(TAG, "WEBSOCKET_EVENT_ERROR");
+		xTaskNotify( socketBuf->taskHandle, event_id, eSetValueWithOverwrite );
 		break;
 	}
 }
@@ -128,10 +118,6 @@ void ws_client(void *pvParameters)
 	ESP_LOGI(TAG, "url=[%s]", url);
 
 	TaskHandle_t taskHandle = xTaskGetCurrentTaskHandle();
-	ESP_LOGI(TAG, "taskHandle=0x%x", (unsigned int)taskHandle);
-	timeout_signal_timer = xTimerCreate("timer", TIMEOUT_SEC * 1000 / portTICK_PERIOD_MS,
-		pdFALSE, taskHandle, timer_cb);
-
 	SOCKET_t socketBuf;
 	socketBuf.taskHandle = taskHandle;
 	esp_websocket_client_config_t websocket_cfg = {};
@@ -140,6 +126,7 @@ void ws_client(void *pvParameters)
 #if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0))
 	websocket_cfg.reconnect_timeout_ms = 10000;
 	websocket_cfg.network_timeout_ms = 10000;
+	websocket_cfg.ping_interval_sec = 60;
 #endif
 
 	ESP_LOGI(TAG, "Connecting to %s...", websocket_cfg.uri);
@@ -150,7 +137,8 @@ void ws_client(void *pvParameters)
 	esp_websocket_client_start(client);
 	while(1) {
 		if (esp_websocket_client_is_connected(client)) break;
-		vTaskDelay(1);
+		ESP_LOGW(TAG, "waiting for server to start");
+		vTaskDelay(100);
 	}
 	ESP_LOGI(TAG, "Connected to %s...", websocket_cfg.uri);
 
@@ -159,28 +147,46 @@ void ws_client(void *pvParameters)
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buffer, sizeof(buffer), portMAX_DELAY);
 		ESP_LOGI(TAG, "xMessageBufferReceive received=%d", received);
 		if (received > 0) {
+#if 0
+			// WebSockets can only handle printable characters.
+			// Therefore, determine whether the characters are printable.
+			bool printable = true;
+			for (int i=0;i<received;i++) {
+				int c = buffer[i];
+				if (!isprint(c)) printable = false;
+			}
+			ESP_LOGI(TAG, "printable=%d", printable);
+			if (!printable) {
+				ESP_LOGW(TAG, "Contains characters that cannot be printed");
+				continue;
+			}
+#endif
+
 			ESP_LOGI(TAG, "xMessageBufferReceive buffer=[%.*s]",received, buffer);
 			if (esp_websocket_client_is_connected(client)) {
-				xTimerStart(timeout_signal_timer, portMAX_DELAY);
-				esp_websocket_client_send_text(client, buffer, received, portMAX_DELAY);
-				uint32_t event_id = ulTaskNotifyTake( pdTRUE, portMAX_DELAY );
-				ESP_LOGI(TAG, "ulTaskNotifyTake=0x%"PRIx32, event_id);
-				if (event_id != TIMEOUT_VAL) {
-					ESP_LOGI(TAG, "Receiving op_code=%d data_len=%d", socketBuf.op_code, socketBuf.data_len);
-					ESP_LOGI(TAG, "DATA=[%.*s]\r", socketBuf.data_len, socketBuf.data);
-					if (socketBuf.op_code == WS_TRANSPORT_OPCODES_CLOSE) break;
-				} else {
-					ESP_LOGW(TAG, "Receive timeout");
+				ESP_LOGI(TAG, "esp_websocket_client_send_text");
+				int sended = esp_websocket_client_send_text(client, buffer, received, portMAX_DELAY);
+				if (sended != received) {
+					ESP_LOGE(TAG," esp_websocket_client_send_text fail sended=%d received=%d", sended, received);
+					break;
 				}
-				xTimerStop(timeout_signal_timer, 100);
+
+				// Wait for response from server
+				uint32_t event_id = ulTaskNotifyTake( pdTRUE, 100 );
+				ESP_LOGI(TAG, "ulTaskNotifyTake=0x%"PRIx32, event_id);
+				if (event_id != WEBSOCKET_EVENT_DATA) {
+					ESP_LOGE(TAG, "No response from server");
+					break;
+				}
 			} else {
 				ESP_LOGW(TAG, "Not connected server");
+				break;
 			}
 		} else {
 			 ESP_LOGE(TAG, "xMessageBufferReceive fail");
 			 break;
-		} // end while
-	}
+		}
+	} // end while
 
 	// Stop connection
 	// stops ws client and closes TCP connection directly with sending close frames.
