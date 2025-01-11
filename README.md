@@ -79,15 +79,12 @@ Maximum power level is 10dBm.
 |Current Consumption|26.9mA|29.1mA|32.4mA|31.8mA|
 
 # The frequency used by the transceiver   
-A 433MHz transceiver can only communicate with other 433MHz transceivers.   
-Even if you change the settings of a 433MHz transceiver, it will not be able to communicate with 868/915MHz transceivers.   
 The frequency used by the transceiver is determined by the XOSC (crystal oscillator) implemented in the hardware.   
 The XOSC (Crystal Oscillator) is a small silver component on the board.   
+Many transceivers are equipped with a 26MHz XOSC.   
 ![280566405-0ece5072-8645-49df-a494-c6470e75cafc](https://github.com/user-attachments/assets/dd3f9079-517b-4bae-a8d8-72e857acd028)
 
 The frequency used by the transceiver is determined by the XOSC frequency and registers value.   
-Please refer to the CC1101 datasheet for how to calculate the frequency used.   
-
 ```
 Fcarrier = { Fxosc / 2**16 } * FREQ[23:0]
 
@@ -96,12 +93,18 @@ Fxosc is the XOSC frequency
 FREQ[23:0] is the register value
 ```
 
-Even if FREQ[23:0] has the same value, Fcarrier is different because Fxos is different between 433MHz transceivers and 868/915MHz transceivers.
+This library uses the following register values:
+- 315MHz
+ Fcarrier = { 26MHz / 2**16 } * 0x0C1D89 = 314.999664MHz
 
-```
-Fcarrier1 = { 433MHz's_Fxosc / 2**16 } * FREQ[23:0]
-Fcarrier2 = { 868MHz's_Fxosc / 2**16 } * FREQ[23:0]
-```
+- 433MHz
+ Fcarrier = { 26MHz / 2**16 } * 0x10A762 = 432.999817MHz
+
+- 868MHz
+ Fcarrier = { 26MHz / 2**16 } * 0x216276 = 867.999939MHz
+
+- 915MHz
+ Fcarrier = { 26MHz / 2**16 } * 0x23313B = 914.999969MHz
 
 # SPI BUS selection   
 ![config-cc1101-5](https://user-images.githubusercontent.com/6020549/167520086-e74c1f25-5c5f-4349-a98f-5248ac9edf50.jpg)
