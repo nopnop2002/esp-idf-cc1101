@@ -80,7 +80,7 @@ Maximum power level is 10dBm.
 
 # The frequency used by the transceiver   
 A 433MHz transceiver can only communicate with other 433MHz transceivers.   
-Even if you change the settings of a 433MHz transceiver, it will not be able to communicate with non-433MHz transceivers.   
+Even if you change the settings of a 433MHz transceiver, it will not be able to communicate with 868/915MHz transceivers.   
 The frequency used by the transceiver is determined by the XOSC (crystal oscillator) implemented in the hardware.   
 The XOSC (Crystal Oscillator) is a small silver component on the board.   
 ![280566405-0ece5072-8645-49df-a494-c6470e75cafc](https://github.com/user-attachments/assets/dd3f9079-517b-4bae-a8d8-72e857acd028)
@@ -96,7 +96,7 @@ Fxosc is the XOSC frequency
 FREQ[23:0] is the register value
 ```
 
-Even if FREQ[23:0] has the same value, Fcarrier is different because Fxos is different between 433MHz transceivers and non-433MHz transceivers.
+Even if FREQ[23:0] has the same value, Fcarrier is different because Fxos is different between 433MHz transceivers and 868/915MHz transceivers.
 
 ```
 Fcarrier1 = { 433MHz's_Fxosc / 2**16 } * FREQ[23:0]
