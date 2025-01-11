@@ -90,6 +90,7 @@ Please refer to the CC1101 datasheet for how to calculate the frequency used.
 
 ```
 Fcarrier = { Fxosc / 2**16 } * FREQ[23:0]
+
 Fcarrier is the frequency to be used
 Fxosc is the XOSC frequency
 FREQ[23:0] is the register value
