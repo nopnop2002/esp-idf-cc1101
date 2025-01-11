@@ -18,6 +18,9 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
 ![CC1101-868MHz-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/f153ecad-5e96-4e27-a61f-95b3bc1b8214)
 
+A 433MHz transceivers typically support frequencies from 410MHz to 450MHz.   
+A 868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
+
 # Changes from the original   
 - The 918MHz setting has been abolished.   
 - Added 355MHz setting.   
