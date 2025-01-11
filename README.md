@@ -94,16 +94,16 @@ FREQ[23:0] is the register value
 ```
 
 This library uses the following register values:
-- 315MHz
+- 315MHz   
  Fcarrier = { 26MHz / 2**16 } * 0x0C1D89 = 314.999664MHz
 
-- 433MHz
+- 433MHz   
  Fcarrier = { 26MHz / 2**16 } * 0x10A762 = 432.999817MHz
 
-- 868MHz
+- 868MHz   
  Fcarrier = { 26MHz / 2**16 } * 0x216276 = 867.999939MHz
 
-- 915MHz
+- 915MHz   
  Fcarrier = { 26MHz / 2**16 } * 0x23313B = 914.999969MHz
 
 # SPI BUS selection   
