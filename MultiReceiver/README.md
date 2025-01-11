@@ -2,7 +2,7 @@
 
 CC1101 can communicate with devices that have the same synchronization word.   
 In other words, it cannot communicate with devices that have a different synchronization word.   
-Using this function allows you to communicate with multiple devices.   
+Using this function allows you to communicate with a specific device.   
 
 - Receiver1
 ```
