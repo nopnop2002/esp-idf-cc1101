@@ -85,8 +85,8 @@ The frequency used by the transceiver is determined by the XOSC (crystal oscilla
 The XOSC (Crystal Oscillator) is a small silver component on the board.   
 ![280566405-0ece5072-8645-49df-a494-c6470e75cafc](https://github.com/user-attachments/assets/dd3f9079-517b-4bae-a8d8-72e857acd028)
 
-The frequency used by the transceiver is determined by the XOSC frequency and registers value.
-Please refer to the CC1101 datasheet for how to calculate the frequency used.
+The frequency used by the transceiver is determined by the XOSC frequency and registers value.   
+Please refer to the CC1101 datasheet for how to calculate the frequency used.   
 
 ```
 Fcarrier = { Fxosc / 2**16 } * FREQ[23:0]
