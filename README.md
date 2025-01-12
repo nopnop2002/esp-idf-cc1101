@@ -22,7 +22,7 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 
 # Changes from the original   
 - The 918MHz setting has been abolished.   
-- Added 355MHz setting.   
+- Added 315MHz setting.   
 - TX power setting was changed.   
 
 # Software requirements
