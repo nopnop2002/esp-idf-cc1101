@@ -91,22 +91,22 @@ static uint8_t _powerMax;
  * Macros
  */
 // Select (SPI) CC1101
-//#define cc1101_Select()  digitalWrite(SS, LOW)
-#define cc1101_Select()  gpio_set_level(CONFIG_CSN_GPIO, LOW)
+//#define cc1101_Select() digitalWrite(SS, LOW)
+#define cc1101_Select() gpio_set_level(CONFIG_CSN_GPIO, LOW)
 // Deselect (SPI) CC1101
-//#define cc1101_Deselect()  digitalWrite(SS, HIGH)
-#define cc1101_Deselect()  gpio_set_level(CONFIG_CSN_GPIO, HIGH)
+//#define cc1101_Deselect() digitalWrite(SS, HIGH)
+#define cc1101_Deselect() gpio_set_level(CONFIG_CSN_GPIO, HIGH)
 // Wait until SPI MISO line goes low
-//#define wait_Miso()  while(digitalRead(MISO)>0)
-#define wait_Miso()  while(gpio_get_level(CONFIG_MISO_GPIO)>0)
-//#define wait_Miso()  (void)0
+//#define wait_Miso() while(digitalRead(MISO)>0)
+#define wait_Miso() while(gpio_get_level(CONFIG_MISO_GPIO)>0)
+//#define wait_Miso() (void)0
 // Get GDO0 pin state
-//#define getGDO0state()	digitalRead(GDO0)
-#define getGDO0state()	gpio_get_level(CONFIG_GDO0_GPIO)
+//#define getGDO0state() digitalRead(GDO0)
+#define getGDO0state()gpio_get_level(CONFIG_GDO0_GPIO)
 // Wait until GDO0 line goes high
-#define wait_GDO0_high()	while(!getGDO0state())
+#define wait_GDO0_high() while(!getGDO0state())
 // Wait until GDO0 line goes low
-#define wait_GDO0_low()  while(getGDO0state())
+#define wait_GDO0_low() while(getGDO0state())
 
 /**
  * Arduino Macros
@@ -212,9 +212,9 @@ uint8_t spi_transfer(uint8_t address)
  */
 void wakeUp(void)
 {
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Select();			// Select CC1101
+	wait_Miso();				// Wait until MISO goes low
+	cc1101_Deselect();			// Deselect CC1101
 }
 
 /**
@@ -227,11 +227,11 @@ void wakeUp(void)
  */
 void writeReg(byte regAddr, byte value) 
 {
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(regAddr);								// Send register address
-	spi_transfer(value);									// Send value
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Select();			// Select CC1101
+	wait_Miso();				// Wait until MISO goes low
+	spi_transfer(regAddr);			// Send register address
+	spi_transfer(value);			// Send value
+	cc1101_Deselect();			// Deselect CC1101
 }
 
 /**
@@ -247,15 +247,15 @@ void writeBurstReg(byte regAddr, byte* buffer, byte len)
 {
 	byte addr, i;
 	
-	addr = regAddr | WRITE_BURST;					// Enable burst transfer
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(addr);										// Send register address
+	addr = regAddr | WRITE_BURST;		// Enable burst transfer
+	cc1101_Select();			// Select CC1101
+	wait_Miso();				// Wait until MISO goes low
+	spi_transfer(addr);			// Send register address
 	
 	for(i=0 ; i<len ; i++)
-		spi_transfer(buffer[i]);						// Send value
+		spi_transfer(buffer[i]);	// Send value
 
-	cc1101_Deselect();										// Deselect CC1101	
+	cc1101_Deselect();			// Deselect CC1101	
 }
 
 /**
@@ -267,10 +267,10 @@ void writeBurstReg(byte regAddr, byte* buffer, byte len)
  */			
 void cmdStrobe(byte cmd) 
 {
-	cc1101_Select();	// Select CC1101
-	wait_Miso();		// Wait until MISO goes low
-	spi_transfer(cmd);	// Send strobe command
-	cc1101_Deselect();	// Deselect CC1101
+	cc1101_Select();			// Select CC1101
+	wait_Miso();				// Wait until MISO goes low
+	spi_transfer(cmd);			// Send strobe command
+	cc1101_Deselect();			// Deselect CC1101
 }
 
 /**
@@ -292,7 +292,7 @@ byte readReg(byte regAddr, byte regType)
 	cc1101_Select();			// Select CC1101
 	wait_Miso();				// Wait until MISO goes low
 	spi_transfer(addr);			// Send register address
-	val = spi_transfer(0x00);	// Read result
+	val = spi_transfer(0x00);		// Read result
 	cc1101_Deselect();			// Deselect CC1101
 
 	return val;
@@ -312,12 +312,12 @@ void readBurstReg(byte * buffer, byte regAddr, byte len)
 	byte addr, i;
 	
 	addr = regAddr | READ_BURST;
-	cc1101_Select();											// Select CC1101
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(addr);										// Send register address
+	cc1101_Select();				// Select CC1101
+	wait_Miso();					// Wait until MISO goes low
+	spi_transfer(addr);				// Send register address
 	for(i=0 ; i<len ; i++)
-		buffer[i] = spi_transfer(0x00);			// Read result byte by byte
-	cc1101_Deselect();										// Deselect CC1101
+		buffer[i] = spi_transfer(0x00);		// Read result byte by byte
+	cc1101_Deselect();				// Deselect CC1101
 }
 
 /**
@@ -327,21 +327,21 @@ void readBurstReg(byte * buffer, byte regAddr, byte len)
  */
 void reset(void) 
 {
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Deselect();				// Deselect CC1101
 	delayMicroseconds(5);
-	cc1101_Select();											// Select CC1101
+	cc1101_Select();				// Select CC1101
 	delayMicroseconds(10);
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Deselect();				// Deselect CC1101
 	delayMicroseconds(41);
-	cc1101_Select();											// Select CC1101
+	cc1101_Select();				// Select CC1101
 
-	wait_Miso();													// Wait until MISO goes low
-	spi_transfer(CC1101_SRES);						// Send reset command strobe
-	wait_Miso();													// Wait until MISO goes low
+	wait_Miso();					// Wait until MISO goes low
+	spi_transfer(CC1101_SRES);			// Send reset command strobe
+	wait_Miso();					// Wait until MISO goes low
 
-	cc1101_Deselect();										// Deselect CC1101
+	cc1101_Deselect();				// Deselect CC1101
 
-	setCCregs();													// Reconfigure CC1101
+	setCCregs();					// Reconfigure CC1101
 }
 
 /**
@@ -654,8 +654,8 @@ bool sendData(CCPACKET packet)
 	// Check that the RX state has been entered
 	while (tries++ < 1000 && ((marcState = readStatusReg(CC1101_MARCSTATE)) & 0x1F) != 0x0D)
 	{
-		if (marcState == 0x11)				// RX_OVERFLOW
-			flushRxFifo();							// flush receive queue
+		if (marcState == 0x11)		// RX_OVERFLOW
+			flushRxFifo();		// flush receive queue
 	}
 	if (tries >= 1000) {
 		// TODO: MarcState sometimes never enters the expected state; this is a hack workaround.
@@ -679,9 +679,9 @@ bool sendData(CCPACKET packet)
 	marcState = readStatusReg(CC1101_MARCSTATE) & 0x1F;
 	if((marcState != 0x13) && (marcState != 0x14) && (marcState != 0x15))
 	{
-		setIdleState();				// Enter IDLE state
-		flushTxFifo();				// Flush Tx FIFO
-		setRxState();					// Back to RX state
+		setIdleState();		// Enter IDLE state
+		flushTxFifo();		// Flush Tx FIFO
+		setRxState();		// Back to RX state
 
 		// Declare to be in Rx state
 		_rfState = RFSTATE_RX;
@@ -701,8 +701,8 @@ bool sendData(CCPACKET packet)
 	if((readStatusReg(CC1101_TXBYTES) & 0x7F) == 0)
 		res = true;
 
-	setIdleState();				// Enter IDLE state
-	flushTxFifo();				// Flush Tx FIFO
+	setIdleState();		// Enter IDLE state
+	flushTxFifo();		// Flush Tx FIFO
 
 	// Enter back into RX state
 	setRxState();
