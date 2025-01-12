@@ -4,22 +4,24 @@ CC1101 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
 I based it on [this](https://github.com/veonik/arduino-cc1101).
 
 - 433MHz module(2.54mm pitch)
+ The supported frequency bands are unknown.   
  ![CC1101-433MHz-2 54mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5b0f350-5e1f-4487-b00c-2e1b2d7d696d)
 
 - ebyte E07-M1101D-SMA 433MHz module(2.54mm pitch)   
- The documentation is [here](https://www.cdebyte.com/products/E07-M1101D-SMA).   
+ The official documentation is [here](https://www.cdebyte.com/products/E07-M1101D-SMA).   
  Support frequencies from 387MHz to 464MHz.   
  ![CC1101-433MHz-2 54mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/0ece5072-8645-49df-a494-c6470e75cafc)
  ![CC1101-433MHz-2 54mm-2-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/0ccba0a5-dcc4-4687-93d2-5ce02940a179)
 
 - 433MHz module(1.27mm pitch)
+ The supported frequency bands are unknown.   
  ![CC1101-433MHz-1 27mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/414c1b08-43c3-4998-ac81-f0d3006d2699)
  ![CC1101-433MHz-1 27mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/9b555215-848d-4b85-a8ce-9e6481c9d953)
 
 - 868MHz module(2mm pitch)
+ 868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
  ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
  ![CC1101-868MHz-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/f153ecad-5e96-4e27-a61f-95b3bc1b8214)
- 868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
 
 # Changes from the original   
 - The 918MHz setting has been abolished.   
