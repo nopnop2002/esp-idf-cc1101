@@ -23,6 +23,11 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  ![CC1101-433MHz-1 27mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/414c1b08-43c3-4998-ac81-f0d3006d2699)
  ![CC1101-433MHz-1 27mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/9b555215-848d-4b85-a8ce-9e6481c9d953)
 
+- EBYTE E07-900M10S 868/915MHz(1.27mm pitch)   
+ The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-900M10S).   
+ Support frequencies from 855MHz to 925MHz.   
+ ![Image](https://github.com/user-attachments/assets/3e1cd7e1-e81f-4f42-8e34-fc87a6c9ebaf)
+
 - 868MHz module(2mm pitch)   
  868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
  ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
