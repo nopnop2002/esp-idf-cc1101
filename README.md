@@ -151,8 +151,8 @@ You can order the PCB yourself using the publicly available Gerber files.
 
 ![Image](https://github.com/user-attachments/assets/44e33542-1f0a-4356-8b22-fc4ed0933bd3)
 
+You can download gerbers file from [here](https://www.pcbway.com/project/shareproject/EBYTE_SPI_LoRa_module_pitch_converter_6c8c2ec2.html).    
 You can repeat my order from [here](https://www.pcbway.com/project/shareproject/EBYTE_SPI_LoRa_module_pitch_converter_6c8c2ec2.html).    
-![PCBWAY-Product-Detail](https://user-images.githubusercontent.com/6020549/221338443-f41ff9bc-7bdd-4623-8f12-cddb5fa80613.jpg)
 
 
 # Communication with another library   
