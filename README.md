@@ -144,6 +144,16 @@ __You can change it to any pin using menuconfig.__
 __GDO0 needs to be able to use interrupts.__   
 __Some GPIOs cannot use interrupts.__   
 
+# EBYTE SMD PCB   
+EBYTE's SPI module is a 1.27mm pitch SMD module.   
+So I designed a conversion board that converts from 1.27mm pitch to 2.54mm pitch.   
+You can order the PCB yourself using the publicly available Gerber files.   
+
+![Image](https://github.com/user-attachments/assets/44e33542-1f0a-4356-8b22-fc4ed0933bd3)
+
+You can repeat my order from [here](https://www.pcbway.com/project/shareproject/EBYTE_SPI_LoRa_module_pitch_converter_6c8c2ec2.html).    
+![PCBWAY-Product-Detail](https://user-images.githubusercontent.com/6020549/221338443-f41ff9bc-7bdd-4623-8f12-cddb5fa80613.jpg)
+
 
 # Communication with another library   
 Basically, communication between applications with different register values is not guaranteed.   
