@@ -26,6 +26,8 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 
 - 433MHz module(1.27mm pitch)   
  The supported frequency bands are unknown.   
+ 315MHz and 433MHz can be used.   
+ GOD1 is MISO.   
  ![CC1101-433MHz-1 27mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/414c1b08-43c3-4998-ac81-f0d3006d2699)
  ![CC1101-433MHz-1 27mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/9b555215-848d-4b85-a8ce-9e6481c9d953)
 
