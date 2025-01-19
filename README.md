@@ -8,8 +8,8 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  Supports frequencies from 410MHz to 450MHz.   
  ![Image](https://github.com/user-attachments/assets/e49d90fb-6bf8-4976-9b6e-f15d75e20c6d)
 
-- 315/433/868/915MHz module(2.54mm pitch)   
- Supported frequencies are 300-348MHz, 400-464MHz, and 800-928MHz.   
+- 315/433MHz module(2.54mm pitch)   
+ Supported frequencies are 300-348MHz and 400-464MHz.   
  ![CC1101-433MHz-2 54mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5b0f350-5e1f-4487-b00c-2e1b2d7d696d)
 
 - EBYTE E07-M1101D-SMA 433MHz module(2.54mm pitch)   
