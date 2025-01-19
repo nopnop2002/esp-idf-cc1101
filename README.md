@@ -8,7 +8,7 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  Supports frequencies from 410MHz to 450MHz.   
  ![Image](https://github.com/user-attachments/assets/e49d90fb-6bf8-4976-9b6e-f15d75e20c6d)
 
-- 315/433MHz module(2.54mm pitch)   
+- HW-862 315/433MHz module(2.54mm pitch)   
  Supported frequencies are 300-348MHz and 400-464MHz.   
  ![CC1101-433MHz-2 54mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5b0f350-5e1f-4487-b00c-2e1b2d7d696d)
 
@@ -24,7 +24,7 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  ![Image](https://github.com/user-attachments/assets/337c182d-ecaa-4017-83fc-00ea0d601c57)
  ![Image](https://github.com/user-attachments/assets/e89fffbd-0d6c-45b9-a0c2-8fa957206ec2)
 
-- 433MHz module(1.27mm pitch)   
+- AS07-M1101S 433MHz module(1.27mm pitch)   
  The supported frequency bands are unknown.   
  315MHz and 433MHz can be used.   
  GOD1 is MISO.   
@@ -36,7 +36,7 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  Supports frequencies from 855MHz to 925MHz.   
  ![Image](https://github.com/user-attachments/assets/3e1cd7e1-e81f-4f42-8e34-fc87a6c9ebaf)
 
-- 868MHz module(2mm pitch)   
+- CC11010 868MHz module(2mm pitch)   
  The supported frequency bands are unknown.   
  868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
  ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
