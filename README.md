@@ -5,22 +5,22 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 
 - EBYTE E07-400M10S 433MHz(1.27mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-400M10S).   
- Support frequencies from 410MHz to 450MHz.   
+ Supports frequencies from 410MHz to 450MHz.   
  ![Image](https://github.com/user-attachments/assets/e49d90fb-6bf8-4976-9b6e-f15d75e20c6d)
 
-- 433MHz module(2.54mm pitch)   
- The supported frequency bands are unknown.   
+- 315/433/868/915MHz module(2.54mm pitch)   
+ Supported frequencies are 300-348MHz, 400-464MHz, and 800-928MHz.   
  ![CC1101-433MHz-2 54mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5b0f350-5e1f-4487-b00c-2e1b2d7d696d)
 
 - EBYTE E07-M1101D-SMA 433MHz module(2.54mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-M1101D-SMA).   
- Support frequencies from 387MHz to 464MHz.   
+ Supports frequencies from 387MHz to 464MHz.
  ![Image](https://github.com/user-attachments/assets/0e30ee88-6e3d-4418-ab56-dec81e8ff6d3)
  ![Image](https://github.com/user-attachments/assets/e89fffbd-0d6c-45b9-a0c2-8fa957206ec2)
 
 - EBYTE E07-M1101D-TH 433MHz module(2.54mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-M1101D-TH).   
- Support frequencies from 387MHz to 464MHz.   
+ Supports frequencies from 387MHz to 464MHz.   
  ![Image](https://github.com/user-attachments/assets/337c182d-ecaa-4017-83fc-00ea0d601c57)
  ![Image](https://github.com/user-attachments/assets/e89fffbd-0d6c-45b9-a0c2-8fa957206ec2)
 
@@ -31,10 +31,11 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
 
 - EBYTE E07-900M10S 868/915MHz(1.27mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-900M10S).   
- Support frequencies from 855MHz to 925MHz.   
+ Supports frequencies from 855MHz to 925MHz.   
  ![Image](https://github.com/user-attachments/assets/3e1cd7e1-e81f-4f42-8e34-fc87a6c9ebaf)
 
 - 868MHz module(2mm pitch)   
+ The supported frequency bands are unknown.   
  868MHz transceivers typically support frequencies from 855MHz to 925MHz.   
  ![CC1101-868MHz](https://user-images.githubusercontent.com/6020549/162899066-cc1234a0-7e9d-4427-a779-601b107ddf87.JPG)
  ![CC1101-868MHz-pinout](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/f153ecad-5e96-4e27-a61f-95b3bc1b8214)
