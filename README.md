@@ -3,7 +3,7 @@ CC1101 Low-Power Sub-1 GHz RF Transceiver driver for esp-idf.
 
 I based it on [this](https://github.com/veonik/arduino-cc1101).
 
-- EBYTE E07-400M10S 433MHz(1.27mm pitch)   
+- EBYTE E07-400M10S 433MHz module(1.27mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-400M10S).   
  Supports frequencies from 410MHz to 450MHz.   
  ![Image](https://github.com/user-attachments/assets/e49d90fb-6bf8-4976-9b6e-f15d75e20c6d)
@@ -31,7 +31,7 @@ I based it on [this](https://github.com/veonik/arduino-cc1101).
  ![CC1101-433MHz-1 27mm-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/414c1b08-43c3-4998-ac81-f0d3006d2699)
  ![CC1101-433MHz-1 27mm-2](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/9b555215-848d-4b85-a8ce-9e6481c9d953)
 
-- EBYTE E07-900M10S 868/915MHz(1.27mm pitch)   
+- EBYTE E07-900M10S 868/915MHz module(1.27mm pitch)   
  The official Product Descriptio is [here](https://www.cdebyte.com/products/E07-900M10S).   
  Supports frequencies from 855MHz to 925MHz.   
  ![Image](https://github.com/user-attachments/assets/3e1cd7e1-e81f-4f42-8e34-fc87a6c9ebaf)
