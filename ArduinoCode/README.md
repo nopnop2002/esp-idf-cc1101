@@ -24,3 +24,22 @@ CC1101 is not 5V tolerant.
 You need level shift from 5V to 3.3V.   
 I used [this](https://www.ti.com/lit/ds/symlink/txs0108e.pdf?ts=1647593549503) for a level shift.   
 
+# Configuration
+
+- Radio frequency   
+ Specifies the frequency to be used.
+```
+radio.setCarrierFreq(CFREQ_433);
+```
+
+- Radio channel   
+ Specifies the channel to be used.
+```
+radio.setChannel(0);
+```
+
+- PA power setting   
+ Specifies the PA power to be used.
+```
+radio.setTxPowerAmp(PA_LongDistance);
+```
