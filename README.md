@@ -183,6 +183,31 @@ These settings may differ.
 You need to use [this](https://github.com/veonik/arduino-cc1101) when communicating with the Arduino environment.   
 Communication with other libraries is not guaranteed.   
 
+# How to use this component in your project   
+Create idf_component.yml in the same directory as main.c.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+                         +-- CMakeLists.txt
+                         +-- idf_component.yml
+```
+
+Contents of idf_component.yml.
+```
+dependencies:
+  nopnop2002/cc1101:
+    path: components/cc1101/
+    git: https://github.com/nopnop2002/esp-idf-cc1101.git
+```
+
+When you build a projects esp-idf will automaticly fetch repository to managed_components dir and link with your code.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+              |          +-- CMakeLists.txt
+              |          +-- idf_component.yml
+              +-- managed_components ----- nopnop2002__cc1101
+```
 
 # Comparison of cc2500 and cc1101
 ||cc2500|cc1101|
