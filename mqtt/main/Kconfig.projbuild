@@ -132,6 +132,7 @@ menu "Application Configuration"
 			default "/topic/radio/test"
 			help
 				Topic of subscribe
+
 		config BROKER_AUTHENTICATION
 			bool "Server requests for password when connecting"
 			default false
