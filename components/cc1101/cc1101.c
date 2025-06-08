@@ -156,6 +156,7 @@ void spi_init() {
 	assert(ret==ESP_OK);
 }
 
+#if 0
 bool spi_write_byte(uint8_t* Dataout, size_t DataLength )
 {
 	spi_transaction_t SPITransaction;
@@ -185,6 +186,7 @@ bool spi_read_byte(uint8_t* Datain, uint8_t* Dataout, size_t DataLength )
 
 	return true;
 }
+#endif
 
 uint8_t spi_transfer(uint8_t address)
 {
@@ -229,8 +231,8 @@ void writeReg(byte regAddr, byte value)
 {
 	cc1101_Select();			// Select CC1101
 	wait_Miso();				// Wait until MISO goes low
-	spi_transfer(regAddr);			// Send register address
-	spi_transfer(value);			// Send value
+	spi_transfer(regAddr);		// Send register address
+	spi_transfer(value);		// Send value
 	cc1101_Deselect();			// Deselect CC1101
 }
 
@@ -247,15 +249,15 @@ void writeBurstReg(byte regAddr, byte* buffer, byte len)
 {
 	byte addr, i;
 	
-	addr = regAddr | WRITE_BURST;		// Enable burst transfer
-	cc1101_Select();			// Select CC1101
-	wait_Miso();				// Wait until MISO goes low
-	spi_transfer(addr);			// Send register address
+	addr = regAddr | WRITE_BURST;	// Enable burst transfer
+	cc1101_Select();				// Select CC1101
+	wait_Miso();					// Wait until MISO goes low
+	spi_transfer(addr);				// Send register address
 	
 	for(i=0 ; i<len ; i++)
 		spi_transfer(buffer[i]);	// Send value
 
-	cc1101_Deselect();			// Deselect CC1101	
+	cc1101_Deselect();				// Deselect CC1101	
 }
 
 /**
@@ -292,7 +294,7 @@ byte readReg(byte regAddr, byte regType)
 	cc1101_Select();			// Select CC1101
 	wait_Miso();				// Wait until MISO goes low
 	spi_transfer(addr);			// Send register address
-	val = spi_transfer(0x00);		// Read result
+	val = spi_transfer(0x00);	// Read result
 	cc1101_Deselect();			// Deselect CC1101
 
 	return val;

@@ -29,8 +29,8 @@
 /**
  * Buffer and data lengths
  */
-#define CCPACKET_BUFFER_LEN				 64
-#define CCPACKET_DATA_LEN					 CCPACKET_BUFFER_LEN - 3
+#define CCPACKET_BUFFER_LEN 64
+#define CCPACKET_DATA_LEN   CCPACKET_BUFFER_LEN - 3
 
 /**
  * Class: CCPACKET
