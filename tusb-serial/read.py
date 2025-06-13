@@ -26,6 +26,7 @@ if __name__=='__main__':
 		print("Unable to open {}".format(args.device))
 		sys.exit()
 
+	ser.reset_input_buffer()
 	while running:
 		msg = ser.readline()
 		#print(len(msg))
