@@ -39,7 +39,7 @@ ESP32-S2/S3 BOARD          USB CONNECTOR
 
 
 # Configuration
-![config-top](https://github.com/user-attachments/assets/64725b68-2185-4848-9e90-34f47decb81d)
+![Image](https://github.com/user-attachments/assets/92b41987-8679-4af1-bfaf-e5bec05c76f8)
 
 ### USB to Radio
 Receive from USB and send to Radio.   
@@ -55,7 +55,7 @@ You can use this script as USB Serial Host for writing.
             +---------------+          +---------------+          +---------------+
 ```
 
-![config-radio-1](https://github.com/user-attachments/assets/6b75c21a-5cec-4af8-8b75-f6a541d4900a)
+![Image](https://github.com/user-attachments/assets/f42de1bb-d8d0-46c0-89f9-bf7013eb0b5b)
 
 Communicate with Arduino Environment.   
 Run this sketch.   
@@ -76,7 +76,7 @@ You can use this script as USB Serial Host for reading.
             +---------------+          +---------------+          +---------------+
 ```
 
-![config-radio-2](https://github.com/user-attachments/assets/0d685209-a8bd-4925-a1e3-4c4add64ca83)
+![Image](https://github.com/user-attachments/assets/43baaab3-170c-4933-8baa-856596e29894)
 
 Communicate with Arduino Environment.   
 Run this sketch.   
