@@ -27,7 +27,7 @@ size_t xItemSize = 65; // Maximum Payload size of CC1101 is 64
 #if CONFIG_SENDER
 void tx_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
 	uint8_t buf[xItemSize];
 	while(1) {
@@ -45,7 +45,7 @@ void tx_task(void *pvParameter)
 		}
 		ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), packet.data, packet.length, ESP_LOG_INFO);
 		sendData(packet);
-		ESP_LOGI(pcTaskGetName(0), "Sent packet. length=%d", packet.length);
+		ESP_LOGI(pcTaskGetName(NULL), "Sent packet. length=%d", packet.length);
 	} // end while
 
 	vTaskDelete( NULL );
@@ -73,21 +73,21 @@ int lqi(char raw) {
 
 void rx_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
 	uint8_t buf[xItemSize];
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
-				ESP_LOGI(pcTaskGetName(0), "Received packet...");
+				ESP_LOGI(pcTaskGetName(NULL), "Received packet...");
 				if (!packet.crc_ok) {
-					ESP_LOGE(pcTaskGetName(0), "crc not ok");
+					ESP_LOGE(pcTaskGetName(NULL), "crc not ok");
 				} else {
-					ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
-					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
-					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(NULL),"packet.lqi: %d", lqi(packet.lqi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.rssi: %ddBm", rssi(packet.rssi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *)packet.data);
+						ESP_LOGI(pcTaskGetName(NULL),"data: %.*s", packet.length, (char *)packet.data);
 						ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), packet.data, packet.length, ESP_LOG_INFO);
 
 						memcpy(buf, packet.data, packet.length);
