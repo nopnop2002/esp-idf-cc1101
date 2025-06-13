@@ -1,5 +1,5 @@
 # VCP Example   
-This is LoRa and VCP(Virtual Com Port) gateway application.   
+This is cc1101 and VCP(Virtual Com Port) gateway application.   
 
 ESP-IDF supports VCP hosts.   
 VCP hosts can communicate with VCP devices using the USB port.   
