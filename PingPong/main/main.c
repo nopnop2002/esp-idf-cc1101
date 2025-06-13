@@ -37,12 +37,12 @@ int lqi(char raw) {
 #if CONFIG_PRIMARY
 void primary_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet_sent;
 	CCPACKET packet_recv;
 	while(1) {
 		packet_sent.length = sprintf((char *)packet_sent.data, "Hello World %"PRIu32, xTaskGetTickCount());
-		ESP_LOGD(pcTaskGetName(0), "packet_sent.length=%d", packet_sent.length);
+		ESP_LOGD(pcTaskGetName(NULL), "packet_sent.length=%d", packet_sent.length);
 		sendData(packet_sent);
 
 		// Wait for a response from the other party
@@ -52,20 +52,20 @@ void primary_task(void *pvParameter)
 			if(packet_available()) {
 				TickType_t respTick = xTaskGetTickCount() - startTick;
 				if (receiveData(&packet_recv) > 0) {
-					ESP_LOGI(pcTaskGetName(0), "Received packet...");
+					ESP_LOGI(pcTaskGetName(NULL), "Received packet...");
 					if (!packet_recv.crc_ok) {
-						ESP_LOGE(pcTaskGetName(0), "crc not ok");
+						ESP_LOGE(pcTaskGetName(NULL), "crc not ok");
 					} else {
-						ESP_LOGI(pcTaskGetName(0),"Responce time: %"PRIu32, respTick);
-						ESP_LOGD(pcTaskGetName(0),"packet_recv.lqi: %d", lqi(packet_recv.lqi));
-						ESP_LOGD(pcTaskGetName(0),"packet_recv.rssi: %ddBm", rssi(packet_recv.rssi));
+						ESP_LOGI(pcTaskGetName(NULL),"Responce time: %"PRIu32, respTick);
+						ESP_LOGD(pcTaskGetName(NULL),"packet_recv.lqi: %d", lqi(packet_recv.lqi));
+						ESP_LOGD(pcTaskGetName(NULL),"packet_recv.rssi: %ddBm", rssi(packet_recv.rssi));
 						if (packet_recv.length == packet_sent.length) {
-							ESP_LOGI(pcTaskGetName(0),"packet_recv.length: %d", packet_recv.length);
-							ESP_LOGI(pcTaskGetName(0),"[%.*s] --> [%.*s]", 
+							ESP_LOGI(pcTaskGetName(NULL),"packet_recv.length: %d", packet_recv.length);
+							ESP_LOGI(pcTaskGetName(NULL),"[%.*s] --> [%.*s]", 
 								packet_sent.length, (char *) packet_sent.data,
 								packet_recv.length, (char *) packet_recv.data);
 						} else {
-							ESP_LOGE(pcTaskGetName(0),"illegal receive packet length %d --> %d", packet_sent.length, packet_recv.length);
+							ESP_LOGE(pcTaskGetName(NULL),"illegal receive packet length %d --> %d", packet_sent.length, packet_recv.length);
 						}
 					}
 					waiting = false;
@@ -73,7 +73,7 @@ void primary_task(void *pvParameter)
 			} // end packet_available
 			TickType_t diffTick = xTaskGetTickCount() - startTick;
 			if (diffTick > 100) {
-				ESP_LOGE(pcTaskGetName(0), "No responce from others");
+				ESP_LOGE(pcTaskGetName(NULL), "No responce from others");
 				waiting = false;
 			}
 			vTaskDelay(1);
@@ -89,20 +89,20 @@ void primary_task(void *pvParameter)
 #if CONFIG_SECONDARY
 void secondary_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
-				ESP_LOGI(pcTaskGetName(0), "Received packet...");
+				ESP_LOGI(pcTaskGetName(NULL), "Received packet...");
 				if (!packet.crc_ok) {
-					ESP_LOGE(pcTaskGetName(0), "crc not ok");
+					ESP_LOGE(pcTaskGetName(NULL), "crc not ok");
 				} else {
-					ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
-					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
-					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(NULL),"packet.lqi: %d", lqi(packet.lqi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.rssi: %ddBm", rssi(packet.rssi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
+						ESP_LOGI(pcTaskGetName(NULL),"data: %.*s", packet.length, (char *) packet.data);
 						for (int i=0;i<packet.length;i++) {
 							if (islower(packet.data[i])) {
 								packet.data[i] = toupper(packet.data[i]);
@@ -111,7 +111,7 @@ void secondary_task(void *pvParameter)
 							}
 						}
 						sendData(packet);
-						ESP_LOGI(pcTaskGetName(0),"send back....");
+						ESP_LOGI(pcTaskGetName(NULL),"send back....");
 					}
 				}
 			} // end receiveData
