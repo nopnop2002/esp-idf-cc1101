@@ -59,7 +59,7 @@ You can use this script as USB Serial Host for writing.
 
 Communicate with Arduino Environment.   
 Run this sketch.   
-ArduinoCode\Ra01S_RX   
+ArduinoCode\CC1101_receive   
 
 
 ### Radio to USB
@@ -80,7 +80,7 @@ You can use this script as USB Serial Host for reading.
 
 Communicate with Arduino Environment.   
 Run this sketch.   
-ArduinoCode\Ra01S_TX   
+ArduinoCode\CC1101_transmitte   
 
 
 # Using Windows Terminal Software
