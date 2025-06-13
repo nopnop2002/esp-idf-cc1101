@@ -180,11 +180,11 @@ void convert_mdns_host(char * from, char * to)
 #if CONFIG_SENDER
 void tx_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
 	while(1) {
 		packet.length = xMessageBufferReceive(xMessageBufferRecv, packet.data, sizeof(packet.data), portMAX_DELAY);
-		ESP_LOGI(pcTaskGetName(0), "packet.length=%d", packet.length);
+		ESP_LOGI(pcTaskGetName(NULL), "packet.length=%d", packet.length);
 		sendData(packet);
 	} // end while
 
@@ -214,20 +214,20 @@ int lqi(char raw) {
 
 void rx_task(void *pvParameter)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
-				ESP_LOGI(pcTaskGetName(0), "Received packet...");
+				ESP_LOGI(pcTaskGetName(NULL), "Received packet...");
 				if (!packet.crc_ok) {
-					ESP_LOGE(pcTaskGetName(0), "crc not ok");
+					ESP_LOGE(pcTaskGetName(NULL), "crc not ok");
 				} else {
-					ESP_LOGI(pcTaskGetName(0),"packet.lqi: %d", lqi(packet.lqi));
-					ESP_LOGI(pcTaskGetName(0),"packet.rssi: %ddBm", rssi(packet.rssi));
-					ESP_LOGI(pcTaskGetName(0),"packet.length: %d", packet.length);
+					ESP_LOGI(pcTaskGetName(NULL),"packet.lqi: %d", lqi(packet.lqi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.rssi: %ddBm", rssi(packet.rssi));
+					ESP_LOGI(pcTaskGetName(NULL),"packet.length: %d", packet.length);
 					if (packet.length > 0) {
-						ESP_LOGI(pcTaskGetName(0),"data: %.*s", packet.length, (char *) packet.data);
+						ESP_LOGI(pcTaskGetName(NULL),"data: %.*s", packet.length, (char *) packet.data);
 						size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferTrans );
 						ESP_LOGI(pcTaskGetName(NULL), "spacesAvailable=%d", spacesAvailable);
 						size_t sended = xMessageBufferSend(xMessageBufferTrans, packet.data, packet.length, 100);
