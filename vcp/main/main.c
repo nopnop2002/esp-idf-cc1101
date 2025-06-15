@@ -33,16 +33,8 @@ void tx_task(void *pvParameter)
 	while(1) {
 		size_t received = xMessageBufferReceive(xMessageBufferRx, buf, sizeof(buf), portMAX_DELAY);
 		ESP_LOGI(pcTaskGetName(NULL), "xMessageBufferReceive received=%d", received);
-		ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), buf, received, ESP_LOG_DEBUG);
-
-		// The VCP termination character is CR+LF. So Remove CR/LF.
-		packet.length = 0;
-		for (int i=0;i<received;i++) {
-			if (buf[i] == 0x0d) continue;
-			if (buf[i] == 0x0a) continue;
-			packet.data[packet.length] = buf[i];
-			packet.length++;
-		}
+		packet.length = received;
+		memcpy(packet.data, buf, packet.length);
 		ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), packet.data, packet.length, ESP_LOG_INFO);
 		sendData(packet);
 		ESP_LOGI(pcTaskGetName(NULL), "Sent packet. length=%d", packet.length);
@@ -75,7 +67,7 @@ void rx_task(void *pvParameter)
 {
 	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
-	uint8_t buf[xItemSize+1];
+	uint8_t buf[xItemSize];
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
@@ -91,16 +83,12 @@ void rx_task(void *pvParameter)
 						ESP_LOG_BUFFER_HEXDUMP(pcTaskGetName(NULL), packet.data, packet.length, ESP_LOG_INFO);
 
 						memcpy(buf, packet.data, packet.length);
-						int txLen = packet.length;
-						if (buf[txLen-1] != 0x0a) {
-							buf[txLen] = 0x0a;
-							txLen++;
-						}
+						int rxLen = packet.length;
 						size_t spacesAvailable = xMessageBufferSpacesAvailable( xMessageBufferTx );
 						ESP_LOGI(pcTaskGetName(NULL), "spacesAvailable=%d", spacesAvailable);
-						size_t sended = xMessageBufferSend(xMessageBufferTx, buf, txLen, 100);
-						if (sended != txLen) {
-							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail txLen=%d sended=%d", txLen, sended);
+						size_t sended = xMessageBufferSend(xMessageBufferTx, buf, rxLen, 100);
+						if (sended != rxLen) {
+							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail rxLen=%d sended=%d", rxLen, sended);
 							break;
 						}
 					}
