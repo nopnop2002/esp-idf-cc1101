@@ -28,7 +28,7 @@ Set the information of your access point.
 Set the wireless communication direction.   
 
 ### WS to Radio
-Subscribe with WebSocket and send to Radio.   
+Receive from WebSocket and send to Radio.   
 ESP32 acts as WebSocket Server.   
 You can use ws-client.py as WS Client.   
 ```python3 ws-client.py```
@@ -49,7 +49,7 @@ ArduinoCode\CC1101_receive
 
 
 ### Radio to WS
-Receive from Radio and publish as WebSocket.   
+Receive from Radio and send to WebSocket.   
 ESP32 acts as WebSocket Client.   
 Use [this](https://components.espressif.com/components/espressif/esp_websocket_client) component.   
 You can use ws-server.py as WS Server.   
