@@ -28,7 +28,7 @@ Set the information of your access point.
 Set the wireless communication direction.   
 
 ### HTTP to Radio
-Subscribe with HTTP and send to Radio.   
+Receive from HTTP and send to Radio.   
 ESP32 acts as HTTP Server.   
 You can use curl as HTTP Client.   
 ```sh ./http-client.sh```
@@ -49,7 +49,7 @@ ArduinoCode\CC1101_receive
 
 
 ### Radio to HTTP
-Receive from Radio and publish as HTTP.   
+Receive from Radio and send to HTTP.   
 ESP32 acts as HTTP Client.   
 You can use nc(netcat) as HTTP Server.   
 ```sh ./http-server.sh```
