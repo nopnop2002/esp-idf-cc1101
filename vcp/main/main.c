@@ -22,7 +22,7 @@ MessageBufferHandle_t xMessageBufferRx;
 // The total number of bytes (not messages) the message buffer will be able to hold at any one time.
 size_t xBufferSizeBytes = 1024;
 // The size, in bytes, required to hold each item in the message,
-size_t xItemSize = 65; // Maximum Payload size of CC1101 is 64
+size_t xItemSize = 64; // Maximum Payload size of CC1101 is 64
 
 #if CONFIG_SENDER
 void tx_task(void *pvParameter)
@@ -75,7 +75,7 @@ void rx_task(void *pvParameter)
 {
 	ESP_LOGI(pcTaskGetName(NULL), "Start");
 	CCPACKET packet;
-	uint8_t buf[xItemSize];
+	uint8_t buf[xItemSize+1];
 	while(1) {
 		if(packet_available()) {
 			if (receiveData(&packet) > 0) {
@@ -104,7 +104,6 @@ void rx_task(void *pvParameter)
 							break;
 						}
 					}
-					
 				}
 			} // end receiveData
 		} // end packet_available
@@ -155,7 +154,7 @@ void app_main()
 	ESP_LOGW(TAG, "Set speed to 38400bps");
 #endif
 
-	//init(CFREQ_433, 0);
+	// Initialize CC1101
 	esp_err_t ret = init(freq, mode);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG, "CC1101 not installed");
