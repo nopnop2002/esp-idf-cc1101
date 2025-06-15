@@ -63,7 +63,7 @@ ArduinoCode\CC1101_receive
 
 
 ### Radio to USB
-Receive from Radio and send to  USB.   
+Receive from Radio and send to USB.   
 ESP32 acts as USB Serial Device for writing.   
 You can use this script as USB Serial Host for reading.   
 ```python3 ./read.py```
