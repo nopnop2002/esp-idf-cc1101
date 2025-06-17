@@ -20,12 +20,12 @@
 #include "freertos/message_buffer.h"
 #include "esp_event.h"
 #include "esp_log.h"
-//#include "esp_transport_ws.h"
 #include "esp_websocket_client.h"
 
 static const char *TAG = "CLIENT";
 
 extern MessageBufferHandle_t xMessageBufferTrans;
+extern size_t xItemSize;
 
 typedef struct {
 	TaskHandle_t taskHandle;
@@ -81,7 +81,7 @@ static void websocket_event_handler(void *handler_args, esp_event_base_t base, i
 
 		if (data->op_code == WS_TRANSPORT_OPCODES_TEXT) {
 			ESP_LOGI(TAG, "Received text data->data_len=%d", data->data_len);
-			ESP_LOGD(TAG, "Total payload length=%d, data_len=%d, current payload offset=%d", data->payload_len, data->data_len, data->payload_offset);
+			ESP_LOGI(TAG, "Total payload length=%d, data_len=%d, current payload offset=%d", data->payload_len, data->data_len, data->payload_offset);
 			ESP_LOG_BUFFER_HEXDUMP(TAG, data->data_ptr, data->data_len, ESP_LOG_INFO);
 			socketBuf->data_len = data->data_len;
 			socketBuf->op_code = data->op_code;
@@ -142,12 +142,11 @@ void ws_client(void *pvParameters)
 	}
 	ESP_LOGI(TAG, "Connected to %s...", websocket_cfg.uri);
 
-	char buffer[64]; // Maximum Payload size of CC1101 is 64
+	char buffer[xItemSize];
 	while (1) {
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buffer, sizeof(buffer), portMAX_DELAY);
 		ESP_LOGI(TAG, "xMessageBufferReceive received=%d", received);
 		if (received > 0) {
-#if 0
 			// WebSockets can only handle printable characters.
 			// Therefore, determine whether the characters are printable.
 			bool printable = true;
@@ -160,12 +159,11 @@ void ws_client(void *pvParameters)
 				ESP_LOGW(TAG, "Contains characters that cannot be printed");
 				continue;
 			}
-#endif
 
 			ESP_LOGI(TAG, "xMessageBufferReceive buffer=[%.*s]",received, buffer);
 			if (esp_websocket_client_is_connected(client)) {
 				ESP_LOGI(TAG, "esp_websocket_client_send_text");
-				int sended = esp_websocket_client_send_text(client, buffer, received, portMAX_DELAY);
+				int sended = esp_websocket_client_send_text(client, buffer, received, 100);
 				if (sended != received) {
 					ESP_LOGE(TAG," esp_websocket_client_send_text fail sended=%d received=%d", sended, received);
 					break;
@@ -179,7 +177,7 @@ void ws_client(void *pvParameters)
 					break;
 				}
 			} else {
-				ESP_LOGW(TAG, "Not connected server");
+				ESP_LOGE(TAG, "Not connected server");
 				break;
 			}
 		} else {
