@@ -24,6 +24,8 @@ QueueHandle_t xQueueTinyusb;
 
 // The total number of bytes (not single messages) the message buffer will be able to hold at any one time.
 size_t xBufferSizeBytes = 1024;
+// The size, in bytes, required to hold each item in the message,
+size_t xItemSize = 64; // Maximum Payload size of CC1101 is 64
 
 void tinyusb_cdc_rx_callback(int itf, cdcacm_event_t *event)
 {
@@ -70,7 +72,7 @@ void tx_task(void *pvParameter)
 void usb_rx(void *pvParameters)
 {
 	ESP_LOGI(pcTaskGetName(NULL), "Start");
-	char buffer[64]; // Maximum Payload size of cc1101 is 64
+	char buffer[xItemSize];
 	int index = 0;
 	while(1) {
 		char ch;
@@ -89,7 +91,7 @@ void usb_rx(void *pvParameters)
 					index = 0;
 				}
 			} else {
-				if (index == 64) continue;
+				if (index == xItemSize) continue;
 				buffer[index++] = ch;
 			}
 		}
@@ -152,7 +154,7 @@ void rx_task(void *pvParameter)
 void usb_tx(void *pvParameters)
 {
 	ESP_LOGI(pcTaskGetName(NULL), "Start");
-	uint8_t buf[64]; // Maximum Payload size of cc1101 is 64
+	uint8_t buf[xItemSize];
 	uint8_t crlf[2] = { 0x0d, 0x0a };
 	while(1) {
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buf, sizeof(buf), portMAX_DELAY);
