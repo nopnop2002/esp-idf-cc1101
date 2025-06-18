@@ -37,6 +37,8 @@ MessageBufferHandle_t xMessageBufferRecv;
 
 // The total number of bytes (not single messages) the message buffer will be able to hold at any one time.
 size_t xBufferSizeBytes = 1024;
+// The size, in bytes, required to hold each item in the message,
+size_t xItemSize = 64; // Maximum Payload size of CC1101 is 64
 
 static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
@@ -325,11 +327,11 @@ void app_main()
 
 #if CONFIG_SENDER
 	xTaskCreate(&tx_task, "TX", 1024*3, NULL, 5, NULL);
-	xTaskCreate(&mqtt_sub, "SUB", 1024*4, NULL, 2, NULL);
+	xTaskCreate(&mqtt_sub, "SUB", 1024*4, NULL, 5, NULL);
 #endif
 #if CONFIG_RECEIVER
 	xTaskCreate(&rx_task, "RX", 1024*3, NULL, 5, NULL);
-	xTaskCreate(&mqtt_pub, "PUB", 1024*4, NULL, 2, NULL);
+	xTaskCreate(&mqtt_pub, "PUB", 1024*4, NULL, 5, NULL);
 #endif
 }
 
