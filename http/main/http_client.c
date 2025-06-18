@@ -21,6 +21,7 @@
 static const char *TAG = "CLIENT";
 
 extern MessageBufferHandle_t xMessageBufferTrans;
+extern size_t xItemSize;
 
 esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
@@ -170,7 +171,7 @@ void http_client(void *pvParameters)
 	sprintf(url, "http://%s:%d", ip, CONFIG_WEB_SERVER_PORT);
 	ESP_LOGI(TAG, "url=[%s]", url);
 
-	char buffer[64]; // Maximum Payload size of CC1101 is 64
+	char buffer[xItemSize];
 	while (1) {
 		size_t received = xMessageBufferReceive(xMessageBufferTrans, buffer, sizeof(buffer), portMAX_DELAY);
 		ESP_LOGI(TAG, "xMessageBufferReceive received=%d", received);
