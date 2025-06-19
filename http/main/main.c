@@ -255,8 +255,9 @@ void rx_task(void *pvParameter)
 				}
 			} // end receiveData
 		} // end packet_available
-		vTaskDelay(1);
+		vTaskDelay(1); // Avoid Watchdog asserts
 	} // end while
+
 	vTaskDelete( NULL );
 }
 #endif // CONFIG_RECEIVER
