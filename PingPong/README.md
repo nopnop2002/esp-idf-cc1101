@@ -6,14 +6,12 @@ In the secondary, the characters are converted and sent back.
 ![config-pingpong-1](https://user-images.githubusercontent.com/6020549/158708163-9bacbe80-bb37-4705-a3f7-ef4c1d098f97.jpg)
 ![config-pingpong-2](https://user-images.githubusercontent.com/6020549/158708129-7037e259-105d-47ee-b49f-e30eb4f7aa47.jpg)
 
-# Using as Primary   
-Sending and receiving.   
+# Communication with the Arduino environment   
+- ESP32 is the primary   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_pong).   
 
-# Using as Secondary   
-Send back the received data.   
+- ESP32 is the secondary   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_ping).   
-
 
 # Screen Shot
 
