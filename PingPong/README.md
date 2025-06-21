@@ -13,8 +13,7 @@ I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/A
 - ESP32 is the secondary   
 I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_ping).   
 
-# Screen Shot
-
+# Screen Shot   
 ![ScreenShot-pingpong-1](https://user-images.githubusercontent.com/6020549/167343204-58dbf11b-a0ff-4e9f-a6ff-def1a3405e36.jpg)
 ![ScreenShot-pingpong-2](https://user-images.githubusercontent.com/6020549/167343197-895c8aa2-b7b5-46b6-9b34-3deb3d92ffba.jpg)
 
