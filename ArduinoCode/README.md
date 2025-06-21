@@ -27,19 +27,19 @@ I used [this](https://www.ti.com/lit/ds/symlink/txs0108e.pdf?ts=1647593549503) f
 # Configuration
 
 - Radio frequency   
- Specifies the frequency to be used.
-```
-radio.setCarrierFreq(CFREQ_433);
-```
+	Specifies the frequency to be used.
+	```
+	radio.setCarrierFreq(CFREQ_433);
+	```
 
 - Radio channel   
- Specifies the channel to be used.
-```
-radio.setChannel(0);
-```
+	Specifies the channel to be used.
+	```
+	radio.setChannel(0);
+	```
 
 - PA power setting   
- Specifies the PA power to be used.
-```
-radio.setTxPowerAmp(PA_LongDistance);
-```
+	Specifies the PA power to be used.
+	```
+	radio.setTxPowerAmp(PA_LongDistance);
+	```
