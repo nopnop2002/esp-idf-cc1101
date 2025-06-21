@@ -43,3 +43,13 @@ I used [this](https://www.ti.com/lit/ds/symlink/txs0108e.pdf?ts=1647593549503) f
 	```
 	radio.setTxPowerAmp(PA_LongDistance);
 	```
+
+# Application   
+- CC1101_transmitte   
+	Send only.   
+- CC1101_receive   
+	Receive only.   
+- CC1101_ping   
+	Wait for a response after sending.   
+- CC1101_pong   
+	Send a response after receiving.   
