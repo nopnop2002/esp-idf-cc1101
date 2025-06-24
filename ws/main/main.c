@@ -255,7 +255,7 @@ void rx_task(void *pvParameter)
 				}
 			} // end receiveData
 		} // end packet_available
-		vTaskDelay(1);
+		vTaskDelay(1); // Avoid WatchDog alerts
 	} // end while
 	vTaskDelete( NULL );
 }
