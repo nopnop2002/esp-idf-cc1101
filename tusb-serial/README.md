@@ -58,9 +58,7 @@ You can use this script as USB Serial Host for writing.
 ![Image](https://github.com/user-attachments/assets/f42de1bb-d8d0-46c0-89f9-bf7013eb0b5b)
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_receive   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
 
 ### Radio to USB
 Receive from Radio and send to USB.   
@@ -79,9 +77,7 @@ You can use this script as USB Serial Host for reading.
 ![Image](https://github.com/user-attachments/assets/43baaab3-170c-4933-8baa-856596e29894)
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_transmitte   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_transmitte).   
 
 # Using Windows Terminal Software
 When you connect the USB cable to the USB port on your Windows machine and build the firmware, a new COM port will appear.   
