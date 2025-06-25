@@ -44,9 +44,7 @@ You can use ws-client.py as WS Client.
 ![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/081b3b57-e3aa-4926-939a-15ebb095ff13)
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_receive   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
 
 ### Radio to WS
 Receive from Radio and send to WebSocket.   
@@ -67,9 +65,7 @@ You can use ws-server.py as WS Server.
 
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_transmitte   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_transmitte).   
 
 ### Specifying an WebSocket Server   
 You can specify your WebSocket Server in one of the following ways:   
