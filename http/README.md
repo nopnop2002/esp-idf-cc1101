@@ -44,9 +44,7 @@ You can use curl as HTTP Client.
 ![config-radio-1](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/26f4bf6f-a0e5-4038-a617-b4fb83badc96)
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_receive   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
 
 ### Radio to HTTP
 Receive from Radio and send to HTTP.   
@@ -66,9 +64,7 @@ You can use nc(netcat) as HTTP Server.
 
 
 Communicate with Arduino Environment.   
-Run this sketch.   
-ArduinoCode\CC1101_transmitte   
-
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_transmitte).   
 
 ### Specifying an HTTP Server   
 You can specify your HTTP Server in one of the following ways:   
