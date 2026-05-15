@@ -11,7 +11,8 @@
 #include "freertos/task.h"
 #include "freertos/message_buffer.h"
 #include "tinyusb.h"
-#include "tusb_cdc_acm.h"
+#include "tinyusb_default_config.h"
+#include "tinyusb_cdc_acm.h"
 #include "esp_log.h"
 
 #include <cc1101.h>
@@ -39,9 +40,11 @@ void tinyusb_cdc_rx_callback(int itf, cdcacm_event_t *event)
 	if (ret == ESP_OK) {
 		ESP_LOGD(TAG, "Data from channel=%d rx_size=%d", itf, rx_size);
 		ESP_LOG_BUFFER_HEXDUMP(TAG, buf, rx_size, ESP_LOG_INFO);
+#if CONFIG_SENDER
 		for(int i=0;i<rx_size;i++) {
 			xQueueSendFromISR(xQueueTinyusb, &buf[i], NULL);
 		}
+#endif
 	} else {
 		ESP_LOGE(TAG, "tinyusb_cdcacm_read error");
 	}
@@ -170,35 +173,40 @@ void usb_tx(void *pvParameters)
 
 void app_main()
 {
-    ESP_LOGI(TAG, "USB initialization");
-    const tinyusb_config_t tusb_cfg = {
-        .device_descriptor = NULL,
-        .string_descriptor = NULL,
-        .external_phy = false,
-        .configuration_descriptor = NULL,
-    };
-    ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
+	ESP_LOGI(TAG, "USB initialization");
+	tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG();
+#ifdef CONFIG_IDF_TARGET_ESP32P4
+	tusb_cfg.port = TINYUSB_PORT_FULL_SPEED_0;
+#endif
+	ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 
-    tinyusb_config_cdcacm_t acm_cfg = {
-        .usb_dev = TINYUSB_USBDEV_0,
-        .cdc_port = TINYUSB_CDC_ACM_0,
-        .rx_unread_buf_sz = 64,
-        .callback_rx = &tinyusb_cdc_rx_callback, // the first way to register a callback
-        .callback_rx_wanted_char = NULL,
-        .callback_line_state_changed = &tinyusb_cdc_line_state_changed_callback,
-        .callback_line_coding_changed = NULL
-    };
-    ESP_ERROR_CHECK(tusb_cdc_acm_init(&acm_cfg));
+	tinyusb_config_cdcacm_t acm_cfg = {
+		.cdc_port = TINYUSB_CDC_ACM_0,
+		.callback_rx = &tinyusb_cdc_rx_callback, // the first way to register a callback
+		.callback_rx_wanted_char = NULL,
+		.callback_line_state_changed = &tinyusb_cdc_line_state_changed_callback,
+		.callback_line_coding_changed = NULL
+	};
+	ESP_ERROR_CHECK(tinyusb_cdcacm_init(&acm_cfg));
 
-    // Create MessageBuffer
-    xMessageBufferTrans = xMessageBufferCreate(xBufferSizeBytes);
-    configASSERT( xMessageBufferTrans );
-    xMessageBufferRecv = xMessageBufferCreate(xBufferSizeBytes);
-    configASSERT( xMessageBufferRecv );
+#if (CONFIG_TINYUSB_CDC_COUNT > 1)
+	acm_cfg.cdc_port = TINYUSB_CDC_ACM_1;
+	ESP_ERROR_CHECK(tinyusb_cdcacm_init(&acm_cfg));
+	ESP_ERROR_CHECK(tinyusb_cdcacm_register_callback(
+		TINYUSB_CDC_ACM_1,
+		CDC_EVENT_LINE_STATE_CHANGED,
+		&tinyusb_cdc_line_state_changed_callback));
+#endif
 
-    // Create Queue
-    xQueueTinyusb = xQueueCreate(100, sizeof(char));
-    configASSERT( xQueueTinyusb );
+	// Create MessageBuffer
+	xMessageBufferTrans = xMessageBufferCreate(xBufferSizeBytes);
+	configASSERT( xMessageBufferTrans );
+	xMessageBufferRecv = xMessageBufferCreate(xBufferSizeBytes);
+	configASSERT( xMessageBufferRecv );
+
+	// Create Queue
+	xQueueTinyusb = xQueueCreate(100, sizeof(char));
+	configASSERT( xQueueTinyusb );
 
 	uint8_t freq;
 #if CONFIG_CC1101_FREQ_315
