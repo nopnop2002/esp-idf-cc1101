@@ -1,17 +1,8 @@
 menu "CC1101 Configuration"
 
-	config GPIO_RANGE_MAX
-		int
-		default 33 if IDF_TARGET_ESP32
-		default 46 if IDF_TARGET_ESP32S2
-		default 48 if IDF_TARGET_ESP32S3
-		default 18 if IDF_TARGET_ESP32C2
-		default 19 if IDF_TARGET_ESP32C3
-		default 30 if IDF_TARGET_ESP32C6
-
 	config MISO_GPIO
 		int "CC1101 MISO GPIO"
-		range 0 GPIO_RANGE_MAX
+		range 0 SOC_GPIO_IN_RANGE_MAX
 		default 19 if IDF_TARGET_ESP32
 		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  4 # C3 and others
@@ -20,7 +11,7 @@ menu "CC1101 Configuration"
 
 	config SCK_GPIO
 		int "CC1101 SCK GPIO"
-		range 0 GPIO_RANGE_MAX
+		range 0 SOC_GPIO_OUT_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
 		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  3 # C3 and others
@@ -29,7 +20,7 @@ menu "CC1101 Configuration"
 
 	config MOSI_GPIO
 		int "CC1101 MOSI GPIO"
-		range 0 GPIO_RANGE_MAX
+		range 0 SOC_GPIO_OUT_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
 		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  2 # C3 and others
@@ -38,7 +29,7 @@ menu "CC1101 Configuration"
 
 	config CSN_GPIO
 		int "CC1101 CSN GPIO"
-		range 0 GPIO_RANGE_MAX
+		range 0 SOC_GPIO_OUT_RANGE_MAX
 		default  5 if IDF_TARGET_ESP32
 		default 34 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  1 # C3 and others
@@ -47,7 +38,7 @@ menu "CC1101 Configuration"
 
 	config GDO0_GPIO
 		int "CC1101 GDO0 GPIO"
-		range 0 GPIO_RANGE_MAX
+		range 0 SOC_GPIO_IN_RANGE_MAX
 		default 15 if IDF_TARGET_ESP32
 		default 33 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  0 # C3 and others
@@ -64,7 +55,7 @@ menu "CC1101 Configuration"
 			help
 				Use SPI2_HOST. This is also called HSPI_HOST.
 		config SPI3_HOST
-			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+			depends on SOC_SPI_PERIPH_NUM > 2
 			bool "SPI3_HOST"
 			help
 				USE SPI3_HOST. This is also called VSPI_HOST
@@ -104,9 +95,9 @@ menu "CC1101 Configuration"
 		config CC1101_SPEED_9600
 			bool "9.6 kbit/sec"
 		config CC1101_SPEED_19200
-			bool "19.2 kbit/sec"    
+			bool "19.2 kbit/sec"
 		config CC1101_SPEED_38400
-			bool "38.4 kbit/sec" 
+			bool "38.4 kbit/sec"
 	endchoice
 
 	choice
@@ -120,9 +111,9 @@ menu "CC1101 Configuration"
 		config CC1101_POWER_MIN
 			bool "Minimum power level"
 		config CC1101_POWER_0db
-			bool "Power level is 0dBm"    
+			bool "Power level is 0dBm"
 		config CC1101_POWER_MAX
-			bool "Maximum power level" 
+			bool "Maximum power level"
 	endchoice
 
 endmenu
