@@ -36,7 +36,7 @@ Receive from BLE and send to Radio.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/f671e87c-2a63-400c-86a2-ab61d5968576" />
 
 Communicate with Arduino Environment.   
-I tested it with [this](https://github.com/nopnop2002/esp-idf-sx126x/tree/main/ArduinoCode/Ra01S-RX).   
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_receive).   
 
 ### Radio to BLE
 Receive from Radio and send to BLE.   
@@ -51,7 +51,7 @@ Receive from Radio and send to BLE.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/04df61ab-848e-496e-9014-291734e3a4bf" />
 
 Communicate with Arduino Environment.   
-I tested it with [this](https://github.com/nopnop2002/esp-idf-sx126x/tree/main/ArduinoCode/Ra01S-TX).   
+I tested it with [this](https://github.com/nopnop2002/esp-idf-cc1101/tree/main/ArduinoCode/CC1101_transmitte).   
 
 # Android Application   
 I used [this](https://play.google.com/store/apps/details?id=de.kai_morich.serial_bluetooth_terminal) app.   
