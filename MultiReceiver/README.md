@@ -45,4 +45,18 @@ void tx_task(void *pvParameter)
 }
 ```
 
-Now the messages will be sent alternately to the two receivers.
+The messages will be sent alternately to the two receivers.
+
+```
++----------+             +-----------+
+|          | counter = 0 |           |
+|          |------------>| Receiver1 |
+|          |             |           |
+|          |             +-----------+
+|  Sender  |
+|          |             +-----------+
+|          | counter = 1 |           |
+|          |------------>| Receiver2 |
+|          |             |           |
++----------+             +-----------+
+```
