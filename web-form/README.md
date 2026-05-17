@@ -76,8 +76,8 @@ Enter the data to send in the TextBox and press the Send button.
 The received data will be displayed in the TextBox.   
 The Change button changes the number of lines displayed.   
 The Copy button copies the received data to the clipboard.   
-<img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/08bd305b-3b27-4861-84c8-fd2acbdb0062" />
-<img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/609860a9-bc41-48e9-9693-342eff4c151a" />
+<img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/9d5c15f6-ff11-4197-aaa7-d0d2c5665885" />
+<img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/28434741-6941-4893-ad33-b9d1588e1121" />
 
 # WEB Pages
 WEB Pages are stored in the html folder.   
