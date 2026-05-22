@@ -30,8 +30,8 @@ Set the information of your access point.
 ## Radio Setting
 Set the wireless communication direction.   
 
-### Web to LoRa
-Data entered through the web form is sent to LoRa.   
+### Web to Radio
+Data entered through the web form is sent to Radio.   
 ```
             +-----------+              +-----------+              +-----------+
             |           |              |           |              |           |
@@ -43,8 +43,8 @@ Data entered through the web form is sent to LoRa.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/ab57c99d-0c39-4e5d-8321-34845cda4c92" />
 
 
-### LoRa to Web
-Data received from LoRa is displayed in a web form.   
+### Radio to Web
+Data received from Radio is displayed in a web form.   
 
 ```
             +-----------+              +-----------+              +-----------+
@@ -68,11 +68,11 @@ http://esp32-server.local/
 <img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/be8d468b-38d5-4b36-8e37-8eabd8e289fa" />
 <img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/3f60f399-d2c7-42ce-8f92-3b71620b4c50" />
 
-### Web to LoRa
+### Web to Radio
 Enter the data to send in the TextBox and press the Send button.   
 <img width="947" height="877" alt="Image" src="https://github.com/user-attachments/assets/c2f27dd1-b8e5-4cc3-899e-182ead60014a" />
 
-### LoRa to Web
+### Radio to Web
 The received data will be displayed in the TextBox.   
 The Change button changes the number of lines displayed.   
 The Copy button copies the received data to the clipboard.   
