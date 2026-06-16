@@ -234,6 +234,7 @@ void rx_task(void *pvParameter)
 							ESP_LOGE(pcTaskGetName(NULL), "xMessageBufferSend fail my_json_length=%d sended=%d", my_json_length, sended);
 							break;
 						}
+						cJSON_free(my_json_string);
 					}
 				}
 			} // end receiveData
@@ -362,4 +363,3 @@ void app_main()
 		vTaskDelay(10);
 	}
 }
-
