@@ -1,5 +1,5 @@
 # Interrupt Example   
-While the CC1101 allows GDO0, GDO1, and GDO2 to be used as interrupt outputs, this library uses GDO2.   
+While the CC1101 allows GDO0, GDO1, and GDO2 to be used as interrupt output signals, this library uses GDO2.   
 The CC1101 supports the following interrupts.   
 This project demonstrates how to use asserts when sync word has been sent / received, and de-asserts at the end of the packet.   
 
