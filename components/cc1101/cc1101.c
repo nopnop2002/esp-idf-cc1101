@@ -828,3 +828,14 @@ uint8_t packet_available()
 	return 0;
 }
 
+/**
+ * setAssert
+ *
+ * Set Assert value
+ *
+ * @param assert assert value
+ */
+void setAssert(uint8_t assert)
+{
+	writeReg(CC1101_IOCFG2, assert);
+}

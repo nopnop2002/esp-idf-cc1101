@@ -553,6 +553,15 @@ void setTxPowerAmp(uint8_t paLevel);
  * Check if Packet is received
  */
 uint8_t packet_available();
+
+/**
+ * setAssert
+ *
+ * Set Assert value
+ *
+ * @param assert assert value
+ */
+void setAssert(uint8_t assert);
 #endif
 
 
