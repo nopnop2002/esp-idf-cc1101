@@ -302,7 +302,7 @@ void app_main()
 	ESP_LOGW(TAG, "Set speed to 38400bps");
 #endif
 
-	//init(CFREQ_433, 0);
+	// Initialize CC1101
 	ret = init(freq, mode);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG, "CC1101 not installed");
@@ -334,4 +334,3 @@ void app_main()
 	xTaskCreate(&mqtt_pub, "PUB", 1024*4, NULL, 5, NULL);
 #endif
 }
-
