@@ -24,7 +24,7 @@ This is cc1101 and HTTP gateway application.
 Set the information of your access point.   
 ![config-wifi](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/5f59f5a9-ca9e-488a-90bb-4929065e43d0)
 
-## Radioi Setting
+## Radio Setting
 Set the wireless communication direction.   
 
 ### HTTP to Radio

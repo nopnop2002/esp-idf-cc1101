@@ -24,7 +24,7 @@ This is cc1101 and WebSocket gateway application.
 Set the information of your access point.   
 ![config-wifi](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/21dc01ff-61c2-4e23-8571-32065fb7b360)
 
-## Radioi Setting
+## Radio Setting
 Set the wireless communication direction.   
 
 ### WS to Radio
