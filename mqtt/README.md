@@ -24,7 +24,7 @@ This is cc1101 and MQTT gateway application.
 Set the information of your access point.   
 ![config-wifi](https://github.com/nopnop2002/esp-idf-cc1101/assets/6020549/b5fd7791-b350-4831-bb03-b87d473f7bcf)
 
-## Radioi Setting
+## Radio Setting
 Set the wireless communication direction.   
 ![Image](https://github.com/user-attachments/assets/5a0719b7-bc83-424d-94f9-df65dd1ff409)
 
